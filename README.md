@@ -28,13 +28,23 @@ $ powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 $ pip install uv
 ```
 
-### 3. Install Project Dependencies
+### 3. Activate the Virtual Environment
+
+```bash
+# On MacOS and Linux.
+$ source .venv/bin/activate
+
+# On Windows.
+$ .venv\Scripts\activate
+```
+
+### 4. Install Project Dependencies
 
 ```bash
 uv sync
 ```
 
-### 4. Run the Streamlit App
+### 5. Run the Streamlit App
 
 ```bash
 streamlit run app.py
