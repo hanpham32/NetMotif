@@ -36,7 +36,17 @@ class Graph:
             "Weight": self.G.size(),
         }
 
-    def draw(self):
+    def draw(self, draw_option):
         plt.figure(figsize=(8, 6))
-        nx.draw(self.G)
+        match draw_option:
+            case "Spring Layout":
+                nx.draw_spring(self.G)
+            case "Circular Layout":
+                nx.draw_circular(self.G)
+            case "Planar Layout":
+                nx.draw_planar(self.G)
+            case _:
+                pos = nx.spring_layout(self.G)
+                nx.draw(self.G, pos)
+
         st.pyplot(plt.gcf())
