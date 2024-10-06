@@ -22,7 +22,11 @@ def form_callback():
         st.write(f"Number of edges: {graph_properties['Number of edges']}")
         st.write(f"Weight: {graph_properties['Weight']}")
 
-        G.draw()
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            G.draw(st.session_state["draw_option"])
+        with col2:
+            st.write("Draw option:", st.session_state["draw_option"])
 
 
 def main():
@@ -31,6 +35,8 @@ def main():
         st.session_state['graph_type'] = None
     if 'uploaded_file' not in st.session_state:
         st.session_state['uploaded_file'] = None
+    if 'draw_option' not in st.session_state:
+        st.session_state['draw_option'] = "Spring Layout"
 
     with st.form(key="form"):
         col1, col2 = st.columns([1, 3])
@@ -40,6 +46,11 @@ def main():
                 key="graph",
                 index=None,
                 options=["Directed", "Undirected"],
+            )
+            draw_option = st.selectbox(
+                "Draw Option",
+                ("Spring Layout", "Circular Layout", "Planar Layout"),
+                index=0,
             )
         with col2:
             uploaded_file = st.file_uploader("Choose a file")
@@ -52,6 +63,7 @@ def main():
     if submitted:
         st.session_state['graph_type'] = graph_type
         st.session_state['uploaded_file'] = uploaded_file
+        st.session_state['draw_option'] = draw_option
         form_callback()
 
 
