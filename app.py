@@ -61,6 +61,11 @@ def main():
         st.session_state['graph_type'] = graph_type
         st.session_state['uploaded_file'] = uploaded_file
         form_callback()
+    '''
+    [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/hanpham32/NetMotif) 
+
+    '''
+    st.markdown("<br>",unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
