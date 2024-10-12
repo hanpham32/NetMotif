@@ -12,7 +12,6 @@ def form_callback():
     elif st.session_state['graph_type'] is None:
         st.warning("Please select a graph type.")
     else:
-        st.write("Succesfully uploaded file.")
         G = Graph()
         G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'])
 
@@ -22,11 +21,7 @@ def form_callback():
         st.write(f"Number of edges: {graph_properties['Number of edges']}")
         st.write(f"Weight: {graph_properties['Weight']}")
 
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            G.draw(st.session_state["graph_type"])
-        with col2:
-            st.write("Draw option:", st.session_state["draw_option"])
+        G.draw(st.session_state["graph_type"])
 
 
 def main():
@@ -35,8 +30,16 @@ def main():
         st.session_state['graph_type'] = None
     if 'uploaded_file' not in st.session_state:
         st.session_state['uploaded_file'] = None
-    if 'draw_option' not in st.session_state:
-        st.session_state['draw_option'] = "Spring Layout"
+    if 'prev_uploaded_file' not in st.session_state:
+        st.session_state['prev_uploaded_file'] = None
+
+    uploaded_file = st.file_uploader("Upload a file")
+    if uploaded_file:
+        if uploaded_file != st.session_state['prev_uploaded_file']:
+            st.session_state['uploaded_file'] = uploaded_file
+            st.session_state['prev_uploaded_file'] = uploaded_file
+            st.toast("Succesfully uploaded file", icon="✅")
+
 
     with st.form(key="form"):
         col1, col2 = st.columns([1, 3])
@@ -47,15 +50,9 @@ def main():
                 index=None,
                 options=["Directed", "Undirected"],
             )
-            draw_option = st.selectbox(
-                "Draw Option",
-                ("Spring Layout", "Circular Layout", "Planar Layout"),
-                index=0,
-            )
         with col2:
-            uploaded_file = st.file_uploader("Choose a file")
             st.write(
-                "NOTE: Uploading more than 1000 nodes might cause delay. Will implement loading progress to display status"
+                "NOTE: Uploading more than 1000 nodes might consume more processing time."
             )
 
         submitted = st.form_submit_button(label="Submit")
@@ -63,7 +60,6 @@ def main():
     if submitted:
         st.session_state['graph_type'] = graph_type
         st.session_state['uploaded_file'] = uploaded_file
-        st.session_state['draw_option'] = draw_option
         form_callback()
 
 
