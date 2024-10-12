@@ -2,6 +2,7 @@ import networkx as nx
 from io import StringIO
 import matplotlib.pyplot as plt
 import streamlit as st
+import streamlit.components.v1 as components
 from pyvis.network import Network
 
 
@@ -45,9 +46,11 @@ class Graph:
         nt.from_nx(self.G)
         nt.toggle_physics(True)  # add physic to graph
         nt.toggle_hide_edges_on_drag(True)
+        nt.show_buttons(filter_=['physics'])
 
         # Render the graph to an HTML file
         nt.write_html('nx.html', open_browser=False)
         with open("nx.html", "r") as f:
             html = f.read()
-        st.components.v1.html(html, height=500)
+
+        components.html(html, height=1000, scrolling=True)
