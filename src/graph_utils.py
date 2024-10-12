@@ -2,6 +2,7 @@ import networkx as nx
 from io import StringIO
 import matplotlib.pyplot as plt
 import streamlit as st
+from pyvis.network import Network
 
 
 class Graph:
@@ -36,17 +37,17 @@ class Graph:
             "Weight": self.G.size(),
         }
 
-    def draw(self, draw_option):
-        plt.figure(figsize=(8, 6))
-        match draw_option:
-            case "Spring Layout":
-                nx.draw_spring(self.G)
-            case "Circular Layout":
-                nx.draw_circular(self.G)
-            case "Planar Layout":
-                nx.draw_planar(self.G)
-            case _:
-                pos = nx.spring_layout(self.G)
-                nx.draw(self.G, pos)
+    def draw(self, graph_type):
+        if graph_type == "Directed":
+            nt = Network(directed=True)
+        else:
+            nt = Network()
+        nt.from_nx(self.G)
+        nt.toggle_physics(True)  # add physic to graph
+        nt.toggle_hide_edges_on_drag(True)
 
-        st.pyplot(plt.gcf())
+        # Render the graph to an HTML file
+        nt.write_html('nx.html', open_browser=False)
+        with open("nx.html", "r") as f:
+            html = f.read()
+        st.components.v1.html(html, height=500)

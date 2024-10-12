@@ -24,7 +24,7 @@ def form_callback():
 
         col1, col2 = st.columns([3, 1])
         with col1:
-            G.draw(st.session_state["draw_option"])
+            G.draw(st.session_state["graph_type"])
         with col2:
             st.write("Draw option:", st.session_state["draw_option"])
 
