@@ -54,3 +54,15 @@ class Graph:
             html = f.read()
 
         components.html(html, height=1000, scrolling=True)
+
+    #gets all neighbors after specified node in the node list
+    def getRightNeighbors(self, node):
+        rightHandNeighbors = list()
+        i = 0
+        nodeIndexInG = list(self.G.nodes).index(node)
+        for n in self.G:
+            if(i>nodeIndexInG):
+                if(self.G.has_edge(node, n)):
+                    rightHandNeighbors.append(n)
+            i = i+1
+        return iter(rightHandNeighbors) #turns list back into iterator again
