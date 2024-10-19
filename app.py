@@ -1,5 +1,6 @@
 import streamlit as st
 from src.graph_utils import Graph
+import src.esu as esu
 
 
 def form_callback():
@@ -20,7 +21,12 @@ def form_callback():
         # st.write(f"Edges: {graph_properties['Edges']}")
         st.write(f"Number of edges: {graph_properties['Number of edges']}")
         st.write(f"Weight: {graph_properties['Weight']}")
-
+        esuList = esu.esu(G,3)
+        for subgraph in esuList:
+            esuGraph = Graph()
+            esuGraph.generate_graph(None, graph_type=st.session_state['graph_type'])
+            esuGraph.G = subgraph
+            esuGraph.draw(st.session_state["graph_type"])
         G.draw(st.session_state["graph_type"])
 
 
@@ -39,7 +45,6 @@ def main():
             st.session_state['uploaded_file'] = uploaded_file
             st.session_state['prev_uploaded_file'] = uploaded_file
             st.toast("Succesfully uploaded file", icon="✅")
-
 
     with st.form(key="form"):
         col1, col2 = st.columns([1, 3])
