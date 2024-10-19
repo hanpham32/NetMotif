@@ -1,21 +1,33 @@
+"""
+Graph Class
+
+This class is responsible for graph generation, visualization, and\
+    rendering using NetworkX and Pyvis.
+
+"""
+
 import networkx as nx
+import os
 from io import StringIO
-import matplotlib.pyplot as plt
 import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
+from src.esu import ESU
+from src.labeling import *
 
 
 class Graph:
     def __init__(self):
         self.G = None
+        self.graph_type = None
 
     def generate_graph(self, file, graph_type):
         if graph_type == "Undirected":
             self.G = nx.Graph()
+            self.graph_type = "Undirected"
         elif graph_type == "Directed":
             self.G = nx.DiGraph()
-
+            self.graph_type = "Directed"
         if file is not None:
             bytes_data = StringIO(file.getvalue().decode("utf-8"))
             data = bytes_data.readlines()
@@ -38,7 +50,8 @@ class Graph:
             "Weight": self.G.size(),
         }
 
-    def draw(self, graph_type):
+    def draw_graph(self, graph_type):
+        output_dir = "drawings"
         if graph_type == "Directed":
             nt = Network(directed=True)
         else:
@@ -49,8 +62,39 @@ class Graph:
         nt.show_buttons(filter_=['physics'])
 
         # Render the graph to an HTML file
-        nt.write_html('nx.html', open_browser=False)
-        with open("nx.html", "r") as f:
+        file_name = os.path.join(output_dir, 'nx.html')
+
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        nt.write_html(file_name, open_browser=False)
+        with open(file_name, "r") as f:
             html = f.read()
 
         components.html(html, height=1000, scrolling=True)
+
+    def draw_subgraph(self, motif_size: int):
+        output_dir = "drawings/subgraphs"
+        esu = ESU(self.G)
+        esu_list = esu.enumerate_subgraphs(motif_size)  # FIXME: 3 is default motif size
+
+        for i, subgraph in enumerate(esu_list):
+            if self.graph_type == "Directed":
+                nt = Network(directed=True)
+            else:
+                nt = Network()
+
+            nt.from_nx(subgraph)
+            file_name = os.path.join(output_dir, f'nx_subgraph_{i}.html')
+
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+
+            nt.write_html(file_name, open_browser=False)
+
+            with open(file_name, "r") as f:
+                html = f.read()
+
+            st.markdown(f"### Subgraph {labelGraph(subgraph, self.graph_type)}")
+            components.html(html, height=600, scrolling=True)
+        return
