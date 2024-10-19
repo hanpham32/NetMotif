@@ -21,8 +21,12 @@ def form_callback():
         # st.write(f"Edges: {graph_properties['Edges']}")
         st.write(f"Number of edges: {graph_properties['Number of edges']}")
         st.write(f"Weight: {graph_properties['Weight']}")
-        st.write(esu.esu(G,3))
-
+        esuList = esu.esu(G,3)
+        for subgraph in esuList:
+            esuGraph = Graph()
+            esuGraph.generate_graph(None, graph_type=st.session_state['graph_type'])
+            esuGraph.G = subgraph
+            esuGraph.draw(st.session_state["graph_type"])
         G.draw(st.session_state["graph_type"])
 
 
