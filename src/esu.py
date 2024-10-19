@@ -26,6 +26,7 @@ def esu(graph: gu.Graph, size: int):
         nodeVisited.add(node)
         esu_recurse(graph, size, neighborSet, nodeList, subgraphList, nodeVisited)
 
+
     return subgraphList
 
 
@@ -34,7 +35,7 @@ def esu_recurse(graph: gu.Graph, size: int, neighbors: set,
 
     #if subgraph is complete
     if size == 1:
-        subgraphList.append(nodeList.copy())
+        subgraphList.append(graph.G.subgraph(nodeList.copy()))
         return
 
     #checks if there are no more neighbors to pull from

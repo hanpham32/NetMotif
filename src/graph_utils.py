@@ -58,7 +58,7 @@ class Graph:
     #gets all neighbors after specified node in the node list
     def getRightNeighbors(self, node):
         rightHandNeighbors = list()
-        i = 0
+        i = 0 #iterate through node list index
         nodeIndexInG = list(self.G.nodes).index(node)
         for n in self.G:
             if(i>nodeIndexInG):
