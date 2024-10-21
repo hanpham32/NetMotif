@@ -7,6 +7,7 @@ This class is responsible for graph generation, visualization, and\
 """
 
 import networkx as nx
+import os
 from io import StringIO
 import streamlit as st
 import streamlit.components.v1 as components
@@ -47,6 +48,7 @@ class Graph:
         }
 
     def draw_graph(self, graph_type):
+        output_dir = "drawings"
         if graph_type == "Directed":
             nt = Network(directed=True)
         else:
@@ -57,13 +59,15 @@ class Graph:
         nt.show_buttons(filter_=['physics'])
 
         # Render the graph to an HTML file
-        nt.write_html('nx.html', open_browser=False)
-        with open("nx.html", "r") as f:
+        file_name = os.path.join(output_dir, 'nx.html')
+        nt.write_html(file_name, open_browser=False)
+        with open(file_name, "r") as f:
             html = f.read()
 
         components.html(html, height=1000, scrolling=True)
 
     def draw_subgraph(self, graph_type):
+        output_dir = "drawings/subgraphs"
         esu = ESU(self.G)
         esu_list = esu.enumerate_subgraphs(3)  # FIXME: 3 is default motif size
 
@@ -74,7 +78,7 @@ class Graph:
                 nt = Network()
 
             nt.from_nx(subgraph)
-            file_name = f'nx_subgraph_{i}.html'
+            file_name = os.path.join(output_dir, f'nx_subgraph_{i}.html')
             nt.write_html(file_name, open_browser=False)
 
             with open(file_name, "r") as f:
