@@ -1,9 +1,17 @@
+"""
+Graph Class
+
+This class is responsible for graph generation, visualization, and\
+    rendering using NetworkX and Pyvis.
+
+"""
+
 import networkx as nx
 from io import StringIO
-import matplotlib.pyplot as plt
 import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
+from src.esu import ESU
 
 
 class Graph:
@@ -38,7 +46,7 @@ class Graph:
             "Weight": self.G.size(),
         }
 
-    def draw(self, graph_type):
+    def draw_graph(self, graph_type):
         if graph_type == "Directed":
             nt = Network(directed=True)
         else:
@@ -55,14 +63,23 @@ class Graph:
 
         components.html(html, height=1000, scrolling=True)
 
-    #gets all neighbors after specified node in the node list
-    def getRightNeighbors(self, node):
-        rightHandNeighbors = list()
-        i = 0 #iterate through node list index
-        nodeIndexInG = list(self.G.nodes).index(node)
-        for n in self.G:
-            if(i>nodeIndexInG):
-                if(self.G.has_edge(node, n)):
-                    rightHandNeighbors.append(n)
-            i = i+1
-        return iter(rightHandNeighbors) #turns list back into iterator again
+    def draw_subgraph(self, graph_type):
+        esu = ESU(self.G)
+        esu_list = esu.enumerate_subgraphs(3)  # FIXME: 3 is default motif size
+
+        for i, subgraph in enumerate(esu_list):
+            if graph_type == "Directed":
+                nt = Network(directed=True)
+            else:
+                nt = Network()
+
+            nt.from_nx(subgraph)
+            file_name = f'nx_subgraph_{i}.html'
+            nt.write_html(file_name, open_browser=False)
+
+            with open(file_name, "r") as f:
+                html = f.read()
+
+            st.markdown(f"### Subgraph {i + 1}")
+            components.html(html, height=600, scrolling=True)
+        return

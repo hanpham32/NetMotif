@@ -1,76 +1,73 @@
-#translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
+"""
+ESU Class
 
-
-#import networkx as nx
-import src.graph_utils as gu
-from io import StringIO
-#import streamlit as st
-#import streamlit.components.v1 as components
-#from pyvis.network import Network
-#from src.graph import UndirectedGraph
-#from src.motif import Motif
-
-def esu(graph: gu.Graph, size: int):
-    #creates a list to hold all subgraph arrays
-    subgraphList = list()
-    #collects all starting nodes for search
-    nodes = graph.G.nodes()
-
-    #loops through every starting node and enters a recursive function to find subgraphs for each
-    nodeVisited = set()
-    for node in nodes:
-        #neighbors is a set so that adding new values in the future will be easier
-        neighborSet = set(graph.getRightNeighbors(node))
-        #creates the start of a subgraph
-        nodeList = [node]
-        nodeVisited.add(node)
-        esu_recurse(graph, size, neighborSet, nodeList, subgraphList, nodeVisited)
-
-
-    return subgraphList
-
-
-def esu_recurse(graph: gu.Graph, size: int, neighbors: set,
-                nodeList: list, subgraphList: list, nodesVisited: set):
-
-    #if subgraph is complete
-    if size == 1:
-        subgraphList.append(graph.G.subgraph(nodeList.copy()))
-        return
-
-    #checks if there are no more neighbors to pull from
-    elif len(neighbors) == 0:
-        return
-
-    #recurses for every neighbor
-    for node in neighbors:
-        #add node to the current subgraph list
-        nodeList.append(node)
-        nodesVisited.add(node)
-        nextNeighbors = set()
-
-        #only adds nodes that have not been visited to the next neighbors list
-        for neighbor in neighbors:
-            if neighbor not in nodesVisited:
-                nextNeighbors.add(neighbor)
-        for neighbor in graph.G.neighbors(node):
-            if neighbor not in nodesVisited:
-                nextNeighbors.add(neighbor)
-
-        #sends the neighbors list for the next node to the recursion
-        esu_recurse(graph, size-1, nextNeighbors, nodeList, subgraphList, nodesVisited)
-
-        #this removes the previously searched node from the current subgraph list
-        if len(nodeList) > 0:
-            nodeList.pop()
-
-    #if the nodes been visited, it is removed from the neighbor set
-    for node in neighbors:
-        nodesVisited.discard(node)
+This class implements the ESU algorithm.
+The class can identify subgraphs of specified size and return them for further\
+    analysis or visualization.
 
 """
-def esuGraph(graph: gu.Graph, size: int):
-    motifNodes = esu(graph, size)
-    for nodes in motifNodes:
-        Motif(nodes, graph)
-"""
+
+import networkx as nx
+
+
+class ESU:
+    def __init__(self, G: nx.Graph):
+        self.G = G
+
+    def enumerate_subgraphs(self, size: int):
+        """
+        Enumerates all unique subgraphs of a given motif size from the input\
+                graph using the ESU algorithm.
+        Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
+        """
+        subgraph_list = []
+        nodes = self.G.nodes()
+        node_visited = set()
+
+        for node in nodes:
+            neighbor_set = set(self.get_right_neighbors(node))
+            node_list = [node]
+            node_visited.add(node)
+            self.esu_recursive_helper(size, neighbor_set, node_list, \
+                    subgraph_list, node_visited)
+
+        return subgraph_list
+
+    def esu_recursive_helper(self, size: int, neighbors: set, node_list: list, subgraph_list: list, nodes_visited: set):
+        if size == 1:
+            subgraph_list.append(self.G.subgraph(node_list.copy()))
+            return
+
+        if len(neighbors) == 0:
+            return
+
+        for node in neighbors:
+            node_list.append(node)
+            nodes_visited.add(node)
+            next_neighbors = set()
+
+            for neighbor in neighbors:
+                if neighbor not in nodes_visited:
+                    next_neighbors.add(neighbor)
+            for neighbor in self.G.neighbors(node):
+                if neighbor not in nodes_visited:
+                    next_neighbors.add(neighbor)
+
+            self.esu_recursive_helper(size - 1, next_neighbors, node_list, subgraph_list, nodes_visited)
+
+            if len(node_list) > 0:
+                node_list.pop()
+
+        for node in neighbors:
+            nodes_visited.discard(node)
+
+    def get_right_neighbors(self, node):
+        right_hand_neighbors = []
+        nodes_list = list(self.G.nodes)
+        node_index_in_g = nodes_list.index(node)
+
+        for i, n in enumerate(self.G):
+            if i > node_index_in_g and self.G.has_edge(node, n):
+                right_hand_neighbors.append(n)
+
+        return iter(right_hand_neighbors)

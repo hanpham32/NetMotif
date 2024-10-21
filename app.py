@@ -13,21 +13,26 @@ def form_callback():
     elif st.session_state['graph_type'] is None:
         st.warning("Please select a graph type.")
     else:
+        # create graph from file
         G = Graph()
         G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'])
 
+        # display graph properties
         graph_properties = G.graph_properties()
         st.write(f"Number of nodes: {graph_properties['Number of nodes']}")
         # st.write(f"Edges: {graph_properties['Edges']}")
         st.write(f"Number of edges: {graph_properties['Number of edges']}")
         st.write(f"Weight: {graph_properties['Weight']}")
-        esuList = esu.esu(G,3)
-        for subgraph in esuList:
-            esuGraph = Graph()
-            esuGraph.generate_graph(None, graph_type=st.session_state['graph_type'])
-            esuGraph.G = subgraph
-            esuGraph.draw(st.session_state["graph_type"])
-        G.draw(st.session_state["graph_type"])
+
+        # visualize the full graph if selected
+        if st.session_state['is_visualize_graph']:
+            st.markdown("### Full Graph Visualization")
+            G.draw_graph(st.session_state["graph_type"])
+
+        # Visualize subgraphs if selected
+        if st.session_state['is_visualize_subgraph']:
+            st.markdown("### Subgraph Visualization")
+            G.draw_subgraph(st.session_state["graph_type"])
 
 
 def main():
@@ -55,14 +60,33 @@ def main():
                 index=None,
                 options=["Directed", "Undirected"],
             )
-        with col2:
-            st.write(
-                "NOTE: Uploading more than 1000 nodes might consume more processing time."
+
+            motif_size = st.number_input("Size of motif")
+
+            nemo_count_type = st.radio(
+                "Nemo Data Options",
+                key="nemo_option",
+                index=None,
+                options=["NemoCount", "NemoProfile", "NemoCollect"],
             )
+
+        with col2:
+            st.write("NOTE: Uploading more than 1000 nodes might consume more processing time.")
+            st.write("Visualize Options:")
+            is_visualize_graph = st.checkbox("Visualize graph")
+            is_visualize_subgraph = st.checkbox("Visualize subgraph")
 
         submitted = st.form_submit_button(label="Submit")
 
     if submitted:
+        st.session_state['is_visualize_graph'] = False
+        st.session_state['is_visualize_subgraph'] = False
+
+        if is_visualize_graph:
+            st.session_state['is_visualize_graph'] = True
+        if is_visualize_subgraph:
+            st.session_state['is_visualize_subgraph'] = True
+
         st.session_state['graph_type'] = graph_type
         st.session_state['uploaded_file'] = uploaded_file
         form_callback()
@@ -70,7 +94,7 @@ def main():
     [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/hanpham32/NetMotif) 
 
     '''
-    st.markdown("<br>",unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
