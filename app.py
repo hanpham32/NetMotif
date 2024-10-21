@@ -10,29 +10,32 @@ def form_callback():
 
     if st.session_state['uploaded_file'] is None:
         st.warning("Please upload a file.")
-    elif st.session_state['graph_type'] is None:
+        return
+
+    if st.session_state['graph_type'] is None:
         st.warning("Please select a graph type.")
-    else:
-        # create graph from file
-        G = Graph()
-        G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'])
+        return
 
-        # display graph properties
-        graph_properties = G.graph_properties()
-        st.write(f"Number of nodes: {graph_properties['Number of nodes']}")
-        # st.write(f"Edges: {graph_properties['Edges']}")
-        st.write(f"Number of edges: {graph_properties['Number of edges']}")
-        st.write(f"Weight: {graph_properties['Weight']}")
+    # create graph from file
+    G = Graph()
+    G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'])
 
-        # visualize the full graph if selected
-        if st.session_state['is_visualize_graph']:
-            st.markdown("### Full Graph Visualization")
-            G.draw_graph(st.session_state["graph_type"])
+    # display graph properties
+    graph_properties = G.graph_properties()
+    st.write(f"Number of nodes: {graph_properties['Number of nodes']}")
+    # st.write(f"Edges: {graph_properties['Edges']}")
+    st.write(f"Number of edges: {graph_properties['Number of edges']}")
+    st.write(f"Weight: {graph_properties['Weight']}")
 
-        # Visualize subgraphs if selected
-        if st.session_state['is_visualize_subgraph']:
-            st.markdown("### Subgraph Visualization")
-            G.draw_subgraph(st.session_state["graph_type"])
+    # visualize the full graph if selected
+    if st.session_state['is_visualize_graph']:
+        st.markdown("### Full Graph Visualization")
+        G.draw_graph(st.session_state["graph_type"])
+
+    # Visualize subgraphs if selected
+    if st.session_state['is_visualize_subgraph']:
+        st.markdown("### Subgraph Visualization")
+        G.draw_subgraph(st.session_state["graph_type"], st.session_state["motif_size"])
 
 
 def main():
@@ -61,7 +64,7 @@ def main():
                 options=["Directed", "Undirected"],
             )
 
-            motif_size = st.number_input("Size of motif")
+            motif_size = st.number_input("Size of motif", value=3, placeholder="Input motif size...", min_value=1, max_value=5)
 
             nemo_count_type = st.radio(
                 "Nemo Data Options",
@@ -89,6 +92,7 @@ def main():
 
         st.session_state['graph_type'] = graph_type
         st.session_state['uploaded_file'] = uploaded_file
+        st.session_state['motif_size'] = motif_size
         form_callback()
     '''
     [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/hanpham32/NetMotif) 

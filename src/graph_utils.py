@@ -66,10 +66,10 @@ class Graph:
 
         components.html(html, height=1000, scrolling=True)
 
-    def draw_subgraph(self, graph_type):
+    def draw_subgraph(self, graph_type: str, motif_size: int):
         output_dir = "drawings/subgraphs"
         esu = ESU(self.G)
-        esu_list = esu.enumerate_subgraphs(3)  # FIXME: 3 is default motif size
+        esu_list = esu.enumerate_subgraphs(motif_size)  # FIXME: 3 is default motif size
 
         for i, subgraph in enumerate(esu_list):
             if graph_type == "Directed":
