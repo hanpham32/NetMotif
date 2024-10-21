@@ -28,8 +28,7 @@ class ESU:
             neighbor_set = set(self.get_right_neighbors(node))
             node_list = [node]
             node_visited.add(node)
-            self.esu_recursive_helper(size, neighbor_set, node_list, \
-                    subgraph_list, node_visited)
+            self.esu_recursive_helper(size, neighbor_set, node_list, subgraph_list, node_visited)
 
         return subgraph_list
 
