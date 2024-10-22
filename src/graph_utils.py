@@ -61,6 +61,10 @@ class Graph:
 
         # Render the graph to an HTML file
         file_name = os.path.join(output_dir, 'nx.html')
+
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
         nt.write_html(file_name, open_browser=False)
         with open(file_name, "r") as f:
             html = f.read()
@@ -80,6 +84,10 @@ class Graph:
 
             nt.from_nx(subgraph)
             file_name = os.path.join(output_dir, f'nx_subgraph_{i}.html')
+
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+
             nt.write_html(file_name, open_browser=False)
 
             with open(file_name, "r") as f:
