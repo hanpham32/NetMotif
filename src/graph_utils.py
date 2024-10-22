@@ -22,9 +22,10 @@ class Graph:
     def generate_graph(self, file, graph_type):
         if graph_type == "Undirected":
             self.G = nx.Graph()
+            self.graph_type = "Undirected"
         elif graph_type == "Directed":
             self.G = nx.DiGraph()
-
+            self.graph_type = "Directed"
         if file is not None:
             bytes_data = StringIO(file.getvalue().decode("utf-8"))
             data = bytes_data.readlines()
