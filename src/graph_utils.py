@@ -18,6 +18,7 @@ from src.esu import ESU
 class Graph:
     def __init__(self):
         self.G = None
+        self.graph_type = None
 
     def generate_graph(self, file, graph_type):
         if graph_type == "Undirected":
