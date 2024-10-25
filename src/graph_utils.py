@@ -13,6 +13,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
 from src.esu import ESU
+from src.labeling import *
+
 from src.random_graph import *
 
 class Graph:
@@ -78,13 +80,13 @@ class Graph:
 
         components.html(html, height=1000, scrolling=True)
 
-    def draw_subgraph(self, graph_type: str, motif_size: int):
+    def draw_subgraph(self, motif_size: int):
         output_dir = "drawings/subgraphs"
         esu = ESU(self.G)
         esu_list = esu.enumerate_subgraphs(motif_size)  # FIXME: 3 is default motif size
 
         for i, subgraph in enumerate(esu_list):
-            if graph_type == "Directed":
+            if self.graph_type == "Directed":
                 nt = Network(directed=True)
             else:
                 nt = Network()
@@ -100,6 +102,6 @@ class Graph:
             with open(file_name, "r") as f:
                 html = f.read()
 
-            st.markdown(f"### Subgraph {i + 1}")
+            st.markdown(f"### Subgraph {labelGraph(subgraph, self.graph_type)}")
             components.html(html, height=600, scrolling=True)
         return
