@@ -18,9 +18,9 @@ from src.labeling import *
 from src.random_graph import *
 
 class Graph:
-    def __init__(self, input_graph = None):
+    def __init__(self, input_graph = None, input_graph_type = None):
         self.G = input_graph
-        self.graph_type = None
+        self.graph_type = input_graph_type
 
     def generate_graph(self, file, graph_type):
         if graph_type == "Undirected":
@@ -55,7 +55,7 @@ class Graph:
          #imported generate_random_graphs
         random_graphs = generate_random_graphs(self.G, number_of_graphs, self.graph_type)
         for graph in random_graphs:
-            Graph(graph).draw_graph()
+            Graph(graph, self.graph_type).draw_graph()
 
     def draw_graph(self):
         output_dir = "drawings"
