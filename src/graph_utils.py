@@ -13,11 +13,11 @@ import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
 from src.esu import ESU
-
+from src.random_graph import *
 
 class Graph:
-    def __init__(self):
-        self.G = None
+    def __init__(self, input_graph = None):
+        self.G = input_graph
         self.graph_type = None
 
     def generate_graph(self, file, graph_type):
@@ -49,9 +49,15 @@ class Graph:
             "Weight": self.G.size(),
         }
 
-    def draw_graph(self, graph_type):
+    def generate_random_graphs(self, number_of_graphs):
+         #imported generate_random_graphs
+        random_graphs = generate_random_graphs(self.G, number_of_graphs, self.graph_type)
+        for graph in random_graphs:
+            Graph(graph).draw_graph()
+
+    def draw_graph(self):
         output_dir = "drawings"
-        if graph_type == "Directed":
+        if self.graph_type == "Directed":
             nt = Network(directed=True)
         else:
             nt = Network()
