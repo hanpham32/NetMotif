@@ -7,14 +7,16 @@ The class can identify subgraphs of specified size and return them for further\
 
 """
 
+from typing import List
 import networkx as nx
+from networkx import Graph
 
 
 class ESU:
     def __init__(self, G: nx.Graph):
         self.G = G
 
-    def enumerate_subgraphs(self, size: int):
+    def enumerate_subgraphs(self, size: int) -> List[Graph]:
         """
         Enumerates all unique subgraphs of a given motif size from the input\
                 graph using the ESU algorithm.
@@ -62,7 +64,7 @@ class ESU:
 
     def get_right_neighbors(self, node):
         right_hand_neighbors = []
-        nodes_list = list(self.G.nodes)
+        nodes_list = list(self.G.nodes)  # list here?
         node_index_in_g = nodes_list.index(node)
 
         for i, n in enumerate(self.G):
