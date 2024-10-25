@@ -1,6 +1,4 @@
 import networkx as nx
-from typing import List
-from networkx import Graph
 
 
 def g6_label(graph: nx.Graph) -> str:
@@ -85,10 +83,3 @@ def label_graph(networkx_graph, graph_type):  # networkx di or undi graph
         return g6_label(networkx_graph)
     if graph_type == "Directed":
         return d6_label(networkx_graph)
-
-
-def export_labels(esu_list: List[Graph]):
-    """
-    Takes in esu subgraph list and output the labels into a .txt file.
-    """
-    return

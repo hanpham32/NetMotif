@@ -1,7 +1,6 @@
 import streamlit as st
 from src.graph_utils import Graph
-import src.esu as esu
-import src.labeling as label
+from src.labeling import *
 
 
 def form_callback():
@@ -65,7 +64,9 @@ def main():
                 options=["Directed", "Undirected"],
             )
 
-            motif_size = st.number_input("Size of motif", value=3, placeholder="Input motif size...", min_value=1, max_value=5)
+            motif_size = st.number_input(
+                "Size of motif", value=3, placeholder="Input motif size...", min_value=1, max_value=5
+            )
 
             nemo_count_type = st.radio(
                 "Nemo Data Options",

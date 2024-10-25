@@ -15,6 +15,7 @@ from networkx import Graph
 class ESU:
     def __init__(self, G: nx.Graph):
         self.G = G
+        self.subgraph_list: List[Graph] = []
 
     def enumerate_subgraphs(self, size: int) -> List[Graph]:
         """
@@ -22,7 +23,7 @@ class ESU:
                 graph using the ESU algorithm.
         Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
         """
-        subgraph_list = []
+        self.subgraph_list = []
         nodes = self.G.nodes()
         node_visited = set()
 
@@ -30,9 +31,9 @@ class ESU:
             neighbor_set = set(self.get_right_neighbors(node))
             node_list = [node]
             node_visited.add(node)
-            self.esu_recursive_helper(size, neighbor_set, node_list, subgraph_list, node_visited)
+            self.esu_recursive_helper(size, neighbor_set, node_list, self.subgraph_list, node_visited)
 
-        return subgraph_list
+        return self.subgraph_list
 
     def esu_recursive_helper(self, size: int, neighbors: set, node_list: list, subgraph_list: list, nodes_visited: set):
         if size == 1:
@@ -64,7 +65,7 @@ class ESU:
 
     def get_right_neighbors(self, node):
         right_hand_neighbors = []
-        nodes_list = list(self.G.nodes)  # list here?
+        nodes_list = list(self.G.nodes)
         node_index_in_g = nodes_list.index(node)
 
         for i, n in enumerate(self.G):

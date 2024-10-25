@@ -76,7 +76,8 @@ class Graph:
     def draw_subgraph(self, motif_size: int):
         output_dir = "drawings/subgraphs"
         esu = ESU(self.G)
-        esu_list = esu.enumerate_subgraphs(motif_size)  # FIXME: 3 is default motif size
+        esu_list = esu.enumerate_subgraphs(motif_size)
+        self.export_labels(esu)
 
         for i, subgraph in enumerate(esu_list):
             if self.graph_type == "Directed":
@@ -97,4 +98,23 @@ class Graph:
 
             st.markdown(f"### Subgraph {label_graph(subgraph, self.graph_type)}")
             components.html(html, height=600, scrolling=True)
+        return
+
+    def export_labels(self, esu: ESU):
+        """
+        Takes in esu subgraph list and output the labels into a .txt file.
+        """
+        output_dir = "out"
+        file_name = os.path.join(output_dir, 'labels.txt')
+
+        # Ensure output folder exists
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        with open(file_name, "w") as file:
+            print(esu.subgraph_list)
+            for subgraph in esu.subgraph_list:
+                label = label_graph(subgraph, self.graph_type)
+                label = label + '\n'
+                file.writelines(label)
         return
