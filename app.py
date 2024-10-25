@@ -36,17 +36,8 @@ def form_callback():
     # Visualize subgraphs if selected
     if st.session_state['is_visualize_subgraph']:
         st.markdown("### Subgraph Visualization")
-        G.draw_subgraph(st.session_state["motif_size"])
-
-    # visualize the full graph if selected
-    if st.session_state['is_visualize_graph']:
-        st.markdown("### Full Graph Visualization")
-        G.draw_graph(st.session_state["graph_type"])
-
-    # Visualize subgraphs if selected
-    if st.session_state['is_visualize_subgraph']:
-        st.markdown("### Subgraph Visualization")
         G.draw_subgraph(st.session_state["graph_type"], st.session_state["motif_size"])
+
 
 def main():
     # Initialize global session state for user form submission

@@ -11,7 +11,7 @@ import networkx as nx
 
 
 class ESU:
-    def __init__(self, G: nx.Graph): #this should not be a nx undirected graph
+    def __init__(self, G: nx.Graph):
         self.G = G
 
     def enumerate_subgraphs(self, size: int):
