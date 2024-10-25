@@ -38,7 +38,7 @@ def form_callback():
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph(st.session_state["motif_size"])
 
-    G.generate_random_graphs(2)
+    #G.generate_random_graphs(2)
 
 
 def main():
