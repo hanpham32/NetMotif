@@ -83,7 +83,7 @@ class Graph:
     def draw_subgraph(self, motif_size: int):
         output_dir = "drawings/subgraphs"
         esu = ESU(self.G)
-        esu_list = esu.enumerate_subgraphs(motif_size)  # FIXME: 3 is default motif size
+        esu_list = esu.enumerate_subgraphs(motif_size)
 
         for i, subgraph in enumerate(esu_list):
             if self.graph_type == "Directed":
@@ -102,6 +102,6 @@ class Graph:
             with open(file_name, "r") as f:
                 html = f.read()
 
-            st.markdown(f"### Subgraph {labelGraph(subgraph, self.graph_type)}")
+            st.markdown(f"### Subgraph {i}: {labelGraph(subgraph, self.graph_type)}")
             components.html(html, height=600, scrolling=True)
         return
