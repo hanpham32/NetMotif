@@ -26,17 +26,17 @@ class ESU:
         nodes = self.G.nodes()
         node_visited = set()
 
-        sample_neighbors = self.eliminate_percentage(nodes, sample_probability[0])
+        sample_neighbors = self.eliminate_percentage(list(nodes), sample_probability[0])
 
         for node in sample_neighbors:
             neighbor_set = set(self.get_right_neighbors(node))
             node_list = [node]
             node_visited.add(node)
-            self.esu_recursive_helper(size, neighbor_set, node_list, subgraph_list, node_visited)
+            self.esu_recursive_helper(size, neighbor_set, node_list, subgraph_list, node_visited, sample_probability)
 
         return subgraph_list
 
-    def esu_recursive_helper(self, size: int, neighbors: set, node_list: list, subgraph_list: list, nodes_visited: set,  sample_probability: list[float]):
+    def esu_recursive_helper(self, size: int, neighbors: set, node_list: list, subgraph_list: list, nodes_visited: set, sample_probability: list[float]):
         if size == 1:
             subgraph_list.append(self.G.subgraph(node_list.copy()))
             return
@@ -44,7 +44,7 @@ class ESU:
         if len(neighbors) == 0:
             return
 
-        sample_neighbors = self.eliminate_percentage(neighbors, sample_probability[len(node_list)])
+        sample_neighbors = self.eliminate_percentage(list(neighbors), sample_probability[len(node_list)])
 
         for node in sample_neighbors:
             node_list.append(node)
@@ -58,7 +58,7 @@ class ESU:
                 if neighbor not in nodes_visited:
                     next_neighbors.add(neighbor)
 
-            self.esu_recursive_helper(size - 1, next_neighbors, node_list, subgraph_list, nodes_visited)
+            self.esu_recursive_helper(size - 1, next_neighbors, node_list, subgraph_list, nodes_visited, sample_probability)
 
             if len(node_list) > 0:
                 node_list.pop()
@@ -78,13 +78,14 @@ class ESU:
         return iter(right_hand_neighbors)
 
     #Removes a given percentage of elements from a list randomly.
-    def eliminate_percentage(set: set, probability: float):
-        num_to_remove = int(len(set) * probability)
-        indices_to_remove = random.sample(range(len(set)), num_to_remove)
+    #KEEPS PRECENTAGE INPUT. REMOVES 1 - PRECENTAGE
+    def eliminate_percentage(self, collection, probability: float):
+        num_to_remove = int(len(collection) * (1-probability))
+        indices_to_remove = random.sample(range(len(collection)), num_to_remove)
 
         # Remove elements in reverse order to avoid index issues
         for i in sorted(indices_to_remove, reverse=True):
-            set.pop(i)
+            collection.pop(i)
 
-        return set
+        return collection
 
