@@ -43,7 +43,7 @@ class Graph:
 
         # enumerate subgraphs
         self.esu = ESU(self.G)
-        self.esu = self.esu.enumerate_subgraphs(motif_size)
+        self.esu.enumerate_subgraphs(motif_size)
 
     def graph_properties(self):
         if self.G is None:

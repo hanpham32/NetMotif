@@ -33,8 +33,6 @@ class ESU:
             node_visited.add(node)
             self.esu_recursive_helper(size, neighbor_set, node_list, self.subgraph_list, node_visited)
 
-        return self.subgraph_list
-
     def esu_recursive_helper(self, size: int, neighbors: set, node_list: list, subgraph_list: list, nodes_visited: set):
         if size == 1:
             subgraph_list.append(self.G.subgraph(node_list.copy()))
