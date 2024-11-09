@@ -21,8 +21,11 @@ class Graph:
     def __init__(self):
         self.G = None
         self.graph_type = None
+        self.esu = None
+        self.motif_size = None
 
-    def generate_graph(self, file, graph_type):
+    def generate_graph(self, file, graph_type, motif_size):
+        self.motif_size = motif_size
         if graph_type == "Undirected":
             self.G = nx.Graph()
             self.graph_type = "Undirected"
@@ -37,6 +40,9 @@ class Graph:
                 nodes = line.strip().split()
                 if len(nodes) == 2:
                     self.G.add_edge(nodes[0], nodes[1])
+
+        self.esu = ESU(self.G)
+        self.esu = self.esu.enumerate_subgraphs(motif_size)
 
         return self.G
 
@@ -76,11 +82,8 @@ class Graph:
 
     def draw_subgraph(self, motif_size: int):
         output_dir = "drawings/subgraphs"
-        esu = ESU(self.G)
-        esu_list = esu.enumerate_subgraphs(motif_size)
-        self.export_labels(esu)
 
-        for i, subgraph in enumerate(esu_list):
+        for i, subgraph in enumerate(self.esu.get_subgraph_list()):
             if self.graph_type == "Directed":
                 nt = Network(directed=True)
             else:
@@ -101,11 +104,10 @@ class Graph:
             components.html(html, height=600, scrolling=True)
         return
 
-    def export_labels(self, esu: ESU):
+    def print_labelg(self):
         """
         Takes in esu subgraph list and output the labels into a .txt file.
         """
-        st.write("Exporting_label...")
         output_dir = "out"
         labels_file_output = os.path.join(output_dir, 'labels.txt')
 
@@ -113,13 +115,15 @@ class Graph:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
+        # Convert to graph6 type
         with open(labels_file_output, "w") as file:
-            # print(esu.subgraph_list)
-            for subgraph in esu.subgraph_list:
+            for subgraph in self.esu.get_subgraph_list():
                 label = label_graph(subgraph, self.graph_type)
                 label = label + '\n'
                 file.writelines(label)
+            st.write("finished writing graph6 labels")
 
+        # Convert to labelg
         label_g = "./labelg"  # Name of the executable
 
         # Check if the labelg executable exists in the root directory
@@ -131,10 +135,13 @@ class Graph:
 
         try:
             with open(labels_file_output, "r") as file:
-                # Clear previous contents of the output file
+                st.write("Starting subprocess...")
+
+                # Clear previous contents of the labelg output file
                 labelg_output_file = os.path.join(output_dir, 'labelg_output.txt')
                 with open(labelg_output_file, "w") as labelg_file:
-                    labelg_file.write("")  # Clear any existing content
+                    labelg_file.write("")
+                    st.write("finished clearing labelg_file")
 
                 for line in file:
                     line = line.strip()
@@ -144,16 +151,16 @@ class Graph:
 
                     if result.returncode == 0:
                         labelg_output = result.stdout
-
                         labelg_output_file = os.path.join(output_dir, 'labelg_output.txt')
                         with open(labelg_output_file, "a") as labelg_file:
                             labelg_file.write(labelg_output + "\n")
+                        st.write(line, labelg_output)
                     else:
                         st.write("Subprocess failed with return code:", result.returncode)
                         st.error(result.stderr)
             # After all lines are processed, read and display the entire output file
             with open(labelg_output_file, "r") as labelg_file:
-                st.subheader("Final Labelg Output")
+                st.subheader("Labelg Output")
                 st.text(labelg_file.read())  # Display the entire file content
 
         except subprocess.CalledProcessError as e:

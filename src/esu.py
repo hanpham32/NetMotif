@@ -73,3 +73,6 @@ class ESU:
                 right_hand_neighbors.append(n)
 
         return iter(right_hand_neighbors)
+
+    def get_subgraph_list(self):
+        return self.subgraph_list

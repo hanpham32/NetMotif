@@ -18,7 +18,7 @@ def form_callback():
 
     # create graph from file
     G = Graph()
-    G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'])
+    G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'], motif_size=st.session_state['motif_size'])
 
     # display graph properties
     graph_properties = G.graph_properties()
@@ -26,6 +26,9 @@ def form_callback():
     # st.write(f"Edges: {graph_properties['Edges']}")
     st.write(f"Number of edges: {graph_properties['Number of edges']}")
     st.write(f"Weight: {graph_properties['Weight']}")
+
+    # write labels
+    G.print_labelg()
 
     # visualize the full graph if selected
     if st.session_state['is_visualize_graph']:
@@ -47,7 +50,6 @@ def main():
     if 'prev_uploaded_file' not in st.session_state:
         st.session_state['prev_uploaded_file'] = None
 
-    st.write("11/08/24")
     uploaded_file = st.file_uploader("Upload a file")
     if uploaded_file:
         if uploaded_file != st.session_state['prev_uploaded_file']:
