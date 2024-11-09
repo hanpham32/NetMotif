@@ -16,6 +16,7 @@ from src.esu import ESU
 import src.labeling as labeling
 import subprocess
 
+from src.random_graph import *
 
 class Graph:
     def __init__(self, graph_type, input, motif_size):
@@ -55,9 +56,15 @@ class Graph:
             "Weight": self.G.size(),
         }
 
-    def draw_graph(self, graph_type):
+    def generate_random_graphs(self, number_of_graphs):
+         #imported generate_random_graphs
+        random_graphs = generate_random_graphs(self.G, number_of_graphs, self.graph_type)
+        for graph in random_graphs:
+            Graph(graph).draw_graph()
+
+    def draw_graph(self):
         output_dir = "drawings"
-        if graph_type == "Directed":
+        if self.graph_type == "Directed":
             nt = Network(directed=True)
         else:
             nt = Network()
