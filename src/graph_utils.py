@@ -14,6 +14,7 @@ import streamlit.components.v1 as components
 from pyvis.network import Network
 from src.esu import ESU
 from src.labeling import *
+import subprocess
 
 
 class Graph:
@@ -104,17 +105,57 @@ class Graph:
         """
         Takes in esu subgraph list and output the labels into a .txt file.
         """
+        st.write("Exporting_label...")
         output_dir = "out"
-        file_name = os.path.join(output_dir, 'labels.txt')
+        labels_file_output = os.path.join(output_dir, 'labels.txt')
 
         # Ensure output folder exists
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        with open(file_name, "w") as file:
-            print(esu.subgraph_list)
+        with open(labels_file_output, "w") as file:
+            # print(esu.subgraph_list)
             for subgraph in esu.subgraph_list:
                 label = label_graph(subgraph, self.graph_type)
                 label = label + '\n'
                 file.writelines(label)
-        return
+
+        label_g = "./labelg"  # Name of the executable
+
+        # Check if the labelg executable exists in the root directory
+        if os.path.isfile(label_g):
+            os.chmod(label_g, 0o755)  # Ensure it is executable
+        else:
+            st.write("labelg exists: False")
+            return  # Exit if labelg doesn't exist
+
+        try:
+            with open(labels_file_output, "r") as file:
+                # Clear previous contents of the output file
+                labelg_output_file = os.path.join(output_dir, 'labelg_output.txt')
+                with open(labelg_output_file, "w") as labelg_file:
+                    labelg_file.write("")  # Clear any existing content
+
+                for line in file:
+                    line = line.strip()
+                    if self.graph_type == "Directed":
+                        line = "&" + line
+                    result = subprocess.run([label_g], input=line + "\n", text=True, capture_output=True, check=True)
+
+                    if result.returncode == 0:
+                        labelg_output = result.stdout
+
+                        labelg_output_file = os.path.join(output_dir, 'labelg_output.txt')
+                        with open(labelg_output_file, "a") as labelg_file:
+                            labelg_file.write(labelg_output + "\n")
+                    else:
+                        st.write("Subprocess failed with return code:", result.returncode)
+                        st.error(result.stderr)
+            # After all lines are processed, read and display the entire output file
+            with open(labelg_output_file, "r") as labelg_file:
+                st.subheader("Final Labelg Output")
+                st.text(labelg_file.read())  # Display the entire file content
+
+        except subprocess.CalledProcessError as e:
+            st.write("error running labelg:")
+            st.write(e.stderr)
