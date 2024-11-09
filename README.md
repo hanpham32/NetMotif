@@ -2,6 +2,8 @@
 
 ## Local Development Setup
 
+Note: This application is currently supported only on Linux systems. Please ensure you are using a Linux environment to run the app.
+
 Follow the steps below to set up the project for local development using [uv](https://github.com/astral-sh/uv):
 
 ### 1. Clone the Repository
