@@ -24,7 +24,7 @@ def form_callback():
     )
 
     # display graph properties
-    graph_properties = G.graph_properties()
+    graph_properties = G.get_graph_properties()
     st.write(f"Number of nodes: {graph_properties['Number of nodes']}")
     # st.write(f"Edges: {graph_properties['Edges']}")
     st.write(f"Number of edges: {graph_properties['Number of edges']}")

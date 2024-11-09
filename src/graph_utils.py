@@ -13,7 +13,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
 from src.esu import ESU
-from src.labeling import *
+import src.labeling as labeling
 import subprocess
 
 
@@ -44,7 +44,7 @@ class Graph:
         # enumerate subgraphs
         self.esu = ESU(self.G, motif_size)
 
-    def graph_properties(self):
+    def get_graph_properties(self):
         if self.G is None:
             return {}
 
@@ -69,6 +69,7 @@ class Graph:
         # Render the graph to an HTML file
         file_name = os.path.join(output_dir, 'nx.html')
 
+        # make sure output folder for the drawings exists
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
@@ -79,7 +80,10 @@ class Graph:
         components.html(html, height=1000, scrolling=True)
 
     def draw_subgraph(self, motif_size: int):
-        output_dir = "drawings/subgraphs"
+        output_dir = "drawings/subgraphs"  # output directory
+        # make sure output folder for the drawings exists
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
         for i, subgraph in enumerate(self.esu.get_subgraph_list()):
             if self.graph_type == "Directed":
@@ -98,7 +102,7 @@ class Graph:
             with open(file_name, "r") as f:
                 html = f.read()
 
-            st.markdown(f"### Subgraph {label_graph(subgraph, self.graph_type)}")
+            st.markdown(f"### Subgraph {labeling.label_graph(subgraph, self.graph_type)}")
             components.html(html, height=600, scrolling=True)
         return
 
@@ -116,7 +120,7 @@ class Graph:
         # Convert to graph6 type
         with open(labels_file_output, "w") as file:
             for subgraph in self.esu.get_subgraph_list():
-                label = label_graph(subgraph, self.graph_type)
+                label = labeling.label_graph(subgraph, self.graph_type)
                 label = label + '\n'
                 file.writelines(label)
 
