@@ -120,7 +120,6 @@ class Graph:
                 label = label_graph(subgraph, self.graph_type)
                 label = label + '\n'
                 file.writelines(label)
-            st.write("finished writing graph6 labels")
 
         # Convert to labelg
         label_g = "./labelg"  # Name of the executable
@@ -130,17 +129,15 @@ class Graph:
             os.chmod(label_g, 0o755)  # Ensure it is executable
         else:
             st.write("labelg exists: False")
-            return  # Exit if labelg doesn't exist
+            return
 
         try:
             with open(labels_file_output, "r") as file:
-                st.write("Starting subprocess...")
 
                 # Clear previous contents of the labelg output file
                 labelg_output_file = os.path.join(output_dir, 'labelg_output.txt')
                 with open(labelg_output_file, "w") as labelg_file:
                     labelg_file.write("")
-                    st.write("finished clearing labelg_file")
 
                 for line in file:
                     line = line.strip()
@@ -153,14 +150,14 @@ class Graph:
                         labelg_output_file = os.path.join(output_dir, 'labelg_output.txt')
                         with open(labelg_output_file, "a") as labelg_file:
                             labelg_file.write(labelg_output + "\n")
-                        st.write(line, labelg_output)
                     else:
                         st.write("Subprocess failed with return code:", result.returncode)
                         st.error(result.stderr)
-            # After all lines are processed, read and display the entire output file
+
+            # after running all the inputs through labelg program, display the entire file
             with open(labelg_output_file, "r") as labelg_file:
                 st.subheader("Labelg Output")
-                st.text(labelg_file.read())  # Display the entire file content
+                st.text(labelg_file.read())
 
         except subprocess.CalledProcessError as e:
             st.write("error running labelg:")
