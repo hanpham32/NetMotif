@@ -18,22 +18,22 @@ import subprocess
 
 
 class Graph:
-    def __init__(self):
-        self.G = None
-        self.graph_type = None
-        self.esu = None
-        self.motif_size = None
-
-    def generate_graph(self, file, graph_type, motif_size):
+    def __init__(self, graph_type, input, motif_size):
+        self.graph_type = graph_type
+        self.file = input
         self.motif_size = motif_size
+        self.G = None
+        self.esu = None
+
+        # build graph
         if graph_type == "Undirected":
             self.G = nx.Graph()
             self.graph_type = "Undirected"
         elif graph_type == "Directed":
             self.G = nx.DiGraph()
             self.graph_type = "Directed"
-        if file is not None:
-            bytes_data = StringIO(file.getvalue().decode("utf-8"))
+        if input is not None:
+            bytes_data = StringIO(input.getvalue().decode("utf-8"))
             data = bytes_data.readlines()
 
             for line in data:
@@ -41,10 +41,9 @@ class Graph:
                 if len(nodes) == 2:
                     self.G.add_edge(nodes[0], nodes[1])
 
+        # enumerate subgraphs
         self.esu = ESU(self.G)
         self.esu = self.esu.enumerate_subgraphs(motif_size)
-
-        return self.G
 
     def graph_properties(self):
         if self.G is None:

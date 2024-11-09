@@ -17,8 +17,11 @@ def form_callback():
         return
 
     # create graph from file
-    G = Graph()
-    G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'], motif_size=st.session_state['motif_size'])
+    G = Graph(
+            graph_type=st.session_state['graph_type'], 
+            input=st.session_state['uploaded_file'], 
+            motif_size=st.session_state['motif_size']
+    )
 
     # display graph properties
     graph_properties = G.graph_properties()
