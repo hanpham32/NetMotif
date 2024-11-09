@@ -5,22 +5,23 @@ This class implements the ESU algorithm.
 The class can identify subgraphs of specified size and return them for further\
     analysis or visualization.
 
+Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
 """
 
+from typing import List
 import networkx as nx
+from networkx import Graph
 
 
 class ESU:
-    def __init__(self, G: nx.Graph):
-        self.G = G
-
-    def enumerate_subgraphs(self, size: int):
+    def __init__(self, G: nx.Graph, size: int):
         """
         Enumerates all unique subgraphs of a given motif size from the input\
                 graph using the ESU algorithm.
-        Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
         """
-        subgraph_list = []
+        self.G = G
+        self.subgraph_list: List[Graph] = []
+        self.size = size
         nodes = self.G.nodes()
         node_visited = set()
 
@@ -28,9 +29,7 @@ class ESU:
             neighbor_set = set(self.get_right_neighbors(node))
             node_list = [node]
             node_visited.add(node)
-            self.esu_recursive_helper(size, neighbor_set, node_list, subgraph_list, node_visited)
-
-        return subgraph_list
+            self.esu_recursive_helper(size, neighbor_set, node_list, self.subgraph_list, node_visited)
 
     def esu_recursive_helper(self, size: int, neighbors: set, node_list: list, subgraph_list: list, nodes_visited: set):
         if size == 1:
@@ -70,3 +69,6 @@ class ESU:
                 right_hand_neighbors.append(n)
 
         return iter(right_hand_neighbors)
+
+    def get_subgraph_list(self):
+        return self.subgraph_list
