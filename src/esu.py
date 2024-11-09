@@ -5,6 +5,7 @@ This class implements the ESU algorithm.
 The class can identify subgraphs of specified size and return them for further\
     analysis or visualization.
 
+Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
 """
 
 from typing import List
@@ -13,17 +14,14 @@ from networkx import Graph
 
 
 class ESU:
-    def __init__(self, G: nx.Graph):
-        self.G = G
-        self.subgraph_list: List[Graph] = []
-
-    def enumerate_subgraphs(self, size: int) -> List[Graph]:
+    def __init__(self, G: nx.Graph, size: int):
         """
         Enumerates all unique subgraphs of a given motif size from the input\
                 graph using the ESU algorithm.
-        Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
         """
-        self.subgraph_list = []
+        self.G = G
+        self.subgraph_list: List[Graph] = []
+        self.size = size
         nodes = self.G.nodes()
         node_visited = set()
 

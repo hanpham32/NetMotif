@@ -42,8 +42,7 @@ class Graph:
                     self.G.add_edge(nodes[0], nodes[1])
 
         # enumerate subgraphs
-        self.esu = ESU(self.G)
-        self.esu.enumerate_subgraphs(motif_size)
+        self.esu = ESU(self.G, motif_size)
 
     def graph_properties(self):
         if self.G is None:
