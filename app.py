@@ -1,7 +1,6 @@
 import streamlit as st
 from src.graph_utils import Graph
-import src.esu as esu
-import src.labeling as label
+from src.labeling import *
 
 
 def form_callback():
@@ -18,15 +17,21 @@ def form_callback():
         return
 
     # create graph from file
-    G = Graph()
-    G.generate_graph(file=st.session_state['uploaded_file'], graph_type=st.session_state['graph_type'])
+    G = Graph(
+            graph_type=st.session_state['graph_type'], 
+            input=st.session_state['uploaded_file'], 
+            motif_size=st.session_state['motif_size']
+    )
 
     # display graph properties
-    graph_properties = G.graph_properties()
+    graph_properties = G.get_graph_properties()
     st.write(f"Number of nodes: {graph_properties['Number of nodes']}")
     # st.write(f"Edges: {graph_properties['Edges']}")
     st.write(f"Number of edges: {graph_properties['Number of edges']}")
     st.write(f"Weight: {graph_properties['Weight']}")
+
+    # write labels
+    G.print_labelg()
 
     # visualize the full graph if selected
     if st.session_state['is_visualize_graph']:
@@ -67,7 +72,9 @@ def main():
                 options=["Directed", "Undirected"],
             )
 
-            motif_size = st.number_input("Size of motif", value=3, placeholder="Input motif size...", min_value=1, max_value=5)
+            motif_size = st.number_input(
+                "Size of motif", value=3, placeholder="Input motif size...", min_value=1, max_value=5
+            )
 
             nemo_count_type = st.radio(
                 "Nemo Data Options",
