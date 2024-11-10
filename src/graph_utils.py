@@ -120,7 +120,7 @@ class Graph:
             with open(file_name, "r") as f:
                 html = f.read()
 
-            st.markdown(f"### Subgraph {labeling.label_graph(subgraph, self.graph_type)}")
+            st.markdown(f"### Subgraph {labeling.get_graph_label(subgraph, self.graph_type)}")
             components.html(html, height=600, scrolling=True)
         return
 
@@ -138,7 +138,7 @@ class Graph:
         # Convert to graph6 type
         with open(labels_file_output, "w") as file:
             for subgraph in self.esu.get_subgraph_list():
-                label = labeling.label_graph(subgraph, self.graph_type)
+                label = labeling.get_graph_label(subgraph, self.graph_type)
                 label = label + '\n'
                 file.writelines(label)
 
