@@ -62,12 +62,12 @@ class Graph:
             if self.graph_type == "Undirected":
                 degree_sequence = [d for _, d in self.G.degree()]
                 random_graph = nx.Graph(nx.configuration_model(degree_sequence))
-                random_graph = Graph(random_graph, self.graph_type)
+                random_graph = Graph(random_graph, graph_type=self.graph_type, motif_size=self.motif_size)
             elif self.graph_type == "Directed":
                 in_degree_sequence = [d for _, d in self.G.in_degree()]
                 out_degree_sequence = [d for _, d in self.G.out_degree()]
                 random_graph = nx.DiGraph(nx.directed_configuration_model(in_degree_sequence, out_degree_sequence))
-                random_graph = Graph(random_graph, self.graph_type)
+                random_graph = Graph(random_graph, graph_type=self.graph_type, motif_size=self.motif_size)
             random_graphs.append(random_graph)
         for graph in random_graphs:
             graph.draw_graph()
