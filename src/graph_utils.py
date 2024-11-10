@@ -6,6 +6,7 @@ This class is responsible for graph generation, visualization, and\
 
 """
 
+from typing import List
 import networkx as nx
 import os
 from io import StringIO
@@ -13,12 +14,11 @@ import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
 from src.esu import ESU
-from src.labeling import *
+import src.labeling as labeling
 
-from src.random_graph import *
 
 class Graph:
-    def __init__(self, input_graph = None, input_graph_type = None):
+    def __init__(self, input_graph=None, input_graph_type=None):
         self.G = input_graph
         self.graph_type = input_graph_type
 
@@ -51,11 +51,22 @@ class Graph:
             "Weight": self.G.size(),
         }
 
-    def generate_random_graphs(self, number_of_graphs):
-         #imported generate_random_graphs
-        random_graphs = generate_random_graphs(self.G, number_of_graphs, self.graph_type)
+    def generate_random_graphs(self, number_of_graphs) -> List['Graph']:
+        random_graphs: List['Graph'] = []
+        for i in range(number_of_graphs):
+            if self.graph_type == "Undirected":
+                degree_sequence = [d for _, d in self.G.degree()]
+                random_graph = nx.Graph(nx.configuration_model(degree_sequence))
+                random_graph = Graph(random_graph, self.graph_type)
+            elif self.graph_type == "Directed":
+                in_degree_sequence = [d for _, d in self.G.in_degree()]
+                out_degree_sequence = [d for _, d in self.G.out_degree()]
+                random_graph = nx.DiGraph(nx.directed_configuration_model(in_degree_sequence, out_degree_sequence))
+                random_graph = Graph(random_graph, self.graph_type)
+            random_graphs.append(random_graph)
         for graph in random_graphs:
-            Graph(graph, self.graph_type).draw_graph()
+            graph.draw_graph()
+        return random_graphs
 
     def draw_graph(self):
         output_dir = "drawings"
@@ -102,6 +113,6 @@ class Graph:
             with open(file_name, "r") as f:
                 html = f.read()
 
-            st.markdown(f"### Subgraph {labelGraph(subgraph, self.graph_type)}")
+            st.markdown(f"### Subgraph {labeling.labelGraph(subgraph, self.graph_type)}")
             components.html(html, height=600, scrolling=True)
         return
