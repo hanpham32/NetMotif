@@ -1,6 +1,5 @@
 import streamlit as st
 from src.graph_utils import Graph
-from src.labeling import *
 
 
 def form_callback():
