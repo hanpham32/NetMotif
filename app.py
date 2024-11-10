@@ -1,5 +1,6 @@
 import streamlit as st
 from src.graph_utils import Graph
+from src.types import GraphType
 
 
 def form_callback():
@@ -17,9 +18,9 @@ def form_callback():
 
     # create graph from file
     G = Graph(
-            graph_type=st.session_state['graph_type'], 
-            input=st.session_state['uploaded_file'], 
-            motif_size=st.session_state['motif_size']
+        graph_type=st.session_state['graph_type'],
+        input=st.session_state['uploaded_file'],
+        motif_size=st.session_state['motif_size'],
     )
 
     # display graph properties
@@ -68,7 +69,8 @@ def main():
                 "Set Graph type:",
                 key="graph",
                 index=None,
-                options=["Directed", "Undirected"],
+                options=[GraphType.DIRECTED, GraphType.UNDIRECTED],
+                format_func=lambda x: x.value
             )
 
             motif_size = st.number_input(

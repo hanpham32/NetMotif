@@ -1,4 +1,5 @@
 import networkx as nx
+from src.types import GraphType
 
 
 def graph6(graph: nx.Graph) -> str:
@@ -60,11 +61,11 @@ def digraph6(graph: nx.DiGraph) -> str:
     return N + R
 
 
-def get_graph_label(nx_graph: nx.Graph, graph_type: str) -> str:
+def get_graph_label(nx_graph: nx.Graph, graph_type: GraphType) -> str:
     """
     Label a graph in either graph6 (undirected) or digraph6 (directed) format.
     """
-    if graph_type == "Undirected":
+    if graph_type == GraphType.UNDIRECTED:
         return graph6(nx_graph)
-    if graph_type == "Directed":
+    if graph_type == GraphType.DIRECTED:
         return digraph6(nx_graph)
