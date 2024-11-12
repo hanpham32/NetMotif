@@ -29,9 +29,18 @@ class ESU:
             neighbor_set = set(self.get_right_neighbors(node))
             node_list = [node]
             node_visited.add(node)
-            self.esu_recursive_helper(size, neighbor_set, node_list, self.subgraph_list, node_visited)
+            self.esu_recursive_helper(
+                size, neighbor_set, node_list, self.subgraph_list, node_visited
+            )
 
-    def esu_recursive_helper(self, size: int, neighbors: set, node_list: list, subgraph_list: list, nodes_visited: set):
+    def esu_recursive_helper(
+        self,
+        size: int,
+        neighbors: set,
+        node_list: list,
+        subgraph_list: list,
+        nodes_visited: set,
+    ):
         if size == 1:
             subgraph_list.append(self.G.subgraph(node_list.copy()))
             return
@@ -51,7 +60,13 @@ class ESU:
                 if neighbor not in nodes_visited:
                     next_neighbors.add(neighbor)
 
-            self.esu_recursive_helper(size - 1, next_neighbors, node_list, subgraph_list, nodes_visited)
+            self.esu_recursive_helper(
+                size - 1,
+                next_neighbors,
+                node_list,
+                subgraph_list,
+                nodes_visited,
+            )
 
             if len(node_list) > 0:
                 node_list.pop()

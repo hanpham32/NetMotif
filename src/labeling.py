@@ -25,7 +25,7 @@ def graph6(graph: nx.Graph) -> str:
     # Step 4: Convert each group of 6 bits into an ASCII character for encoding
     R = ""
     for i in range(0, len(bit_vector), 6):
-        group = bit_vector[i:i + 6]
+        group = bit_vector[i : i + 6]
         group_value = sum((bit << (5 - idx)) for idx, bit in enumerate(group))
         R += chr(group_value + 63)
     return N + R
@@ -54,7 +54,7 @@ def digraph6(graph: nx.DiGraph) -> str:
     # Step 4: Convert each group of 6 bits to an ASCII character for encoding
     R = ""
     for i in range(0, len(bit_vector), 6):
-        group = bit_vector[i:i + 6]
+        group = bit_vector[i : i + 6]
         group_value = sum((bit << (5 - idx)) for idx, bit in enumerate(group))
         R += chr(group_value + 63)
 
