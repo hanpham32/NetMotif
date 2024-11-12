@@ -12,10 +12,12 @@ import os
 from io import StringIO
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 from pyvis.network import Network
 from src.esu import ESU
 import src.labeling as labeling
 import subprocess
+from src.types import GraphType
 
 
 class Graph:
@@ -27,20 +29,22 @@ class Graph:
         self.esu = None
 
         # build graph
-        if graph_type == "Undirected":
+        if graph_type == GraphType.UNDIRECTED:
             self.G = nx.Graph()
-            self.graph_type = "Undirected"
-        elif graph_type == "Directed":
+        elif graph_type == GraphType.DIRECTED:
             self.G = nx.DiGraph()
-            self.graph_type = "Directed"
-        if input is not None:
-            bytes_data = StringIO(input.getvalue().decode("utf-8"))
-            data = bytes_data.readlines()
+        # if input is Graph or DiGraph handle differtly
+        if isinstance(input, UploadedFile):
+            if input is not None:
+                bytes_data = StringIO(input.getvalue().decode("utf-8"))
+                data = bytes_data.readlines()
 
-            for line in data:
-                nodes = line.strip().split()
-                if len(nodes) == 2:
-                    self.G.add_edge(nodes[0], nodes[1])
+                for line in data:
+                    nodes = line.strip().split()
+                    if len(nodes) == 2:
+                        self.G.add_edge(nodes[0], nodes[1])
+        else:
+            self.G = input
 
         # enumerate subgraphs
         self.esu = ESU(self.G, motif_size)
@@ -59,15 +63,15 @@ class Graph:
     def generate_random_graphs(self, number_of_graphs) -> List['Graph']:
         random_graphs: List['Graph'] = []
         for i in range(number_of_graphs):
-            if self.graph_type == "Undirected":
+            if self.graph_type == GraphType.UNDIRECTED:
                 degree_sequence = [d for _, d in self.G.degree()]
                 random_graph = nx.Graph(nx.configuration_model(degree_sequence))
-                random_graph = Graph(random_graph, self.graph_type)
-            elif self.graph_type == "Directed":
+                random_graph = Graph(input=random_graph, graph_type=self.graph_type, motif_size=self.motif_size)
+            elif self.graph_type == GraphType.DIRECTED:
                 in_degree_sequence = [d for _, d in self.G.in_degree()]
                 out_degree_sequence = [d for _, d in self.G.out_degree()]
                 random_graph = nx.DiGraph(nx.directed_configuration_model(in_degree_sequence, out_degree_sequence))
-                random_graph = Graph(random_graph, self.graph_type)
+                random_graph = Graph(input=random_graph, graph_type=self.graph_type, motif_size=self.motif_size)
             random_graphs.append(random_graph)
         for graph in random_graphs:
             graph.draw_graph()
@@ -75,7 +79,7 @@ class Graph:
 
     def draw_graph(self):
         output_dir = "drawings"
-        if self.graph_type == "Directed":
+        if self.graph_type == GraphType.DIRECTED:
             nt = Network(directed=True)
         else:
             nt = Network()
@@ -104,7 +108,7 @@ class Graph:
             os.makedirs(output_dir)
 
         for i, subgraph in enumerate(self.esu.get_subgraph_list()):
-            if self.graph_type == "Directed":
+            if self.graph_type == GraphType.DIRECTED:
                 nt = Network(directed=True)
             else:
                 nt = Network()
@@ -120,7 +124,7 @@ class Graph:
             with open(file_name, "r") as f:
                 html = f.read()
 
-            st.markdown(f"### Subgraph {labeling.label_graph(subgraph, self.graph_type)}")
+            st.markdown(f"### Subgraph {labeling.get_graph_label(subgraph, self.graph_type)}")
             components.html(html, height=600, scrolling=True)
         return
 
@@ -138,7 +142,7 @@ class Graph:
         # Convert to graph6 type
         with open(labels_file_output, "w") as file:
             for subgraph in self.esu.get_subgraph_list():
-                label = labeling.label_graph(subgraph, self.graph_type)
+                label = labeling.get_graph_label(subgraph, self.graph_type)
                 label = label + '\n'
                 file.writelines(label)
 
@@ -162,7 +166,7 @@ class Graph:
 
                 for line in file:
                     line = line.strip()
-                    if self.graph_type == "Directed":
+                    if self.graph_type == GraphType.DIRECTED:
                         line = "&" + line
                     result = subprocess.run([label_g], input=line + "\n", text=True, capture_output=True, check=True)
 

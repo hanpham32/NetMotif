@@ -1,85 +1,71 @@
 import networkx as nx
+from src.types import GraphType
 
 
-def g6_label(graph: nx.Graph) -> str:
+def graph6(graph: nx.Graph) -> str:
     """
-    Return the g6label for Undirected graph.
+    Convert a subgraph into graph6 format.
     """
-    # motifSize = n
+    # Step 1: Compute N(n), the graph size character
     graph_size = graph.order()
-
-    # first figure out the N(n)
     N = chr(graph_size + 63)
 
-    # find x
-    x = []
-    diagonal_count: int
-    column_count = graph_size
-    for c in graph:
-        diagonal_count = 0
-        for r in graph:
-            if diagonal_count < graph_size - column_count:
-                x.append(graph.has_edge(r, c))
-            else:
-                break
-            diagonal_count = diagonal_count + 1
-        column_count = column_count - 1
+    # Step 2: Compute R(x). Create bit vector from the upper triangle of the
+    # adjacency matrix
+    # For undirected: read upper triangle of the matrix, column by column
+    bit_vector = []
+    for c in range(graph_size):
+        for r in range(c):
+            bit_vector.append(1 if graph.has_edge(r, c) else 0)
 
-    # attach 0's until x length is multiple of 6
-    while len(x) % 6 != 0:
-        x.append(0)
+    # Step 3: Pad bit vector with zeros to make its length a multiple of 6
+    while len(bit_vector) % 6 != 0:
+        bit_vector.append(0)
 
-    # Compute R(x)
-    # convert x into its ascii character to get R(x)
+    # Step 4: Convert each group of 6 bits into an ASCII character for encoding
     R = ""
-    r_char_list = [1] * int(len(x) / 6)
-    i = 0
-    while i < len(x):
-        r_char_list[int(i / 6)] = (r_char_list[int(i / 6)] << 1) | x[i]
-        if i % 6 == 5:
-            r_char_list[int(i / 6)] = r_char_list[int(i / 6)] - 1
-        i = i + 1
-    for element in r_char_list:
-        R = R + chr(element)
+    for i in range(0, len(bit_vector), 6):
+        group = bit_vector[i:i + 6]
+        group_value = sum((bit << (5 - idx)) for idx, bit in enumerate(group))
+        R += chr(group_value + 63)
     return N + R
 
 
-def d6_label(graph: nx.DiGraph) -> str:
+def digraph6(graph: nx.DiGraph) -> str:
     """
-    Return the d6label for Directed graph.
+    Convert a directed subgraph into digraph6 format.
     """
-    # motifSize = n
+    # Step 1: Compute N(n), the graph size character
     graph_size = graph.order()
-
-    # first figure out the N(n)
     N = chr(graph_size + 63)
 
-    # find x
-    x = []
-    for r in graph:
-        for c in graph:
-            x.append(graph.has_edge(r, c))
+    # Step 2: Compute R(x). Create bit vector from the upper triangle of the
+    # adjacency matrix
+    # For directed: read the matrix row by row
+    bit_vector = []
+    for r in range(graph_size):
+        for c in range(graph_size):
+            bit_vector.append(1 if graph.has_edge(r, c) else 0)
 
-    # attach 0's until x length is multiple of 6
-    while len(x) % 6 != 0:
-        x.append(0)
+    # Step 3: Pad bit vector with zeros to make its length a multiple of 6
+    while len(bit_vector) % 6 != 0:
+        bit_vector.append(0)
 
-    # convert x into its ascii character to get R(x)
+    # Step 4: Convert each group of 6 bits to an ASCII character for encoding
     R = ""
-    r_char_list = [1] * int(len(x) / 6)
-    i = 0
-    while i < len(x):
-        r_char_list[int(i / 6)] = (r_char_list[int(i / 6)] << 1) | x[i]
-        if i % 6 == 5:
-            r_char_list[int(i / 6)] = r_char_list[int(i / 6)] - 1
-        i = i + 1
-    for element in r_char_list:
-        R = R + chr(element)
+    for i in range(0, len(bit_vector), 6):
+        group = bit_vector[i:i + 6]
+        group_value = sum((bit << (5 - idx)) for idx, bit in enumerate(group))
+        R += chr(group_value + 63)
+
     return N + R
 
 
-def label_graph(networkx_graph, graph_type):  # networkx di or undi graph
-    if graph_type == "Undirected":
-        return g6_label(networkx_graph)
-    if graph_type == "Directed":
-        return d6_label(networkx_graph)
+def get_graph_label(nx_graph: nx.Graph, graph_type: GraphType) -> str:
+    """
+    Label a graph in either graph6 (undirected) or digraph6 (directed) format.
+    """
+    if graph_type == GraphType.UNDIRECTED:
+        return graph6(nx_graph)
+    if graph_type == GraphType.DIRECTED:
+        return digraph6(nx_graph)
