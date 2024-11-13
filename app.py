@@ -54,8 +54,6 @@ def main():
         st.session_state["uploaded_file"] = None
     if "prev_uploaded_file" not in st.session_state:
         st.session_state["prev_uploaded_file"] = None
-    if "nemo_option" not in st.session_state:
-        st.session_state["nemo_option"] = None
 
     uploaded_file = st.file_uploader("Upload a file")
     if uploaded_file:
