@@ -51,7 +51,7 @@ class ESU:
             nodes_visited.add(node)
             next_neighbors = set()
 
-            for neighbor in sample_neighbors:
+            for neighbor in neighbors:
                 if neighbor not in nodes_visited:
                     next_neighbors.add(neighbor)
             for neighbor in self.G.neighbors(node):
