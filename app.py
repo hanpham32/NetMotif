@@ -54,6 +54,8 @@ def main():
         st.session_state["uploaded_file"] = None
     if "prev_uploaded_file" not in st.session_state:
         st.session_state["prev_uploaded_file"] = None
+    if "nemo_option" not in st.session_state:
+        st.session_state["nemo_option"] = None
 
     uploaded_file = st.file_uploader("Upload a file")
     if uploaded_file:
@@ -110,6 +112,7 @@ def main():
         st.session_state["graph_type"] = graph_type
         st.session_state["uploaded_file"] = uploaded_file
         st.session_state["motif_size"] = motif_size
+        st.session_state["nemo_option"] = nemo_count_type
         form_callback()
     """
     [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/hanpham32/NetMotif)
