@@ -68,3 +68,7 @@ This will launch the app, and you can access it by navigating to http://localhos
 ├── out/      # contains canonical output
 ├── src/      # contains scripts for the program
 ```
+
+## References
+
+Graph6 and Digraph6 format: [https://users.cecs.anu.edu.au/~bdm/data/formats.txt](https://users.cecs.anu.edu.au/~bdm/data/formats.txt)
