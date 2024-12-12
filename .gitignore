@@ -7,3 +7,4 @@ nx.html
 .null-ls_*.py
 desktop.ini
 uv.lock
+out/
