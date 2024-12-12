@@ -174,16 +174,13 @@ class Graph:
             with open(labels_file_output, "r") as file:
 
                 # Clear previous contents of the labelg output file
-                labelg_output_file = os.path.join(
-                    output_dir, "labelg_output.txt"
-                )
+                labelg_output_file = os.path.join(output_dir, "labelg_output.txt")
                 with open(labelg_output_file, "w") as labelg_file:
                     labelg_file.write("")
 
                 for line in file:
                     line = line.strip()
-                    if self.graph_type == GraphType.DIRECTED:
-                        line = "&" + line
+
                     result = subprocess.run(
                         [label_g],
                         input=line + "\n",
