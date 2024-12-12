@@ -87,3 +87,6 @@ class ESU:
 
     def get_subgraph_list(self):
         return self.subgraph_list
+
+    def number_of_subgraphs(self):
+        return len(self.subgraph.list)
