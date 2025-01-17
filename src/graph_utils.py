@@ -18,6 +18,7 @@ from src.esu import ESU
 import src.labeling as labeling
 import subprocess
 from src.types import GraphType
+from collections import defaultdict
 
 
 class Graph:
@@ -153,10 +154,13 @@ class Graph:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
+        label_counter = defaultdict(int)
+
         # Convert to graph6 type
         with open(labels_file_output, "w") as file:
             for subgraph in self.esu.get_subgraph_list():
                 label = labeling.get_graph_label(subgraph, self.graph_type)
+                label_counter[label] += 1
                 label = label + "\n"
                 file.writelines(label)
 
@@ -174,16 +178,13 @@ class Graph:
             with open(labels_file_output, "r") as file:
 
                 # Clear previous contents of the labelg output file
-                labelg_output_file = os.path.join(
-                    output_dir, "labelg_output.txt"
-                )
+                labelg_output_file = os.path.join(output_dir, "labelg_output.txt")
                 with open(labelg_output_file, "w") as labelg_file:
                     labelg_file.write("")
 
                 for line in file:
                     line = line.strip()
-                    if self.graph_type == GraphType.DIRECTED:
-                        line = "&" + line
+
                     result = subprocess.run(
                         [label_g],
                         input=line + "\n",
@@ -207,9 +208,11 @@ class Graph:
                         st.error(result.stderr)
 
             # after running all the inputs through labelg program, display the entire file
-            with open(labelg_output_file, "r") as labelg_file:
-                st.subheader("Labelg Output")
-                st.text(labelg_file.read())
+            # with open(labelg_output_file, "r") as labelg_file:
+            st.subheader("Labelg Output")
+            print(label_counter)
+            for label, count in label_counter.items():
+                st.text(f"{label}: {count}")
 
         except subprocess.CalledProcessError as e:
             st.write("error running labelg:")
