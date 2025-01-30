@@ -31,7 +31,7 @@ def form_callback():
     st.write(f"Weight: {graph_properties['Weight']}")
 
     # write labels
-    G.print_labelg()
+    #G.print_labelg()
 
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:

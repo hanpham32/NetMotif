@@ -1,0 +1,47 @@
+FANMOD 1.1 subgraph enumeration
+-------------------------------
+
+Network name: C:\Users\IlyaVaschillo\Documents\2024-2025\Autumn\NetMotif\NetMotif\data\bestTest.txt
+Network type: Directed
+Number of nodes: 101
+Number of edges: 15
+Number of single edges: 15
+Number of mutual edges: 0
+
+Algorithm: enumeration
+Subgraph size: 3
+
+Generated 1000 random networks
+   with locally constant number of bidirectional edges,
+   3 exchanges per edge and 3 tries per edge.
+
+29 subgraphs were enumerated in the original network.
+28486 subgraphs were enumerated in the random networks.
+28515 subgraphs were enumerated in all networks.
+
+For the random networks: 88743 tries were made, 33815 were successful.
+Randomization took 0.023 seconds.
+Enumeration took 0.027 seconds.
+
+
+Result overview:
+
+ ID Adj   Frequency     Mean-Freq  Standard-Dev    Z-Score  p-Value
+         [Original]      [Random]      [Random]
+
+ 12 000     55.172%        50.16%      0.051949    0.96483    0.104
+    001
+    100
+
+  6 000     24.138%       26.089%      0.024052    -0.8114    0.672
+    000
+    110
+
+ 36 000     13.793%       15.498%      0.027423   -0.62178    0.662
+    100
+    100
+
+ 38 000     6.8966%       5.6844%      0.038708    0.31316    0.333
+    100
+    110
+
