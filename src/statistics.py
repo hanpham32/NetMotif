@@ -1,5 +1,5 @@
 from typing import List
-from graph_utils import Graph
+from src.graph_utils import Graph
 import math
 
 '''

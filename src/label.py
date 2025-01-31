@@ -1,6 +1,8 @@
 import networkx as nx
 from src.types import GraphType
-
+import os
+import subprocess
+import streamlit as st
 
 def graph6(graph: nx.Graph) -> str:
     """
@@ -97,12 +99,52 @@ def digraph6(graph: nx.DiGraph) -> str:
 
     return chr(38) + N + R
 
+def toLabelg(label:str):
+    label_g = "./labelg"  # Name of the executable
+    # Check if the labelg executable exists in the root directory
+    if os.path.isfile(label_g):
+        os.chmod(label_g, 0o755)  # Ensure it is executable
+    else:
+        st.write("labelg exists: False")
+        return
+
+    try:
+        result = subprocess.run(
+            [label_g],
+            input=label + "\n",
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+
+        #if subprocess runs correctly
+        if result.returncode == 0:
+            labelg_output = result.stdout
+        else:
+            st.write(
+                "Subprocess failed with return code:",
+                result.returncode,
+            )
+            st.error(result.stderr)
+
+    except subprocess.CalledProcessError as e:
+        st.write("error running labelg:")
+        st.write(e.stderr)
+
+    return labelg_output
 
 def get_graph_label(nx_graph: nx.Graph, graph_type: GraphType) -> str:
     """
     Label a graph in either graph6 (undirected) or digraph6 (directed) format.
     """
+    '''
+    for windows
     if graph_type == GraphType.UNDIRECTED:
-        return graph6(nx_graph)
+    return graph6(nx_graph)
     if graph_type == GraphType.DIRECTED:
-        return digraph6(nx_graph)
+    return digraph6(nx_graph)
+    '''
+    if graph_type == GraphType.UNDIRECTED:
+        return toLabelg(graph6(nx_graph))
+    if graph_type == GraphType.DIRECTED:
+        return toLabelg(digraph6(nx_graph))

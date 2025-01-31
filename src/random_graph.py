@@ -1,5 +1,5 @@
 import networkx as nx
-from graph_utils import Graph
+from src.graph_utils import Graph
 from src.types import GraphType
 
 def generate_random_graphs(mimicked_graph: Graph, number_of_graphs) -> list["Graph"]:

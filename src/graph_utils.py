@@ -15,16 +15,16 @@ import streamlit.components.v1 as components
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 from pyvis.network import Network
 from src.esu import ESU
-import src.labeling as labeling
+import NetMotif.src.label as label
 import subprocess
 from src.types import GraphType
 from collections import defaultdict
-import src.statistics as stat
-import src.random_graph as rg
+#import src.statistics as stat
+#import src.random_graph as rg
 
 
 class Graph:
-    def __init__(self, graph_type, input, motif_size):
+    def __init__(self, graph_type, input_file, motif_size):
         self.graph_type = graph_type
         self.file = input
         self.motif_size = motif_size
@@ -41,7 +41,7 @@ class Graph:
         elif graph_type == GraphType.DIRECTED:
             self.G = nx.DiGraph()
         # if input is Graph or DiGraph handle differtly
-        if isinstance(input, UploadedFile):
+        if isinstance(input_file, UploadedFile):
             if input is not None:
                 bytes_data = StringIO(input.getvalue().decode("utf-8"))
                 data = bytes_data.readlines()
@@ -60,7 +60,7 @@ class Graph:
 
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
-            curLabel = labeling.get_graph_label(subgraph, self.graph_type)
+            curLabel = label.get_graph_label(subgraph, self.graph_type)
             if curLabel in self.subgraph_list_enumerated:
                 self.subgraph_list_enumerated[curLabel] = 1
             else:
@@ -77,11 +77,13 @@ class Graph:
             "Weight": self.G.size(),
         }
 
+    '''
     def draw_random_graphs(self, number_of_graphs) -> list["Graph"]:
         random_graphs = rg.generate_random_graphs(self, number_of_graphs)
         for graph in random_graphs:
             graph.draw_graph()
         return random_graphs
+    '''
 
     def draw_graph(self):
         output_dir = "drawings"
@@ -131,7 +133,7 @@ class Graph:
                 html = f.read()
 
             st.markdown(
-                f"### Subgraph {labeling.get_graph_label(subgraph, self.graph_type)}"
+                f"### Subgraph {label.get_graph_label(subgraph, self.graph_type)}"
             )
             components.html(html, height=600, scrolling=True)
         return
@@ -152,7 +154,7 @@ class Graph:
         # Convert to graph6 type
         with open(labels_file_output, "w") as file:
             for subgraph in self.subgraph_list():
-                label = labeling.get_graph_label(subgraph, self.graph_type)
+                label = label.get_graph_label(subgraph, self.graph_type)
                 label_counter[label] += 1
                 label = label + "\n"
                 file.writelines(label)
