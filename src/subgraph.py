@@ -1,5 +1,5 @@
 from src.graph_utils import Graph
-import NetMotif.src.label as lb
+import src.label as lb
 
 '''
 A graph of same size as motif. GraphWithSubgraphs --<*> Subgraphs

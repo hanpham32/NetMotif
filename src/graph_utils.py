@@ -15,7 +15,7 @@ import streamlit.components.v1 as components
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 from pyvis.network import Network
 from src.esu import ESU
-import NetMotif.src.label as label
+import src.label as label
 import subprocess
 from src.types import GraphType
 from collections import defaultdict
@@ -24,7 +24,7 @@ from collections import defaultdict
 
 
 class Graph:
-    def __init__(self, graph_type, input_file, motif_size):
+    def __init__(self, graph_type, input, motif_size):
         self.graph_type = graph_type
         self.file = input
         self.motif_size = motif_size
@@ -41,7 +41,7 @@ class Graph:
         elif graph_type == GraphType.DIRECTED:
             self.G = nx.DiGraph()
         # if input is Graph or DiGraph handle differtly
-        if isinstance(input_file, UploadedFile):
+        if isinstance(input, UploadedFile):
             if input is not None:
                 bytes_data = StringIO(input.getvalue().decode("utf-8"))
                 data = bytes_data.readlines()
@@ -61,7 +61,7 @@ class Graph:
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
             curLabel = label.get_graph_label(subgraph, self.graph_type)
-            if curLabel in self.subgraph_list_enumerated:
+            if curLabel not in self.subgraph_list_enumerated:
                 self.subgraph_list_enumerated[curLabel] = 1
             else:
                 self.subgraph_list_enumerated[curLabel] += 1
