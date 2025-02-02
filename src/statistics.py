@@ -13,13 +13,13 @@ def processStatistics(original_graph: Graph, graphs: list[Graph]):
     generateListofAllUniqueLabels(graphs, labelTable)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
     for label in labelTable:
-        #labelTable[label][0] = graphs[label]
+        #labelTable[label][''] = graphs[label]
         mean = getLabelMean(label, graphs)
-        labelTable[label][1] = mean / total_number_of_subgraphs # % mean-frequency
+        labelTable[label]['mean'] = mean / total_number_of_subgraphs # % mean-frequency
         sd = getStandardDeviation(mean, label, graphs)
-        labelTable[label][2] = sd # standard deviation
-        z_score = getZScore(sd, mean, label, original_graph)
-        labelTable[label][3] = z_score # z-score
+        labelTable[label]['sd'] = sd # standard deviation
+        #z_score = getZScore(sd, mean, label, original_graph)
+        #labelTable[label][3] = z_score # z-score
     return labelTable
 
 
@@ -35,10 +35,10 @@ def generateListofAllUniqueLabels(graphs: list[Graph], labelTable: dict):
     # Iterate through each dictionary in the list
     for graph in graphs:
         # Add the keys of the current dictionary to the set
-        labelTable.update(graph.subgraph_list_enumerated.keys())
+        unique_keys.update(graph.subgraph_list_enumerated.keys())
 
     for key in unique_keys:
-        labelTable[key] = {'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
+        labelTable[key] = {'frequency': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
 def getLabelMean(label, graphs: list[Graph]):
     totalCountOfMotif = 0
@@ -50,7 +50,7 @@ def getLabelMean(label, graphs: list[Graph]):
 def getStandardDeviation(mean, label, graphs: list[Graph]):
     variance = 0
     for graph in graphs:
-        if label in graph:
+        if label in graph.subgraph_list_enumerated:
             xi = graph.subgraph_list_enumerated[label]
             variance += (xi-mean)**2
         else:

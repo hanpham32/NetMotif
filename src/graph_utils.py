@@ -50,6 +50,8 @@ class Graph:
                     nodes = line.strip().split()
                     if len(nodes) == 2:
                         self.G.add_edge(nodes[0], nodes[1])
+        if isinstance(input, str):
+            self.read_file(input)   
         else:
             self.G = input
 
@@ -57,6 +59,14 @@ class Graph:
         self.subgraph_list = ESU(self.G, motif_size).get_subgraph_list()
         # name and enumerate list of subgraphs
         self.enumerate_subgraphs()
+
+    def read_file(self, file_directory):
+        with open(file_directory, 'r') as f:
+            file_content_edges = f.readlines()
+            for edge in file_content_edges:
+                nodes = edge.strip().split()
+                if len(nodes) == 2:
+                    self.G.add_edge(nodes[0], nodes[1])
 
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
@@ -115,7 +125,7 @@ class Graph:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        for i, subgraph in enumerate(self.subgraph_list()):
+        for i, subgraph in enumerate(self.subgraph_list):
             if self.graph_type == GraphType.DIRECTED:
                 nt = Network(directed=True)
             else:
@@ -205,7 +215,7 @@ class Graph:
             # after running all the inputs through labelg program, display the entire file
             # with open(labelg_output_file, "r") as labelg_file:
             st.subheader("Labelg Output")
-            print(label_counter)
+            #print(label_counter)
             for label, count in label_counter.items():
                 st.text(f"{label}: {count}")
 
