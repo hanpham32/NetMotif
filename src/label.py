@@ -1,5 +1,5 @@
 import networkx as nx
-from src.types import GraphType
+from src.graph_types import GraphType
 import os
 import subprocess
 import streamlit as st

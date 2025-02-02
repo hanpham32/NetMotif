@@ -1,4 +1,3 @@
-from typing import List
 from src.graph_utils import Graph
 import math
 

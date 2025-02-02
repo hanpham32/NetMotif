@@ -17,7 +17,7 @@ from pyvis.network import Network
 from src.esu import ESU
 import src.label as label
 import subprocess
-from src.types import GraphType
+from src.graph_types import GraphType
 from collections import defaultdict
 #import src.statistics as stat
 #import src.random_graph as rg
