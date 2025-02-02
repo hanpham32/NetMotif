@@ -110,7 +110,7 @@ def toLabelg(label:str):
     try:
         result = subprocess.run(
             [label_g],
-            input=label,
+            input=label + "\n",
             text=True,
             capture_output=True,
             check=True,
