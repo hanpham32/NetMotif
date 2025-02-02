@@ -50,7 +50,7 @@ class Graph:
                     nodes = line.strip().split()
                     if len(nodes) == 2:
                         self.G.add_edge(nodes[0], nodes[1])
-        if isinstance(input, str):
+        elif isinstance(input, str):
             self.read_file(input)   
         else:
             self.G = input
