@@ -44,7 +44,7 @@ def getLabelMean(label, graphs: list[Graph]):
     for graph in graphs:
         if label in graph.subgraph_list_enumerated:
             totalCountOfMotif += graph.subgraph_list_enumerated[label]
-    return totalCountOfMotif/len(graphs)
+    return totalCountOfMotif
 
 def getStandardDeviation(mean, label, graphs: list[Graph]):
     variance = 0
