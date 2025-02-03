@@ -98,7 +98,7 @@ def digraph6(graph: nx.DiGraph) -> str:
     return chr(38) + N + R
 
 def toLabelg(label:str):
-    label_g = "./NetMotif/labelg"  # Name of the executable
+    label_g = "~/NetMotif/labelg"  # Name of the executable
     # Check if the labelg executable exists in the root directory
     if os.path.isfile(label_g):
         os.chmod(label_g, 0o755)  # Ensure it is executable
