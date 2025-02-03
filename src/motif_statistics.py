@@ -12,7 +12,8 @@ def processStatistics(original_graph: Graph, graphs: list[Graph]):
     generateListofAllUniqueLabels(graphs, labelTable)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
     for label in labelTable:
-        #labelTable[label][''] = graphs[label]
+        if(label in original_graph.subgraph_list_enumerated):
+            labelTable[label]['freq'] = original_graph.subgraph_list_enumerated[label]
         mean = getLabelMean(label, graphs)
         labelTable[label]['mean'] = mean / total_number_of_subgraphs # % mean-frequency
         sd = getStandardDeviation(mean, label, graphs)
@@ -37,7 +38,7 @@ def generateListofAllUniqueLabels(graphs: list[Graph], labelTable: dict):
         unique_keys.update(graph.subgraph_list_enumerated.keys())
 
     for key in unique_keys:
-        labelTable[key] = {'frequency': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
+        labelTable[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
 def getLabelMean(label, graphs: list[Graph]):
     totalCountOfMotif = 0
