@@ -66,7 +66,9 @@ def getStandardDeviation(mean, label, graphs: list[Graph]):
     return variance**0.5
 
 def getZScore(sd: float, mean: float, label, original_graph: Graph):
-    score = original_graph.subgraph_list_enumerated[label]
+    score = 0
+    if(label in original_graph):
+        score = original_graph.subgraph_list_enumerated[label]
     return (score - mean)/sd
 
 def _cdf(z:float):
