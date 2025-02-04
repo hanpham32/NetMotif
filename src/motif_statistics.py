@@ -20,7 +20,9 @@ def processStatistics(original_graph: Graph, graphs: list[Graph]):
         sd = getStandardDeviation(mean, label, graphs)
         labelTable[label]['sd'] = sd # standard deviation
         z_score = getZScore(sd, mean, label, original_graph)
-        labelTable[label][3] = z_score # z-score
+        labelTable[label]['z-score'] = z_score # z-score
+        p_value = getPValue(z_score, label)
+        labelTable[label]['p-value'] = p_value # p-value
     return labelTable
 
 
