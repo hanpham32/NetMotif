@@ -51,7 +51,7 @@ class Graph:
                     if len(nodes) == 2:
                         self.G.add_edge(nodes[0], nodes[1])
         elif isinstance(input, str):
-            self.read_file(input)   
+            self.read_file(input)
         else:
             self.G = input
 

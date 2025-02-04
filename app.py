@@ -1,6 +1,7 @@
 import streamlit as st
 from src.graph_utils import Graph
 from src.graph_types import GraphType
+import random as rg
 
 
 def form_callback():
@@ -43,7 +44,9 @@ def form_callback():
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph(st.session_state["motif_size"])
 
-    #G.generate_random_graphs(2)
+    randoms = rg.generate_random_graphs(G,2)
+    for random in randoms:
+        random.draw_graph()
 
 
 def main():
