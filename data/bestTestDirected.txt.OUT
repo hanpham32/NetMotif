@@ -16,12 +16,12 @@ Generated 1000 random networks
    3 exchanges per edge and 3 tries per edge.
 
 29 subgraphs were enumerated in the original network.
-28486 subgraphs were enumerated in the random networks.
-28515 subgraphs were enumerated in all networks.
+28416 subgraphs were enumerated in the random networks.
+28445 subgraphs were enumerated in all networks.
 
-For the random networks: 88743 tries were made, 33815 were successful.
-Randomization took 0.023 seconds.
-Enumeration took 0.027 seconds.
+For the random networks: 88658 tries were made, 33842 were successful.
+Randomization took 0.038 seconds.
+Enumeration took 0.025 seconds.
 
 
 Result overview:
@@ -29,19 +29,19 @@ Result overview:
  ID Adj   Frequency     Mean-Freq  Standard-Dev    Z-Score  p-Value
          [Original]      [Random]      [Random]
 
- 12 000     55.172%        50.16%      0.051949    0.96483    0.104
+ 12 000     55.172%       49.881%      0.055597    0.95177    0.095
     001
     100
 
-  6 000     24.138%       26.089%      0.024052    -0.8114    0.672
+  6 000     24.138%       26.159%      0.025121   -0.80455    0.677
     000
     110
 
- 36 000     13.793%       15.498%      0.027423   -0.62178    0.662
+ 36 000     13.793%       15.537%      0.028258   -0.61697    0.667
     100
     100
 
- 38 000     6.8966%       5.6844%      0.038708    0.31316    0.333
+ 38 000     6.8966%       5.7084%      0.039484    0.30093    0.343
     100
     110
 

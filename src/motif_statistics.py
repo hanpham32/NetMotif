@@ -19,8 +19,8 @@ def processStatistics(original_graph: Graph, graphs: list[Graph]):
         labelTable[label]['mean'] = mean * 100 # % mean-frequency as a percent
         sd = getStandardDeviation(mean, label, graphs)
         labelTable[label]['sd'] = sd # standard deviation
-        #z_score = getZScore(sd, mean, label, original_graph)
-        #labelTable[label][3] = z_score # z-score
+        z_score = getZScore(sd, mean, label, original_graph)
+        labelTable[label][3] = z_score # z-score
     return labelTable
 
 
