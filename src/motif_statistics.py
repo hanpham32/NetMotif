@@ -13,7 +13,8 @@ def processStatistics(original_graph: Graph, graphs: list[Graph]):
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
     for label in labelTable:
         if(label in original_graph.subgraph_list_enumerated):
-            labelTable[label]['freq'] = original_graph.subgraph_list_enumerated[label]
+            #frequency of label as a percent
+            labelTable[label]['freq'] = (original_graph.subgraph_list_enumerated[label]/total_number_of_subgraphs)*100
         mean = getLabelMean(label, graphs)
         labelTable[label]['mean'] = mean / total_number_of_subgraphs # % mean-frequency
         sd = getStandardDeviation(mean, label, graphs)
