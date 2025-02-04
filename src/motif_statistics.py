@@ -67,7 +67,7 @@ def getStandardDeviation(mean, label, graphs: list[Graph]):
 
 def getZScore(sd: float, mean: float, label, original_graph: Graph):
     score = 0
-    if(label in original_graph):
+    if(label in original_graph.subgraph_list_enumerated):
         score = original_graph.subgraph_list_enumerated[label]
     return (score - mean)/sd
 
