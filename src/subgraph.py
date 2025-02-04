@@ -7,7 +7,8 @@ A graph of same size as motif. GraphWithSubgraphs --<*> Subgraphs
 class Subgraph(Graph):
     label: str
 
-    def name(self):
-        label = lb.get_graph_label(self.G, self.graph_type)
+    def setLabel(self):
+        self.label = lb.get_graph_label(self.G, self.graph_type)
 
-
+    def getLabel(self):
+        return self.label
