@@ -59,7 +59,7 @@ def getStandardDeviation(mean, label, graphs: list[Graph]):
             variance += (xi-mean)**2
         else:
             variance += mean**2
-    variance = variance/(len(graphs) - 1)
+    variance = variance/(len(graphs))
     return variance**0.5
 
 def getZScore(sd: float, mean: float, label, original_graph: Graph):
