@@ -12,5 +12,3 @@ random_graphs = rg.generate_random_graphs(basic_graph, 10)
 # make a table of data for each label
 table = stat.processStatistics(basic_graph, random_graphs)
 print(table)
-
-print("running stats table test")
