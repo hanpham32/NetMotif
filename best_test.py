@@ -6,7 +6,7 @@ import streamlit as st
 from io import BytesIO
 
 print("running stats table test")
-basic_graph = Graph(GraphType.UNDIRECTED, './NetMotif/data/bestTest.txt', 3)
+basic_graph = Graph(GraphType.DIRECTED, './NetMotif/data/bestTest.txt', 3)
 print(basic_graph.subgraph_list_enumerated)
 random_graphs = rg.generate_random_graphs(basic_graph, 10)
 # make a table of data for each label
