@@ -1,7 +1,7 @@
 import streamlit as st
 from src.graph_utils import Graph
 from src.graph_types import GraphType
-import random as rg
+import src.random_graph as rg
 
 
 def form_callback():
