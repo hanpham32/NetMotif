@@ -1,5 +1,6 @@
 from src.graph_utils import Graph
 import math
+import scipy.stats
 
 '''
 keep in mind, graphs is a variable for a list of all graphs' subgraphs,
@@ -70,9 +71,10 @@ def getZScore(sd: float, mean: float, label, original_graph: Graph):
 
 def _cdf(z:float):
     ''' cumaltive density function used for calculating p values '''
-    return 0.5 * (1 + math.erf(z/math.sqrt(2)))
+    return 0.5 * (1 + math.erf(z/((std)(2**0.5))))
 
 def getPValue(zscore: float):
+    return scipy.stats.norm.sf(abs(zscore))*2
     ''' Calculate the P value, using a 2-tail test, for each subgraph in the original graph using Z values'''
     #subtracting 1 from cdf value and multiplying result by 2 to get 2-tailed p value
-    return 2*(1 - (_cdf(math.fabs(zscore))))
+    return 2*(1 - (_cdf(math.fabs(std, zscore))))
