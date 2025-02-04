@@ -119,7 +119,7 @@ def toLabelg(label:str):
 
         #if subprocess runs correctly
         if result.returncode == 0:
-            labelg_output = result.stdout
+            labelg_output = result.stdout.rstrip()
         else:
             st.write(
                 "Subprocess failed with return code:",
