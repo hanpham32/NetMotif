@@ -16,7 +16,7 @@ def processStatistics(original_graph: Graph, graphs: list[Graph]):
             #frequency of label as a percent
             labelTable[label]['freq'] = (original_graph.subgraph_list_enumerated[label]/total_number_of_subgraphs)*100
         mean = getLabelMean(label, graphs)
-        labelTable[label]['mean'] = mean / total_number_of_subgraphs # % mean-frequency
+        labelTable[label]['mean'] = mean * 100 # % mean-frequency as a percent
         sd = getStandardDeviation(mean, label, graphs)
         labelTable[label]['sd'] = sd # standard deviation
         #z_score = getZScore(sd, mean, label, original_graph)
@@ -42,11 +42,14 @@ def generateListofAllUniqueLabels(graphs: list[Graph], labelTable: dict):
         labelTable[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
 def getLabelMean(label, graphs: list[Graph]):
-    totalCountOfMotif = 0
+    graph_frequency = 0
+    frequencys = 0
     for graph in graphs:
         if label in graph.subgraph_list_enumerated:
-            totalCountOfMotif += graph.subgraph_list_enumerated[label]
-    return totalCountOfMotif
+            graph_frequency = graph.subgraph_list_enumerated[label]
+            total_number_of_subgraphs = sum(graph.subgraph_list_enumerated.values())
+            frequencys += graph_frequency/total_number_of_subgraphs
+    return frequencys/len(graphs)
 
 def getStandardDeviation(mean, label, graphs: list[Graph]):
     variance = 0
