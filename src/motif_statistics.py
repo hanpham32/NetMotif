@@ -21,7 +21,7 @@ def processStatistics(original_graph: Graph, graphs: list[Graph]):
         labelTable[label]['sd'] = sd # standard deviation
         z_score = getZScore(sd, mean, label, original_graph)
         labelTable[label]['z-score'] = z_score # z-score
-        p_value = getPValue(z_score, label)
+        p_value = getPValue(z_score)
         labelTable[label]['p-value'] = p_value # p-value
     return labelTable
 
@@ -72,7 +72,7 @@ def _cdf(z:float):
     ''' cumaltive density function used for calculating p values '''
     return 0.5 * (1 + math.erf(z/math.sqrt(2)))
 
-def getPValue(zscores: dict, label) -> dict:
+def getPValue(zscore: float):
     ''' Calculate the P value, using a 2-tail test, for each subgraph in the original graph using Z values'''
     #subtracting 1 from cdf value and multiplying result by 2 to get 2-tailed p value
-    return 2*(1 - (_cdf(math.fabs(zscores[label]))))
+    return 2*(1 - (_cdf(math.fabs(zscore))))
