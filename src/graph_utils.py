@@ -104,7 +104,7 @@ class Graph:
         nt.from_nx(self.G)
         nt.toggle_physics(True)  # add physic to graph
         nt.toggle_hide_edges_on_drag(True)
-        nt.show_buttons(filter_=["physics"])
+        #nt.show_buttons(filter_=["physics"])
 
         # Render the graph to an HTML file
         file_name = os.path.join(output_dir, "nx.html")

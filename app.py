@@ -39,7 +39,8 @@ def form_callback():
     if st.session_state["is_visualize_graph"]:
         st.markdown("### Full Graph Visualization")
         G.draw_graph()
-        stat.draw_statistics(stat.process_statistics(G, randoms))
+
+    stat.draw_statistics(stat.process_statistics(G, randoms))
 
     # Visualize subgraphs if selected
     if st.session_state["is_visualize_subgraph"]:
