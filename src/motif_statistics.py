@@ -10,7 +10,7 @@ named, enumerated, and put into a dictionary
 '''
 
 def draw_statistics(labelTable):
-    df = pd.DataFrame(labelTable, orient = 'index')
+    df = pd.DataFrame.from_dict(labelTable, orient = 'index')
     st.table(df)
 
 #returns a dictionary of all stastical information for each unique label in graphs
