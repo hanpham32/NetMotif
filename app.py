@@ -2,6 +2,7 @@ import streamlit as st
 from src.graph_utils import Graph
 from src.graph_types import GraphType
 import src.random_graph as rg
+import src.motif_statistics as stat
 
 
 def form_callback():
@@ -32,12 +33,13 @@ def form_callback():
     st.write(f"Weight: {graph_properties['Weight']}")
 
     # write labels
-    #G.print_labelg()
+    randoms = rg.generate_random_graphs(G, 100)
 
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:
         st.markdown("### Full Graph Visualization")
         G.draw_graph()
+        stat.draw_statistics(stat.process_statistics(G, randoms))
 
     # Visualize subgraphs if selected
     if st.session_state["is_visualize_subgraph"]:

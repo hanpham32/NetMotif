@@ -1,28 +1,34 @@
 from src.graph_utils import Graph
 import math
 import scipy.stats
+import pandas as pd
+import streamlit as st
 
 '''
 keep in mind, graphs is a variable for a list of all graphs' subgraphs,
 named, enumerated, and put into a dictionary
 '''
 
+def draw_statistics(labelTable):
+    df = pd.DataFrame(labelTable)
+    st.table(df)
+
 #returns a dictionary of all stastical information for each unique label in graphs
-def processStatistics(original_graph: Graph, graphs: list[Graph]):
+def process_statistics(original_graph: Graph, graphs: list[Graph]):
     labelTable: dict = {} #label -> [frequency, mean, sd, zscore, p-value]
-    generateListofAllUniqueLabels(graphs, labelTable)
+    _generateListofAllUniqueLabels(graphs, labelTable)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
     for label in labelTable:
         if(label in original_graph.subgraph_list_enumerated):
             #frequency of label as a percent
             labelTable[label]['freq'] = (original_graph.subgraph_list_enumerated[label]/total_number_of_subgraphs)*100
-        mean = getLabelMean(label, graphs)
+        mean = _getLabelMean(label, graphs)
         labelTable[label]['mean'] = mean * 100 # % mean-frequency as a percent
-        sd = getStandardDeviation(mean, label, graphs)
+        sd = _getStandardDeviation(mean, label, graphs)
         labelTable[label]['sd'] = sd # standard deviation
-        z_score = getZScore(sd, mean, label, original_graph)
+        z_score = _getZScore(sd, mean, label, original_graph)
         labelTable[label]['z-score'] = z_score # z-score
-        p_value = getPValue(z_score)
+        p_value = _getPValue(z_score)
         labelTable[label]['p-value'] = p_value # p-value
     return labelTable
 
@@ -32,7 +38,7 @@ method written by ChatGPT
 finds every unique key in a list of dictionaries and sets them as the
 keys in second input dictionary
 '''
-def generateListofAllUniqueLabels(graphs: list[Graph], labelTable: dict):
+def _generateListofAllUniqueLabels(graphs: list[Graph], labelTable: dict):
     # Create an empty set to store unique keys
     unique_keys = set()
 
@@ -44,7 +50,7 @@ def generateListofAllUniqueLabels(graphs: list[Graph], labelTable: dict):
     for key in unique_keys:
         labelTable[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
-def getLabelMean(label, graphs: list[Graph]):
+def _getLabelMean(label, graphs: list[Graph]):
     graph_frequency = 0
     frequencys = 0
     for graph in graphs:
@@ -54,7 +60,7 @@ def getLabelMean(label, graphs: list[Graph]):
             frequencys += graph_frequency/total_number_of_subgraphs
     return frequencys/len(graphs)
 
-def getStandardDeviation(mean, label, graphs: list[Graph]):
+def _getStandardDeviation(mean, label, graphs: list[Graph]):
     variance = 0
     for graph in graphs:
         if label in graph.subgraph_list_enumerated:
@@ -65,7 +71,7 @@ def getStandardDeviation(mean, label, graphs: list[Graph]):
     variance = variance/(len(graphs))
     return variance**0.5
 
-def getZScore(sd: float, mean: float, label, original_graph: Graph):
+def _getZScore(sd: float, mean: float, label, original_graph: Graph):
     score = 0
     if(label in original_graph.subgraph_list_enumerated):
         score = original_graph.subgraph_list_enumerated[label]
@@ -75,7 +81,7 @@ def _cdf(z:float):
     ''' cumaltive density function used for calculating p values '''
     return 0.5 * (1 + math.erf(z/((std)(2**0.5))))
 
-def getPValue(zscore: float):
+def _getPValue(zscore: float):
     return scipy.stats.norm.sf(abs(zscore))*2
     ''' Calculate the P value, using a 2-tail test, for each subgraph in the original graph using Z values'''
     #subtracting 1 from cdf value and multiplying result by 2 to get 2-tailed p value
