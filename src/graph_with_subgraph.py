@@ -20,11 +20,11 @@ class GraphWithSubgraph(Graph):
     def __init__(self, graph_type, input, motif_size):
         super().__init__(graph_type, input)
         self.motif_size = motif_size
-        self.runESU(motif_size)
+        self.runESU(motif_size, graph_type)
 
-    def runESU(self, motif_size):
+    def runESU(self, motif_size, graph_type):
         # produce list of subgraphs
-        self.subgraph_list = ESU(self.G, motif_size).get_subgraph_list()
+        self.subgraph_list = ESU(self.G, motif_size, graph_type).get_subgraph_list()
         # name and enumerate list of subgraphs
         self.enumerate_subgraphs()
     
