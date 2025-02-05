@@ -117,7 +117,7 @@ class Graph:
         with open(file_name, "r") as f:
             html = f.read()
 
-        components.html(html, height=500, scrolling=True)
+        components.html(html, height=550, scrolling=True)
 
     def draw_subgraph(self, motif_size: int):
         output_dir = "drawings/subgraphs"  # output directory
