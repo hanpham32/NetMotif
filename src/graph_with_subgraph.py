@@ -18,7 +18,7 @@ class GraphWithSubgraph(Graph):
     motif_size: int = 0
 
     def __init__(self, graph_type, input, motif_size):
-        super().__init__(self, graph_type, input)
+        super().__init__(graph_type, input)
         self.motif_size = motif_size
         self.runESU(motif_size)
 
