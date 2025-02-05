@@ -1,5 +1,6 @@
 import streamlit as st
 from src.graph_utils import Graph
+from src.graph_with_subgraph import GraphWithSubgraph
 from src.graph_types import GraphType
 import src.random_graph as rg
 import src.motif_statistics as stat
@@ -19,7 +20,7 @@ def form_callback():
         return
 
     # create graph from file
-    G = Graph(
+    G = GraphWithSubgraph(
         graph_type=st.session_state["graph_type"],
         input=st.session_state["uploaded_file"],
         motif_size=st.session_state["motif_size"],
