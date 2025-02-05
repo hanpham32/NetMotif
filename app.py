@@ -47,11 +47,6 @@ def form_callback():
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph(st.session_state["motif_size"])
 
-    randoms = rg.generate_random_graphs(G,2)
-    for random in randoms:
-        random.draw_graph()
-
-
 def main():
     # Initialize global session state for user form submission
     if "graph_type" not in st.session_state:
