@@ -1,3 +1,4 @@
+from src.graph_with_subgraph import GraphWithSubgraph
 from src.graph_utils import Graph
 import math
 import scipy.stats
@@ -14,7 +15,7 @@ def draw_statistics(labelTable):
     st.table(df)
 
 #returns a dictionary of all stastical information for each unique label in graphs
-def process_statistics(original_graph: Graph, graphs: list[Graph]):
+def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWithSubgraph]):
     labelTable: dict = {} #label -> [frequency, mean, sd, zscore, p-value]
     _generateEmptyLabelTable(original_graph, labelTable)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
@@ -38,7 +39,7 @@ method written by ChatGPT
 finds every unique key in a list of dictionaries and sets them as the
 keys in second input dictionary
 '''
-def _generateEmptyLabelTable(graph: Graph, labelTable: dict):
+def _generateEmptyLabelTable(graph: GraphWithSubgraph, labelTable: dict):
     # Create an empty set to store unique keys
     unique_keys = set()
 
@@ -48,7 +49,7 @@ def _generateEmptyLabelTable(graph: Graph, labelTable: dict):
     for key in unique_keys:
         labelTable[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
-def _getLabelMean(label, graphs: list[Graph]):
+def _getLabelMean(label, graphs: list[GraphWithSubgraph]):
     graph_frequency = 0
     frequencys = 0
     for graph in graphs:
@@ -58,7 +59,7 @@ def _getLabelMean(label, graphs: list[Graph]):
             frequencys += graph_frequency/total_number_of_subgraphs
     return frequencys/len(graphs)
 
-def _getStandardDeviation(mean, label, graphs: list[Graph]):
+def _getStandardDeviation(mean, label, graphs: list[GraphWithSubgraph]):
     variance = 0
     for graph in graphs:
         if label in graph.subgraph_list_enumerated:
@@ -69,7 +70,7 @@ def _getStandardDeviation(mean, label, graphs: list[Graph]):
     variance = variance/(len(graphs))
     return variance**0.5
 
-def _getZScore(sd: float, mean: float, label, original_graph: Graph):
+def _getZScore(sd: float, mean: float, label, original_graph: GraphWithSubgraph):
     score = 0
     if(label in original_graph.subgraph_list_enumerated):
         score = original_graph.subgraph_list_enumerated[label]
