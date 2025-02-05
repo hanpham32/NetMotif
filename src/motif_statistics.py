@@ -9,7 +9,11 @@ keep in mind, graphs is a variable for a list of all graphs' subgraphs,
 named, enumerated, and put into a dictionary
 '''
 
-def draw_statistics(labelTable):
+def draw_statistics(labelTable: dict):
+    motif_table: dict = {}
+    for key in labelTable.keys():
+        newKey = ""
+        key.get_label()
     df = pd.DataFrame.from_dict(labelTable, orient = 'index')
     st.table(df)
 
