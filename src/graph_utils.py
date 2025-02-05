@@ -102,7 +102,7 @@ class Graph:
         else:
             nt = Network()
         nt.from_nx(self.G)
-        #nt.toggle_physics(True)  # add physic to graph
+        nt.toggle_physics(True)  # add physic to graph
         nt.toggle_hide_edges_on_drag(True)
         #nt.show_buttons(filter_=["physics"])
 
@@ -117,7 +117,7 @@ class Graph:
         with open(file_name, "r") as f:
             html = f.read()
 
-        components.html(html, height=1000, scrolling=True)
+        components.html(html, height=500, scrolling=True)
 
     def draw_subgraph(self, motif_size: int):
         output_dir = "drawings/subgraphs"  # output directory
