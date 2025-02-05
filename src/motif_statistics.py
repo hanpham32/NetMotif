@@ -1,5 +1,4 @@
 from src.graph_with_subgraph import GraphWithSubgraph
-from src.graph_utils import Graph
 import math
 import scipy.stats
 import pandas as pd

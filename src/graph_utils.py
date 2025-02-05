@@ -14,7 +14,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 from pyvis.network import Network
-import src.label as label
 import subprocess
 from src.graph_types import GraphType
 from collections import defaultdict
