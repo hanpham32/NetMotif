@@ -36,7 +36,7 @@ class ESU:
             )
 
         for nx_graph in self.subgraph_list:
-            Subgraph(graph_type, nx_graph, size)
+            Subgraph(graph_type, nx_graph)
 
     def esu_recursive_helper(
         self,
