@@ -10,6 +10,7 @@ Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
 
 from typing import List
 import networkx as nx
+import streamlit as st
 from src.subgraph import Subgraph
 from src.graph_types import GraphType
 
@@ -35,6 +36,7 @@ class ESU:
                 size, neighbor_set, node_list, self.subgraph_list, node_visited
             )
 
+        st.write(len(self.subgraph_list))
         for nx_graph in self.subgraph_list:
             Subgraph(graph_type, nx_graph)
 
