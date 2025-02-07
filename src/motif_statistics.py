@@ -11,33 +11,34 @@ keep in mind, graphs is a variable for a list of all graphs' subgraphs,
 named, enumerated, and put into a dictionary
 '''
 
-def draw_statistics(labelTable: dict):
+def draw_statistics(label_table: dict):
     motif_table: dict = {}
-    for key in labelTable.keys():
+    for key in label_table.keys():
         new_key = ""
         new_key += key.get_label()
         new_key += components.html(key.draw_graph())
-    df = pd.DataFrame.from_dict(labelTable, orient = 'index')
+        motif_table[new_key] = label_table[key]
+    df = pd.DataFrame.from_dict(motif_table, orient = 'index')
     st.table(df)
 
 #returns a dictionary of all stastical information for each unique label in graphs
 def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWithSubgraph]):
-    labelTable: dict = {} #label -> [frequency, mean, sd, zscore, p-value]
-    _generateEmptyLabelTable(original_graph, labelTable)
+    label_table: dict = {} #label -> [frequency, mean, sd, zscore, p-value]
+    _generateEmptylabel_table(original_graph, label_table)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
-    for label in labelTable:
+    for label in label_table:
         if(label in original_graph.subgraph_list_enumerated):
             #frequency of label as a percent
-            labelTable[label]['freq'] = (original_graph.subgraph_list_enumerated[label]/total_number_of_subgraphs)*100
+            label_table[label]['freq'] = (original_graph.subgraph_list_enumerated[label]/total_number_of_subgraphs)*100
         mean = _getLabelMean(label, graphs)
-        labelTable[label]['mean'] = mean * 100 # % mean-frequency as a percent
+        label_table[label]['mean'] = mean * 100 # % mean-frequency as a percent
         sd = _getStandardDeviation(mean, label, graphs)
-        labelTable[label]['sd'] = sd # standard deviation
+        label_table[label]['sd'] = sd # standard deviation
         z_score = _getZScore(sd, mean, label, original_graph)
-        labelTable[label]['z-score'] = z_score # z-score
+        label_table[label]['z-score'] = z_score # z-score
         p_value = _getPValue(z_score)
-        labelTable[label]['p-value'] = p_value # p-value
-    return labelTable
+        label_table[label]['p-value'] = p_value # p-value
+    return label_table
 
 
 '''
@@ -45,7 +46,7 @@ method written by ChatGPT
 finds every unique key in a list of dictionaries and sets them as the
 keys in second input dictionary
 '''
-def _generateEmptyLabelTable(graph: GraphWithSubgraph, labelTable: dict):
+def _generateEmptylabel_table(graph: GraphWithSubgraph, label_table: dict):
     # Create an empty set to store unique keys
     unique_keys = set()
 
@@ -53,7 +54,7 @@ def _generateEmptyLabelTable(graph: GraphWithSubgraph, labelTable: dict):
     unique_keys.update(graph.subgraph_list_enumerated.keys())
 
     for key in unique_keys:
-        labelTable[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
+        label_table[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
 def _getLabelMean(label, graphs: list[GraphWithSubgraph]):
     graph_frequency = 0
