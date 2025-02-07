@@ -26,7 +26,6 @@ class Graph:
         self.graph_type = graph_type
         self.file = input
         self.G = None
-        self.esu = None
 
         # build graph
         if graph_type == GraphType.UNDIRECTED:
@@ -87,7 +86,6 @@ class Graph:
         nt.toggle_hide_edges_on_drag(True)
         #nt.show_buttons(filter_=["physics"])
 
-        '''
         # Render the graph to an HTML file
         file_name = os.path.join(output_dir, "nx.html")
 
@@ -100,8 +98,6 @@ class Graph:
             html = f.read()
 
         components.html(html, height=600, scrolling=True)
-        '''
-        st.image(nt)
 
     def print_labelg(self):
         """

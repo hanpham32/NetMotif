@@ -16,6 +16,8 @@ class GraphWithSubgraph(Graph):
     subgraph_list_enumerated: dict = {}
     #number of nodes in subgraphs
     motif_size: int = 0
+    #esu object for esu algorithm
+    esu = None
 
     def __init__(self, graph_type, input, motif_size):
         super().__init__(graph_type, input)

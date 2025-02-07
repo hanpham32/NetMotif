@@ -1,8 +1,10 @@
 from src.graph_with_subgraph import GraphWithSubgraph
+from src.graph_utils import Graph
 import math
 import scipy.stats
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 '''
 keep in mind, graphs is a variable for a list of all graphs' subgraphs,
@@ -12,8 +14,9 @@ named, enumerated, and put into a dictionary
 def draw_statistics(labelTable: dict):
     motif_table: dict = {}
     for key in labelTable.keys():
-        newKey = ""
-        key.get_label()
+        new_key = ""
+        new_key += key.get_label()
+        new_key += components.html(key.draw_graph())
     df = pd.DataFrame.from_dict(labelTable, orient = 'index')
     st.table(df)
 
