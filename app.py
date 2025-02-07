@@ -32,8 +32,7 @@ def form_callback():
     st.write(f"Number of edges: {graph_properties['Number of edges']}")
     st.write(f"Weight: {graph_properties['Weight']}")
 
-    # write labels
-    randoms = rg.generate_random_graphs(G, 100)
+    #randoms = rg.generate_random_graphs(G, 100)
 
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:
