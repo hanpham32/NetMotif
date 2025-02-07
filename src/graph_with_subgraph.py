@@ -38,7 +38,7 @@ class GraphWithSubgraph(Graph):
                 self.subgraph_list_enumerated[subgraph] = 1
             else:
                 self.subgraph_list_enumerated[subgraph] += 1
-        st.write(len(self.subgraph_list_enumerated))
+        #st.write(len(self.subgraph_list_enumerated))
 
     def draw_subgraph(self):
         output_dir = "drawings/subgraphs"  # output directory
