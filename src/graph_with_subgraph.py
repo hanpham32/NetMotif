@@ -27,9 +27,10 @@ class GraphWithSubgraph(Graph):
     def runESU(self, motif_size, graph_type):
         # produce list of subgraphs
         self.subgraph_list = ESU(self.G, motif_size, graph_type).get_subgraph_list()
+        st.write(ESU(self.G, motif_size, graph_type).number_of_subgraphs)
         # name and enumerate list of subgraphs
         self.enumerate_subgraphs()
-    
+
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
             curLabel = subgraph.get_label()
