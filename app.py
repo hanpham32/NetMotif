@@ -32,7 +32,7 @@ def form_callback():
     st.write(f"Number of edges: {graph_properties['Number of edges']}")
     st.write(f"Weight: {graph_properties['Weight']}")
 
-    #randoms = rg.generate_random_graphs(G, 100)
+    randoms = rg.generate_random_graphs(G, 100)
 
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:
@@ -44,7 +44,7 @@ def form_callback():
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph()
 
-    #stat.draw_statistics(stat.process_statistics(G, randoms))
+    stat.draw_statistics(stat.process_statistics(G, randoms))
 
 def main():
     # Initialize global session state for user form submission
