@@ -104,8 +104,6 @@ def toLabelg(label:str):
         os.chmod(label_g, 0o755)  # Ensure it is executable
     else:
         st.write("labelg exists: False")
-        print(os.getcwd())
-        st.write(os.getcwd())
         return label
 
     try:
