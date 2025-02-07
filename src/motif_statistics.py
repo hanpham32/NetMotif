@@ -7,6 +7,7 @@ import streamlit as st
 
 def draw_statistics(label_table: dict):
     motif_table: dict = {}
+    st.write(label_table.keys())
     for key in label_table.keys():
         new_key = ""
         new_key += key.get_label()
