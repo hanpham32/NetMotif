@@ -18,7 +18,7 @@ class Subgraph(Graph):
         return False
 
     def __hash__(self):
-        return self.label.encode()
+        return hash(self.label)
 
     def get_label(self):
         return self.label
