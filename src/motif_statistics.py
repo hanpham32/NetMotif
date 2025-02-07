@@ -3,12 +3,7 @@ import math
 import scipy.stats
 import pandas as pd
 import streamlit as st
-import streamlit.components.v1 as components
-
-'''
-keep in mind, graphs is a variable for a list of all graphs' subgraphs,
-named, enumerated, and put into a dictionary
-'''
+#import streamlit.components.v1 as components
 
 def draw_statistics(label_table: dict):
     motif_table: dict = {}
@@ -21,9 +16,9 @@ def draw_statistics(label_table: dict):
     st.table(df)
 
 #returns a dictionary of all stastical information for each unique label in graphs
-def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWithSubgraph]):
+def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWithSubgraph]) -> dict:
     label_table: dict = {} #label -> [frequency, mean, sd, zscore, p-value]
-    _generateEmptylabel_table(original_graph, label_table)
+    _generate_empty_label_table(original_graph, label_table)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
     for label in label_table:
         if(label in original_graph.subgraph_list_enumerated):
@@ -46,12 +41,13 @@ method written by ChatGPT
 finds every unique key in a list of dictionaries and sets them as the
 keys in second input dictionary
 '''
-def _generateEmptylabel_table(graph: GraphWithSubgraph, label_table: dict):
+def _generate_empty_label_table(graph: GraphWithSubgraph, label_table: dict):
     # Create an empty set to store unique keys
     unique_keys = set()
 
     # Add the keys of the current dictionary to the set
     unique_keys.update(graph.subgraph_list_enumerated.keys())
+    st.write(len(unique_keys))
 
     for key in unique_keys:
         label_table[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}

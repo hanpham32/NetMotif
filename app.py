@@ -1,5 +1,4 @@
 import streamlit as st
-from src.graph_utils import Graph
 from src.graph_with_subgraph import GraphWithSubgraph
 from src.graph_types import GraphType
 import src.random_graph as rg
