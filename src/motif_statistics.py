@@ -1,5 +1,4 @@
 from src.graph_with_subgraph import GraphWithSubgraph
-from src.graph_utils import Graph
 import math
 import scipy.stats
 import pandas as pd
@@ -30,6 +29,7 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
         if(label in original_graph.subgraph_list_enumerated):
             #frequency of label as a percent
             label_table[label]['freq'] = (original_graph.subgraph_list_enumerated[label]/total_number_of_subgraphs)*100
+            st.write(label_table[label]['freq'])
         mean = _getLabelMean(label, graphs)
         label_table[label]['mean'] = mean * 100 # % mean-frequency as a percent
         sd = _getStandardDeviation(mean, label, graphs)
