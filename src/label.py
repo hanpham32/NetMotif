@@ -129,6 +129,7 @@ def toLabelg(label:str):
         st.write("error running labelg:")
         st.write(e.stderr)
 
+    st.write(labelg_output)
     return labelg_output
 
 def get_graph_label(nx_graph: nx.Graph, graph_type: GraphType) -> str:
