@@ -17,5 +17,8 @@ class Subgraph(Graph):
             return self.label == other.label
         return False
 
+    def __hash__(self):
+        return self.label
+
     def get_label(self):
         return self.label
