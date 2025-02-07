@@ -35,9 +35,9 @@ class GraphWithSubgraph(Graph):
         for subgraph in self.subgraph_list:
             curLabel = subgraph.get_label()
             if curLabel not in self.subgraph_list_enumerated:
-                self.subgraph_list_enumerated[curLabel] = 1
+                self.subgraph_list_enumerated[subgraph] = 1
             else:
-                self.subgraph_list_enumerated[curLabel] += 1
+                self.subgraph_list_enumerated[subgraph] += 1
 
     def draw_subgraph(self):
         output_dir = "drawings/subgraphs"  # output directory
