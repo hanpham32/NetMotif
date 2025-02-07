@@ -3,7 +3,7 @@ import math
 import scipy.stats
 import pandas as pd
 import streamlit as st
-#import streamlit.components.v1 as components
+import streamlit.components.v1 as components
 
 def draw_statistics(label_table: dict):
     motif_table: dict = {}
@@ -11,9 +11,9 @@ def draw_statistics(label_table: dict):
     for key in label_table.keys():
         new_key = ""
         new_key += key.get_label()
-        #new_key += components.html(key.draw_graph())
+        new_key += components.html(key.draw_graph())
         motif_table[new_key] = label_table[key]
-    df = pd.DataFrame.from_dict(label_table, orient = 'index')
+    df = pd.DataFrame.from_dict(motif_table, orient = 'index')
     st.table(df)
 
 #returns a dictionary of all stastical information for each unique label in graphs
