@@ -40,12 +40,12 @@ def form_callback():
         st.markdown("### Full Graph Visualization")
         G.draw_graph()
 
-    stat.draw_statistics(stat.process_statistics(G, randoms))
-
     # Visualize subgraphs if selected
     if st.session_state["is_visualize_subgraph"]:
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph()
+
+    #stat.draw_statistics(stat.process_statistics(G, randoms))
 
 def main():
     # Initialize global session state for user form submission
