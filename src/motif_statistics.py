@@ -46,9 +46,7 @@ def _generate_empty_label_table(graph: GraphWithSubgraph, label_table: dict):
     unique_keys = set()
 
     # Add the keys of the current dictionary to the set
-    len(graph.subgraph_list_enumerated)
     unique_keys.update(graph.subgraph_list_enumerated.keys())
-    st.write(len(unique_keys))
 
     for key in unique_keys:
         label_table[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}

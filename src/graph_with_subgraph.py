@@ -28,7 +28,6 @@ class GraphWithSubgraph(Graph):
         # produce list of subgraphs
         self.esu = ESU(self.G, motif_size, graph_type)
         self.subgraph_list = self.esu.get_subgraph_list()
-        st.write(self.esu.number_of_subgraphs())
         # name and enumerate list of subgraphs
         self.enumerate_subgraphs()
 
