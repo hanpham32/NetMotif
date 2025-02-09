@@ -2,8 +2,8 @@ import networkx as nx
 from src.graph_with_subgraph import GraphWithSubgraph
 from src.graph_types import GraphType
 
-def generate_random_graphs(mimicked_graph: GraphWithSubgraph, number_of_graphs) -> list["GraphWithSubgraph"]:
-    random_graphs: list["GraphWithSubgraph"] = []
+def generate_random_graphs(mimicked_graph: GraphWithSubgraph, number_of_graphs) -> list[GraphWithSubgraph]:
+    random_graphs: list[GraphWithSubgraph] = []
     for _ in range(number_of_graphs):
         if mimicked_graph.graph_type == GraphType.UNDIRECTED:
             degree_sequence = [d for _, d in mimicked_graph.G.degree()]
@@ -17,8 +17,8 @@ def generate_random_graphs(mimicked_graph: GraphWithSubgraph, number_of_graphs) 
                 )
             )
         random_graph = GraphWithSubgraph(
-            input=random_nx_graph,
             graph_type=mimicked_graph.graph_type,
+            input=random_nx_graph,
             motif_size=mimicked_graph.motif_size,
         )
         random_graphs.append(random_graph)
