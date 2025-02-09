@@ -40,6 +40,7 @@ class ESU:
         for nx_graph in self.subgraph_list:
             st.write(len(nx_graph.nodes))
             self.Subgraph_list.append(Subgraph(graph_type=graph_type, input=nx_graph))
+            st.write(Subgraph(graph_type=graph_type, input=nx_graph).get_label())
 
     def esu_recursive_helper(
         self,
