@@ -22,5 +22,4 @@ def generate_random_graphs(mimicked_graph: GraphWithSubgraph, number_of_graphs) 
             motif_size=mimicked_graph.motif_size,
         )
         random_graphs.append(random_graph)
-        random_graph = None
     return random_graphs
