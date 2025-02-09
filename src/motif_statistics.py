@@ -30,7 +30,7 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
         #st.write(total_number_of_subgraphs)
         mean = _getsubgraphMean(subgraph, graphs)
         subgraph_table[subgraph]['mean'] = mean * 100 # % mean-frequency as a percent
-        st.write(subgraph.get_label() + str(subgraph_table[subgraph]['mean']))
+        st.write(subgraph.get_label() + " " + str(subgraph_table[subgraph]['mean']))
         sd = _getStandardDeviation(mean, subgraph, graphs)
         subgraph_table[subgraph]['sd'] = sd # standard deviation
         z_score = _getZScore(sd, mean, subgraph, original_graph)
