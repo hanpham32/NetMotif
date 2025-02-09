@@ -8,7 +8,6 @@ import streamlit.components.v1 as components
 
 def draw_statistics(subgraph_table: dict):
     motif_table: dict = {}
-    st.write(subgraph_table.keys())
     for key in subgraph_table.keys():
         new_key = ""
         new_key += key.get_label()
@@ -27,7 +26,6 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
         subgraph_table[subgraph]['freq'] = (original_graph.subgraph_list_enumerated[subgraph]/total_number_of_subgraphs)*100
         mean = _getSubgraphMean(subgraph, graphs)
         subgraph_table[subgraph]['mean'] = mean * 100 # % mean-frequency as a percent
-        st.write(subgraph.get_label() + " " + str(subgraph_table[subgraph]['mean']))
         if(mean == 0):
             sd = 'NA'
             z_score = 'NA'
