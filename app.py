@@ -37,7 +37,7 @@ def form_callback():
     for random in test_randoms:
         random.draw_graph()
 
-    randoms = rg.generate_random_graphs(G, 100)
+    randoms = rg.generate_random_graphs(G, 10)
 
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:

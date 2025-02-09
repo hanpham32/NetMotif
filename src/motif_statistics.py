@@ -22,9 +22,8 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
     _generate_empty_label_table(original_graph, label_table)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
     for label in label_table:
-        #frequency of label as a percent
+        #frequency of label in original graph as a percent
         label_table[label]['freq'] = (original_graph.subgraph_list_enumerated[label]/total_number_of_subgraphs)*100
-        st.write(label_table[label]['freq'])
         mean = _getLabelMean(label, graphs)
         label_table[label]['mean'] = mean * 100 # % mean-frequency as a percent
         sd = _getStandardDeviation(mean, label, graphs)
@@ -52,7 +51,6 @@ def _generate_empty_label_table(graph: GraphWithSubgraph, label_table: dict):
         label_table[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
 def _getLabelMean(label, graphs: list[GraphWithSubgraph]):
-    st.write(len(graphs))
     graph_frequency = 0
     frequencys = 0
     for graph in graphs:
@@ -60,6 +58,9 @@ def _getLabelMean(label, graphs: list[GraphWithSubgraph]):
             graph_frequency = graph.subgraph_list_enumerated[label]
             total_number_of_subgraphs = sum(graph.subgraph_list_enumerated.values())
             frequencys += graph_frequency/total_number_of_subgraphs
+            st.write(graph_frequency)
+            st.write(total_number_of_subgraphs)
+            st.write(frequencys)
     return frequencys/len(graphs)
 
 def _getStandardDeviation(mean, label, graphs: list[GraphWithSubgraph]):
