@@ -11,7 +11,7 @@ def draw_statistics(label_table: dict):
     for key in label_table.keys():
         new_key = ""
         new_key += key.get_label()
-        new_key += components.html(key.draw_graph())
+        #new_key += components.html(key.draw_graph())
         motif_table[new_key] = label_table[key]
     df = pd.DataFrame.from_dict(motif_table, orient = 'index')
     st.table(df)
