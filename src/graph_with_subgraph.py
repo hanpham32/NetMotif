@@ -34,7 +34,7 @@ class GraphWithSubgraph(Graph):
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
             #cur_label = subgraph.get_label()
-            st.write(subgraph.get_label())
+            #st.write(subgraph.get_label())
             if subgraph not in self.subgraph_list_enumerated:
                 self.subgraph_list_enumerated[subgraph] = 1
             else:
