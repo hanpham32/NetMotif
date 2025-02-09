@@ -1,4 +1,5 @@
 from src.graph_with_subgraph import GraphWithSubgraph
+from src.subgraph import Subgraph
 import math
 import scipy.stats
 import pandas as pd
@@ -6,7 +7,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 def draw_statistics(subgraph_table: dict):
-    '''
     motif_table: dict = {}
     st.write(subgraph_table.keys())
     for key in subgraph_table.keys():
@@ -14,8 +14,7 @@ def draw_statistics(subgraph_table: dict):
         new_key += key.get_label()
         #new_key += components.html(key.draw_graph())
         motif_table[new_key] = subgraph_table[key]
-    '''
-    df = pd.DataFrame.from_dict(subgraph_table, orient = 'index')
+    df = pd.DataFrame.from_dict(motif_table, orient = 'index')
     st.table(df)
 
 #returns a dictionary of all stastical information for each unique subgraph in graphs
@@ -26,17 +25,20 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
     for subgraph in subgraph_table:
         #frequency of subgraph in original graph as a percent
         subgraph_table[subgraph]['freq'] = (original_graph.subgraph_list_enumerated[subgraph]/total_number_of_subgraphs)*100
-        #st.write(original_graph.subgraph_list_enumerated[subgraph])
-        #st.write(total_number_of_subgraphs)
-        mean = _getsubgraphMean(subgraph, graphs)
+        mean = _getSubgraphMean(subgraph, graphs)
         subgraph_table[subgraph]['mean'] = mean * 100 # % mean-frequency as a percent
         st.write(subgraph.get_label() + " " + str(subgraph_table[subgraph]['mean']))
-        sd = _getStandardDeviation(mean, subgraph, graphs)
-        subgraph_table[subgraph]['sd'] = sd # standard deviation
-        z_score = _getZScore(sd, mean, subgraph, original_graph)
-        subgraph_table[subgraph]['z-score'] = z_score # z-score
-        p_value = _getPValue(z_score)
-        subgraph_table[subgraph]['p-value'] = p_value # p-value
+        if(mean == 0):
+            sd = 'NA'
+            z_score = 'NA'
+            p_value = 'NA'
+        else:
+            sd = _getStandardDeviation(mean, subgraph, graphs)
+            subgraph_table[subgraph]['sd'] = sd # standard deviation
+            z_score = _getZScore(sd, mean, subgraph, original_graph)
+            subgraph_table[subgraph]['z-score'] = z_score # z-score
+            p_value = _getPValue(z_score)
+            subgraph_table[subgraph]['p-value'] = p_value # p-value
     return subgraph_table
 
 
@@ -55,8 +57,7 @@ def _generate_empty_subgraph_table(graph: GraphWithSubgraph, subgraph_table: dic
     for key in unique_keys:
         subgraph_table[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
-def _getsubgraphMean(subgraph, graphs: list[GraphWithSubgraph]):
-    graph_frequency = 0
+def _getSubgraphMean(subgraph: Subgraph, graphs: list[GraphWithSubgraph]):
     frequencys = 0
     for graph in graphs:
         if subgraph in graph.subgraph_list_enumerated:
@@ -68,7 +69,7 @@ def _getsubgraphMean(subgraph, graphs: list[GraphWithSubgraph]):
             #st.write(frequencys)
     return frequencys/len(graphs)
 
-def _getStandardDeviation(mean, subgraph, graphs: list[GraphWithSubgraph]):
+def _getStandardDeviation(mean, subgraph: Subgraph, graphs: list[GraphWithSubgraph]):
     variance = 0
     for graph in graphs:
         if subgraph in graph.subgraph_list_enumerated:
@@ -79,7 +80,7 @@ def _getStandardDeviation(mean, subgraph, graphs: list[GraphWithSubgraph]):
     variance = variance/(len(graphs))
     return variance**0.5
 
-def _getZScore(sd: float, mean: float, subgraph, original_graph: GraphWithSubgraph):
+def _getZScore(sd: float, mean: float, subgraph: Subgraph, original_graph: GraphWithSubgraph):
     score = 0
     if(subgraph in original_graph.subgraph_list_enumerated):
         score = original_graph.subgraph_list_enumerated[subgraph]
