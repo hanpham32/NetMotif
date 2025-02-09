@@ -40,7 +40,7 @@ class GraphWithSubgraph(Graph):
             else:
                 self.subgraph_list_enumerated[subgraph] += 1
         for subgraph in self.subgraph_list_enumerated:
-            st.write(subgraph.get_label()+self.subgraph_list_enumerated[subgraph])
+            st.write(subgraph.get_label()+str(self.subgraph_list_enumerated[subgraph]))
         #st.write(len(self.subgraph_list_enumerated))
 
     def draw_subgraph(self):
