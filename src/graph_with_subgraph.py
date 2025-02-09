@@ -19,8 +19,12 @@ class GraphWithSubgraph(Graph):
         self.motif_size: int = 0
         #esu object for esu algorithm
         self.esu = None
+
+        #instantiation of Graph object
         super().__init__(graph_type, input)
+        #setting motif size
         self.motif_size = motif_size
+        #creating Subgraph list and dict
         self.runESU(motif_size, graph_type)
 
     def runESU(self, motif_size, graph_type):
@@ -32,15 +36,10 @@ class GraphWithSubgraph(Graph):
 
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
-            #cur_label = subgraph.get_label()
-            #st.write(subgraph.get_label())
             if subgraph not in self.subgraph_list_enumerated:
                 self.subgraph_list_enumerated[subgraph] = 1
             else:
                 self.subgraph_list_enumerated[subgraph] += 1
-        for subgraph in self.subgraph_list_enumerated:
-            st.write(subgraph.get_label()+str(self.subgraph_list_enumerated[subgraph]))
-        #st.write(len(self.subgraph_list_enumerated))
 
     def draw_subgraph(self):
         output_dir = "drawings/subgraphs"  # output directory
