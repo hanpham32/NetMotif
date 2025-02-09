@@ -33,12 +33,12 @@ class GraphWithSubgraph(Graph):
 
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
-            cur_label = subgraph.get_label()
+            #cur_label = subgraph.get_label()
             st.write(subgraph.get_label())
-            if cur_label not in self.subgraph_list_enumerated:
-                self.subgraph_list_enumerated[cur_label] = 1
+            if subgraph not in self.subgraph_list_enumerated:
+                self.subgraph_list_enumerated[subgraph] = 1
             else:
-                self.subgraph_list_enumerated[cur_label] += 1
+                self.subgraph_list_enumerated[subgraph] += 1
         #st.write(len(self.subgraph_list_enumerated))
 
     def draw_subgraph(self):
