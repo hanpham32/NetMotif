@@ -54,9 +54,6 @@ def _generate_empty_label_table(graph: GraphWithSubgraph, label_table: dict):
     for key in unique_keys:
         label_table[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
-    df = pd.DataFrame.from_dict(label_table, orient = 'index')
-    st.table(df)
-
 def _getLabelMean(label, graphs: list[GraphWithSubgraph]):
     graph_frequency = 0
     frequencys = 0
