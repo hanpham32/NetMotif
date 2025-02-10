@@ -76,7 +76,7 @@ def _getStandardDeviation(mean, subgraph: Subgraph, graphs: list[GraphWithSubgra
             xi = graph.subgraph_list_enumerated[subgraph]
             variance += (xi-mean)**2
         else:
-            variance += mean**2
+            variance += 0
     variance = variance/(len(graphs) - 1)
     return variance**0.5
 
