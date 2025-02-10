@@ -24,7 +24,7 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
     st.write(total_number_of_subgraphs)
     for subgraph in subgraph_table:
         original_freq = original_graph.subgraph_list_enumerated[subgraph]/total_number_of_subgraphs
-        mean = _getSubgraphMean(subgraph, graphs)
+        mean = _getMean(subgraph, graphs)
         if(mean == 0):
             sd = 'NA'
             z_score = 'NA'
@@ -57,7 +57,7 @@ def _generate_empty_subgraph_table(graph: GraphWithSubgraph, subgraph_table: dic
     for key in unique_keys:
         subgraph_table[key] = {'freq': 0,'mean': 0, 'sd': 0, 'z-score': 0, 'p-value': 0}
 
-def _getSubgraphMean(subgraph: Subgraph, graphs: list[GraphWithSubgraph]):
+def _getMean(subgraph: Subgraph, graphs: list[GraphWithSubgraph]):
     frequencys = 0
     for graph in graphs:
         if subgraph in graph.subgraph_list_enumerated:
