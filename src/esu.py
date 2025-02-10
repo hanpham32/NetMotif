@@ -86,7 +86,7 @@ class ESU:
         node_index_in_g = nodes_list.index(node)
 
         for i, n in enumerate(self.G):
-            if i > node_index_in_g and self.G.has_edge(node, n):
+            if i > node_index_in_g and (self.G.has_edge(node, n) or self.G.has_edge(n, node)):
                 right_hand_neighbors.append(n)
 
         return iter(right_hand_neighbors)
