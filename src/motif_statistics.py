@@ -78,7 +78,6 @@ def _getStandardDeviation(mean, subgraph: Subgraph, graphs: list[GraphWithSubgra
         else:
             variance += 0
     variance = variance/(len(graphs) - 1)
-    return 0
     return variance**0.5
 
 def _getZScore(sd: float, mean: float, subgraph: Subgraph, original_graph: GraphWithSubgraph):
