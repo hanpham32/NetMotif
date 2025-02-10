@@ -62,7 +62,7 @@ class ESU:
             for neighbor in neighbors:
                 if neighbor not in nodes_visited:
                     next_neighbors.add(neighbor)
-            for neighbor in self.G.neighbors(node):
+            for neighbor in self.G.all_neighbors(node):
                 if neighbor not in nodes_visited:
                     next_neighbors.add(neighbor)
 
