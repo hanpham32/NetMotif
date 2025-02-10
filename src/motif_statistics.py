@@ -83,6 +83,7 @@ def _getStandardDeviation(mean, subgraph: Subgraph, graphs: list[GraphWithSubgra
 def _getZScore(sd: float, mean: float, subgraph: Subgraph, original_graph: GraphWithSubgraph):
     score = 0
     if(subgraph in original_graph.subgraph_list_enumerated):
+        #score as a frequency ratio
         score = original_graph.subgraph_list_enumerated[subgraph]/len(original_graph.subgraph_list)
     return (score - mean)/sd
 
