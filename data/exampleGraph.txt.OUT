@@ -1,0 +1,39 @@
+FANMOD 1.1 subgraph enumeration
+-------------------------------
+
+Network name: C:\Users\IlyaVaschillo\Documents\2024-2025\Autumn\NetMotif\NetMotif\data\exampleGraph.txt
+Network type: Undirected
+Number of nodes: 48299
+Number of edges: 1331
+Number of single edges: 0
+Number of mutual edges: 1331
+
+Algorithm: enumeration
+Subgraph size: 3
+
+Generated 1000 random networks
+   with locally constant number of bidirectional edges,
+   3 exchanges per edge and 3 tries per edge.
+
+9036 subgraphs were enumerated in the original network.
+9597824 subgraphs were enumerated in the random networks.
+9606860 subgraphs were enumerated in all networks.
+
+For the random networks: 4346105 tries were made, 3987813 were successful.
+Randomization took 3.421 seconds.
+Enumeration took 8.621 seconds.
+
+
+Result overview:
+
+  ID Adj   Frequency     Mean-Freq  Standard-Dev    Z-Score  p-Value
+          [Original]      [Random]      [Random]
+
+  78 001     96.868%       99.978%    0.00025548    -121.74        1
+     001
+     110
+
+ 238 011     3.1319%     0.021768%    0.00025548     121.74        0
+     101
+     110
+

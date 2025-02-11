@@ -97,7 +97,7 @@ class Graph:
         with open(file_name, "r") as f:
             html = f.read()
 
-        components.html(html, height=600, scrolling=True)
+        components.html(html, height=700, scrolling=True)
 
     def print_labelg(self):
         """
