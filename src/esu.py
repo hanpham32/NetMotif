@@ -42,12 +42,12 @@ class ESU:
             my_bar.progress(i/len(nodes), text=progress_text)
         my_bar.empty()
 
-        st.write("esu done")
-
-        for nx_graph in self.subgraph_list:
+        progress_text = "Labelg algorithm in progress. Please wait."
+        my_label_bar = st.progress(0, text=progress_text)
+        for i, nx_graph in enumerate(self.subgraph_list):
             self.Subgraph_list.append(Subgraph(graph_type=graph_type, input=nx_graph))
-
-        st.write("subgraphs made")
+            my_label_bar.progress(i/len(self.subgraph_list), text=progress_text)
+        my_label_bar.empty()
 
     def esu_recursive_helper(
         self,
