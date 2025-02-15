@@ -40,12 +40,6 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
         subgraph_table[subgraph]['p-value'] = p_value # p-value
     return subgraph_table
 
-
-'''
-method written by ChatGPT
-finds every unique key in a list of dictionaries and sets them as the
-keys in second input dictionary
-'''
 def _generate_empty_subgraph_table(graph: GraphWithSubgraph, subgraph_table: dict):
     # Create an empty set to store unique keys
     unique_keys = set()
