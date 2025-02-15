@@ -36,10 +36,12 @@ def form_callback():
     st.write(f"Number of edges: {graph_properties['Number of edges']}")
     st.write(f"Weight: {graph_properties['Weight']}")
 
+    '''
     test_randoms = rg.generate_random_graphs(G, 2)
 
     for random in test_randoms:
         random.draw_graph()
+    '''
 
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:
@@ -57,7 +59,7 @@ def form_callback():
     random_graphs: list[GraphWithSubgraph] = []
     for i in range(st.session_state['number_of_random_graphs']):
         random_graphs.append(rg.generate_random_graph(G))
-        my_bar.progress(i/st.session_state['number_of_random_graphs'] + 1, text=progress_text)
+        my_bar.progress(i/st.session_state['number_of_random_graphs'], text=progress_text)
     my_bar.empty()
 
     #randoms = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
