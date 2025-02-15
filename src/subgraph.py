@@ -35,8 +35,8 @@ class Subgraph(Graph):
 
         end_time = time.time()
         elapsed_time = end_time - start_time
-        print(f"Elapsed time for graph6 label: {elapsed_time} seconds")
-        
+        st.write(f"Elapsed time for graph6 label: {elapsed_time} seconds")
+
         if basic_label not in Subgraph.label_conversion_map:
             Subgraph.label_conversion_map[basic_label] = lb.get_graph_label(self.G, self.graph_type)
         self.label = Subgraph.label_conversion_map[basic_label]
