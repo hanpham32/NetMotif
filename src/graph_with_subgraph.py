@@ -104,6 +104,8 @@ class GraphWithSubgraph(Graph):
             top_row = f"{'Nodes':<10}"
             for label in nodes_dictionary.keys():
                 top_row += f"{label:<10}"
+            top_row += "\n"
+            file.writelines(top_row)
 
         #Display download button for file
         with open(subgraph_profile_output, "r") as file:
