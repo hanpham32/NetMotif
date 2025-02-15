@@ -69,3 +69,25 @@ class GraphWithSubgraph(Graph):
             )
             components.html(html, height=600, scrolling=True)
         return
+
+    @st.cache_data
+    def generateSubgraphCollection(self):
+        output_dir = "out"
+        subgraph_collection_output = os.path.join(output_dir, "subgraph_collection.txt")
+
+        # Ensure output folder exists
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        # Write into file
+        with open(subgraph_collection_output, "w") as file:
+            for subgraph in self.subgraph_list():
+                nodes = subgraph.G.nodes()
+                line = ""
+                line += subgraph.get_label() + "\n".join([str(x) for x in nodes])
+                file.writelines(line)
+            st.download_button(
+                label="Download subgraph collection as txt",
+                data=file,
+                file_name="subgraph_collection.txt",
+            )
