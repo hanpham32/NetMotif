@@ -27,7 +27,7 @@ def print_labelg(graph_type, subgraph_list: list[nx.Graph]):
             file.writelines(label)
 
     # Convert to labelg
-    label_g = "./labelg"  # Name of the executable
+    label_g = "./NetMotif/labelg"  # Name of the executable
 
     # Check if the labelg executable exists in the root directory
     if os.path.isfile(label_g):
