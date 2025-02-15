@@ -93,11 +93,15 @@ class GraphWithSubgraph(Graph):
         #table to show profile for each node-label count
         df = pd.DataFrame.from_dict(nodes_dictionary, orient = 'index')
 
+        # Convert DataFrame to CSV
+        csv = df.to_csv()
+
         #Display download button for dataframe
         return st.download_button(
             label="Download subgraph profile",
-            data=df,
+            data=csv,
             file_name="subgraph_profile.txt",
+            mime="text/csv"
         )
 
     #@st.cache_data
