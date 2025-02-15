@@ -29,7 +29,6 @@ class ESU:
         nodes = list(self.G.nodes())
         node_visited = set()
 
-        st.write("progressbar")
         progress_text = "ESU algorithm in progress. Please wait."
         my_bar = st.progress(0, text=progress_text)
 
@@ -40,6 +39,8 @@ class ESU:
             self.esu_recursive_helper(
                 size, neighbor_set, node_list, self.subgraph_list, node_visited
             )
+            st.empty()
+            st.write("progressbar")
             my_bar.progress(i/len(nodes), text=progress_text)
         my_bar.empty()
 
