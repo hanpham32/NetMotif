@@ -68,7 +68,7 @@ class GraphWithSubgraph(Graph):
             st.markdown(
                 f"### Subgraph {subgraph.get_label()}"
             )
-            components.html(html, height=600, scrolling=True)
+            components.html(html, height=700, scrolling=True)
         return
 
     def generate_nemo_count(self):
