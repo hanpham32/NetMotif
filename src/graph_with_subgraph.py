@@ -94,7 +94,7 @@ class GraphWithSubgraph(Graph):
         df = pd.DataFrame.from_dict(nodes_dictionary, orient = 'index')
 
         # Convert DataFrame to CSV
-        csv = df.to_csv()
+        csv = df.to_csv(index=False)
 
         #Display download button for dataframe
         return st.download_button(
