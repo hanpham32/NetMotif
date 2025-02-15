@@ -10,6 +10,7 @@ Translated for networkx from https://github.com/IlyaVasUW/NEMO_SUITE/
 
 from typing import List
 import networkx as nx
+import streamlit as st
 from src.subgraph import Subgraph
 from src.graph_types import GraphType
 
@@ -28,13 +29,18 @@ class ESU:
         nodes = self.G.nodes()
         node_visited = set()
 
-        for node in nodes:
+        progress_text = "ESU algorithm in progress. Please wait."
+        my_bar = st.progress(0, text=progress_text)
+
+        for i, node in enumerate(nodes):
             neighbor_set = set(self.get_right_neighbors(node))
             node_list = [node]
             node_visited.add(node)
             self.esu_recursive_helper(
                 size, neighbor_set, node_list, self.subgraph_list, node_visited
             )
+            my_bar.progress(i/len(nodes), text=progress_text)
+        my_bar.empty()
 
         for nx_graph in self.subgraph_list:
             self.Subgraph_list.append(Subgraph(graph_type=graph_type, input=nx_graph))
