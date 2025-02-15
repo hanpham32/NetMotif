@@ -73,6 +73,12 @@ class GraphWithSubgraph(Graph):
 
         #@st.cache_data
     def generate_subgraph_profile(self):
+        output_dir = "out"
+        subgraph_profile_output = os.path.join(output_dir, "subgraph_profile.csv")
+
+        # Ensure output folder exists
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
         #label-node count dictionary
         nodes_dictionary = {}
@@ -94,7 +100,7 @@ class GraphWithSubgraph(Graph):
         df = pd.DataFrame.from_dict(nodes_dictionary)
 
         # Convert DataFrame to CSV
-        csv = df.to_csv()
+        csv = df.to_csv(subgraph_profile_output, encoding='utf-8')
 
         #Display download button for dataframe
         return st.download_button(
