@@ -92,7 +92,7 @@ def main():
 
             number_of_random_graphs = st.number_input(
                 "Number of random graphs",
-                value=50,
+                value=20,
                 placeholder="Input number of graphs...",
                 min_value=5,
                 max_value=100,

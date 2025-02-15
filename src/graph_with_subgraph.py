@@ -70,8 +70,8 @@ class GraphWithSubgraph(Graph):
             components.html(html, height=600, scrolling=True)
         return
 
-    @st.cache_data
-    def generateSubgraphCollection(self):
+    #@st.cache_data
+    def generate_subgraph_collection(self):
         output_dir = "out"
         subgraph_collection_output = os.path.join(output_dir, "subgraph_collection.txt")
 
