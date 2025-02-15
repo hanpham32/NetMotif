@@ -102,10 +102,16 @@ class GraphWithSubgraph(Graph):
         # Write into file
         with open(subgraph_profile_output, "w") as file:
             top_row = f"{'Nodes':<10}"
-            for label in nodes_dictionary.keys():
-                top_row += f"{label:<10}"
+            for key in nodes_dictionary:
+                top_row += f"{key:<10}"
             top_row += "\n"
             file.writelines(top_row)
+            for node in self.G:
+                line = f"{node:<10}"
+                for key in nodes_dictionary:
+                    line += f"{nodes_dictionary[key][node]:<10}"
+                line += "/n"
+                file.writelines(line)
 
         #Display download button for file
         with open(subgraph_profile_output, "r") as file:
