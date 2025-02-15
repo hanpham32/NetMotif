@@ -84,13 +84,13 @@ class GraphWithSubgraph(Graph):
             for subgraph in self.subgraph_list:
                 nodes = subgraph.G.nodes()
                 line = ""
-                line += subgraph.get_label() + "\n".join([str(x) for x in nodes])
+                line += subgraph.get_label() + "\n" + "".join([str(x) for x in nodes])
                 file.writelines(line)
 
         #Display download button for file
         with open(subgraph_collection_output, "r") as file:
             return st.download_button(
-                label="Download subgraph collection as txt",
+                label="Download subgraph collection",
                 data=file,
                 file_name="subgraph_collection.txt",
             )
