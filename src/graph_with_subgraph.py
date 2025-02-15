@@ -91,10 +91,10 @@ class GraphWithSubgraph(Graph):
                 nodes_dictionary[label][node] += 1
     
         #table to show profile for each node-label count
-        df = pd.DataFrame.from_dict(nodes_dictionary, orient = 'index')
+        df = pd.DataFrame.from_dict(nodes_dictionary)
 
         # Convert DataFrame to CSV
-        csv = df.to_csv(index=False)
+        csv = df.to_csv()
 
         #Display download button for dataframe
         return st.download_button(
