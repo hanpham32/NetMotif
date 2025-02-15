@@ -5,6 +5,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
 import pandas as pd
+from tabulate import tabulate
 from src.graph_utils import Graph
 from src.subgraph import Subgraph
 from src.esu import ESU
@@ -97,7 +98,9 @@ class GraphWithSubgraph(Graph):
                 nodes_dictionary[label][node] += 1
     
         #table to show profile for each node-label count
-        df = pd.DataFrame.from_dict(nodes_dictionary)
+        df = pd.DataFrame.from_dict()
+
+        table = tabulate(df, headers='keys', tablefmt='grid', showindex=False)
 
         # Convert DataFrame to CSV
         csv = df.to_csv(subgraph_profile_output)
