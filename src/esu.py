@@ -13,6 +13,7 @@ import networkx as nx
 import streamlit as st
 from src.subgraph import Subgraph
 from src.graph_types import GraphType
+import src.label as lb
 
 class ESU:
     def __init__(self, G: nx.Graph, size: int, graph_type: GraphType):
@@ -44,9 +45,17 @@ class ESU:
 
         progress_text = "Labelg algorithm in progress. Please wait."
         my_label_bar = st.progress(0, text=progress_text)
+        basic_label = ""
         for i, nx_graph in enumerate(self.subgraph_list):
             self.Subgraph_list.append(Subgraph(graph_type=graph_type, input=nx_graph))
+            if graph_type == GraphType.UNDIRECTED:
+                basic_label += lb.graph6(self.G) + "\n"
+            elif graph_type == GraphType.DIRECTED:
+                basic_label += lb.digraph6(self.G) + "\n"
             my_label_bar.progress(i/len(self.subgraph_list), text=progress_text)
+        labelg = lb.toLabelg(basic_label).splitlines()
+        for i, subgraph in enumerate(self.Subgraph_list):
+            subgraph.label = labelg[i]
         my_label_bar.empty()
 
     def esu_recursive_helper(
