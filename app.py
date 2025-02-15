@@ -84,7 +84,7 @@ def main():
             st.toast("Succesfully uploaded file", icon="✅")
 
     with st.form(key="form"):
-        col1, col2 = st.columns([1, 3])
+        col1, col2 = st.columns([1, 2])
         with col1:
             graph_type = st.radio(
                 "Set Graph type:",
@@ -115,7 +115,6 @@ def main():
                 key="nemo_option",
                 index=None,
                 options=["NemoCount", "SubgraphProfile", "SubgraphCollection"],
-                width=200
             )
 
         with col2:
