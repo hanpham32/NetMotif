@@ -53,7 +53,7 @@ def form_callback():
 
     # Download button if nemo count option is selected to subgraph collection
     if st.session_state["nemo_count_option"] is "SubgraphCollection":
-        G.generateSubgraphCollection()
+        G.generate_subgraph_collection()
 
 def main():
     # Initialize global session state for user form submission
