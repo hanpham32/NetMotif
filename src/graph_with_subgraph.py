@@ -97,7 +97,7 @@ class GraphWithSubgraph(Graph):
                 nodes_dictionary[label][node] += 1
     
         #table to show profile for each node-label count
-        df = pd.DataFrame.from_dict()
+        df = pd.DataFrame.from_dict(nodes_dictionary)
 
         # Convert DataFrame to CSV
         csv = df.to_csv(subgraph_profile_output)
