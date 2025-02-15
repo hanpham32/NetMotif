@@ -17,6 +17,10 @@ def form_callback():
     if st.session_state["graph_type"] is None:
         st.warning("Please select a graph type.")
         return
+    
+    if st.session_state["number_of_random_graphs"] is None:
+        st.warning("Please select a number of random graphs between 5-100.")
+        return
 
     # create graph from file
     G = GraphWithSubgraph(
@@ -37,8 +41,6 @@ def form_callback():
     for random in test_randoms:
         random.draw_graph()
 
-    randoms = rg.generate_random_graphs(G, 100)
-
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:
         st.markdown("### Full Graph Visualization")
@@ -49,7 +51,18 @@ def form_callback():
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph()
 
-    stat.draw_statistics(stat.process_statistics(G, randoms))
+    #Visualize random graph generation progress
+    progress_text = "Random graph generation in progress. Please wait."
+    my_bar = st.progress(0, text=progress_text)
+    random_graphs: list[GraphWithSubgraph] = []
+    for i in range(st.session_state['number_of_random_graphs']):
+        random_graphs.append(rg.generate_random_graph(G))
+        my_bar.progress(i/st.session_state['number_of_random_graphs'] + 1, text=progress_text)
+    my_bar.empty()
+
+    #randoms = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
+
+    stat.draw_statistics(stat.process_statistics(G, random_graphs))
 
 def main():
     # Initialize global session state for user form submission
@@ -86,11 +99,19 @@ def main():
                 max_value=5,
             )
 
+            number_of_random_graphs = st.number_input(
+                "Number of random graphs",
+                value=50,
+                placeholder="Input number of graphs...",
+                min_value=5,
+                max_value=100,
+            )
+
             nemo_count_type = st.radio(
                 "Nemo Data Options",
                 key="nemo_option",
                 index=None,
-                options=["NemoCount", "NemoProfile", "NemoCollect"],
+                options=["NemoCount", "SubgraphProfile", "SubgraphCollect"],
             )
 
         with col2:
@@ -115,6 +136,7 @@ def main():
         st.session_state["graph_type"] = graph_type
         st.session_state["uploaded_file"] = uploaded_file
         st.session_state["motif_size"] = motif_size
+        st.session_state["number_of_random_graphs"] = number_of_random_graphs
         st.session_state["nemo_count_option"] = nemo_count_type
         form_callback()
     """
