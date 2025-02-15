@@ -31,7 +31,9 @@ class GraphWithSubgraph(Graph):
 
     def runESU(self, motif_size, graph_type):
         # produce list of subgraphs
+        st.write("run_esu")
         self.esu = ESU(self.G, motif_size, graph_type)
+        st.write("fin_esu")
         self.subgraph_list = self.esu.get_subgraph_list()
         # name and enumerate list of subgraphs
         self.enumerate_subgraphs()
