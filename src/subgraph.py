@@ -10,7 +10,7 @@ class Subgraph(Graph):
 
     def __init__(self, graph_type, input):
         super().__init__(graph_type, input)  # Call the parent's __init__
-        self.label = lb.get_graph_label(self.G, self.graph_type)
+        #self.label = lb.get_graph_label(self.G, self.graph_type)
 
     def __eq__(self, other):
         if isinstance(other, Subgraph):
