@@ -81,7 +81,7 @@ class GraphWithSubgraph(Graph):
 
         # Write into file
         with open(subgraph_collection_output, "w") as file:
-            for subgraph in self.subgraph_list():
+            for subgraph in self.subgraph_list:
                 nodes = subgraph.G.nodes()
                 line = ""
                 line += subgraph.get_label() + "\n".join([str(x) for x in nodes])
