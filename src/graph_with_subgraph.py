@@ -100,7 +100,7 @@ class GraphWithSubgraph(Graph):
         df = pd.DataFrame.from_dict(nodes_dictionary)
 
         # Convert DataFrame to CSV
-        csv = df.to_csv(subgraph_profile_output, encoding='utf-8')
+        csv = df.to_csv(subgraph_profile_output)
 
         #Display download button for dataframe
         return st.download_button(
