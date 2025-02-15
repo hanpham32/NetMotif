@@ -49,7 +49,11 @@ def form_callback():
     #Visualize random graph generation progress
     random_graphs = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
 
-    stat.draw_statistics(stat.process_statistics(G, random_graphs))
+    stats = stat.process_statistics(G, random_graphs)
+
+    #Visualize statistics
+    st.markdown("### Statistics Table")
+    stat.draw_statistics(stats)
 
     # Download button if nemo count option is selected to subgraph collection
     if st.session_state["nemo_count_option"] is "SubgraphCollection":
