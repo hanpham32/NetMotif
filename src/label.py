@@ -40,7 +40,7 @@ def print_labelg(graph_type, subgraph_list: list[nx.Graph]):
     try:
         subprocess.run(
             [label_g],
-            input=file + labelg_output_file,
+            input=labels_file_output + labelg_output_file,
             check=True,
         )
     except subprocess.CalledProcessError as e:
