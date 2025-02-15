@@ -43,20 +43,13 @@ class ESU:
             my_bar.progress(i/len(nodes), text=progress_text)
         my_bar.empty()
 
-        progress_text = "Labelg algorithm in progress. Please wait."
-        my_label_bar = st.progress(0, text=progress_text)
-        basic_label = ""
-        for i, nx_graph in enumerate(self.subgraph_list):
-            self.Subgraph_list.append(Subgraph(graph_type=graph_type, input=nx_graph))
-            if graph_type == GraphType.UNDIRECTED:
-                basic_label += lb.graph6(self.G) + "\n"
-            elif graph_type == GraphType.DIRECTED:
-                basic_label += lb.digraph6(self.G) + "\n"
-            my_label_bar.progress(i/len(self.subgraph_list), text=progress_text)
-        labelg = lb.toLabelg(basic_label).splitlines()
-        for i, subgraph in enumerate(self.Subgraph_list):
-            subgraph.label = labelg[i]
-        my_label_bar.empty()
+
+        labelg_file = lb.print_labelg(graph_type=graph_type, subgraph_list=self.subgraph_list)
+        with open(labelg_file, "r") as file:
+            for i, subgraph in enumerate(self.subgraph_list):
+                sub = Subgraph(graph_type=graph_type,input=subgraph)
+                sub.label = file.readline()
+                self.Subgraph_list.append(sub)
 
     def esu_recursive_helper(
         self,
@@ -109,6 +102,8 @@ class ESU:
                 right_hand_neighbors.append(n)
 
         return iter(right_hand_neighbors)
+
+    
 
     def get_subgraph_list(self):
         return self.Subgraph_list
