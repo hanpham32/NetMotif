@@ -47,15 +47,7 @@ def form_callback():
         G.draw_subgraph()
 
     #Visualize random graph generation progress
-    progress_text = "Random graph generation in progress. Please wait."
-    my_bar = st.progress(0, text=progress_text)
-    random_graphs: list[GraphWithSubgraph] = []
-    for i in range(st.session_state['number_of_random_graphs']):
-        random_graphs.append(rg.generate_random_graph(G))
-        my_bar.progress(i/st.session_state['number_of_random_graphs'], text=progress_text)
-    my_bar.empty()
-
-    #randoms = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
+    random_graphs = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
 
     stat.draw_statistics(stat.process_statistics(G, random_graphs))
 
