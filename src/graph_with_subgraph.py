@@ -4,6 +4,7 @@ from io import StringIO
 import streamlit as st
 import streamlit.components.v1 as components
 from pyvis.network import Network
+import pandas as pd
 from src.graph_utils import Graph
 from src.subgraph import Subgraph
 from src.esu import ESU
@@ -69,6 +70,35 @@ class GraphWithSubgraph(Graph):
             )
             components.html(html, height=600, scrolling=True)
         return
+
+        #@st.cache_data
+    def generate_subgraph_profile(self):
+
+        #label-node count dictionary
+        nodes_dictionary = {}
+        
+        #iterate over subgraphs
+        for subgraph in self.subgraph_list:
+            label = subgraph.get_label()
+            #if label not accounted for
+            if label not in nodes_dictionary:
+                #fill in all node count as 0 for label
+                nodes_dictionary[label] = {}
+                for node in self.G:
+                    nodes_dictionary[label][node] = 0
+            #for every node in the subgraph add 1 to its label-node count
+            for node in subgraph.G.nodes:
+                nodes_dictionary[node][label] += 1
+    
+        #table to show profile for each node-label count
+        df = pd.DataFrame.from_dict(nodes_dictionary, orient = 'index')
+
+        #Display download button for dataframe
+        return st.download_button(
+            label="Download subgraph profile",
+            data=df,
+            file_name="subgraph_profile.txt",
+        )
 
     #@st.cache_data
     def generate_subgraph_collection(self):
