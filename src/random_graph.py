@@ -5,7 +5,7 @@ from src.graph_types import GraphType
 def generate_random_graphs(mimicked_graph: GraphWithSubgraph, number_of_graphs) -> list[GraphWithSubgraph]:
     random_graphs: list[GraphWithSubgraph] = []
     for _ in range(number_of_graphs):
-        random_graphs.append(generate_random_graph())
+        random_graphs.append(generate_random_graph(mimicked_graph))
     return random_graphs
 
 def generate_random_graph(mimicked_graph: GraphWithSubgraph):
