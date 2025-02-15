@@ -21,7 +21,6 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
     subgraph_table: dict = {} #subgraph -> [frequency, mean, sd, zscore, p-value]
     _generate_empty_subgraph_table(original_graph, subgraph_table)
     total_number_of_subgraphs = sum(original_graph.subgraph_list_enumerated.values())
-    st.write(total_number_of_subgraphs)
     for subgraph in subgraph_table:
         original_freq = original_graph.subgraph_list_enumerated[subgraph]/total_number_of_subgraphs
         mean = _getMean(subgraph, graphs)
@@ -89,12 +88,3 @@ def _getZScore(sd: float, mean: float, subgraph: Subgraph, original_graph: Graph
 
 def _getPValue(zscore: float):
     return scipy.stats.norm.sf(abs(zscore))*2
-    ''' Calculate the P value, using a 2-tail test, for each subgraph in the original graph using Z values'''
-    #subtracting 1 from cdf value and multiplying result by 2 to get 2-tailed p value
-    return 2*(1 - (_cdf(math.fabs(std, zscore))))
-
-'''
-cumaltive density function used for calculating p values
-def _cdf(z:float):
-    return 0.5 * (1 + math.erf(z/((std)(2**0.5))))
-'''
