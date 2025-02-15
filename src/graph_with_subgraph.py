@@ -88,7 +88,7 @@ class GraphWithSubgraph(Graph):
                     nodes_dictionary[label][node] = 0
             #for every node in the subgraph add 1 to its label-node count
             for node in subgraph.G.nodes:
-                nodes_dictionary[node][label] += 1
+                nodes_dictionary[label][node] += 1
     
         #table to show profile for each node-label count
         df = pd.DataFrame.from_dict(nodes_dictionary, orient = 'index')
