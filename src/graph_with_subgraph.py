@@ -23,6 +23,7 @@ class GraphWithSubgraph(Graph):
 
         #instantiation of Graph object
         super().__init__(graph_type, input)
+        st.write("graph_made!")
         #setting motif size
         self.motif_size = motif_size
         #creating Subgraph list and dict
