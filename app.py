@@ -57,7 +57,7 @@ def form_callback():
 
     # Download button if nemo count option is selected to subgraph collection
     if st.session_state["nemo_count_option"] is "NemoCount":
-        G.generate_subgraph_count()
+        G.generate_nemo_count()
 
     # Download button if nemo count option is selected to subgraph collection
     if st.session_state["nemo_count_option"] is "SubgraphProfile":

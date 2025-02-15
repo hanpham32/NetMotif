@@ -71,7 +71,11 @@ class GraphWithSubgraph(Graph):
             components.html(html, height=600, scrolling=True)
         return
 
-        #@st.cache_data
+    def generate_nemo_count(self):
+        #do nothing
+        return
+
+    #@st.cache_data
     def generate_subgraph_profile(self):
         output_dir = "out"
         subgraph_profile_output = os.path.join(output_dir, "subgraph_profile.txt")
