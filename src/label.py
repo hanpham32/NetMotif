@@ -135,15 +135,15 @@ def get_graph_label(nx_graph: nx.Graph, graph_type: GraphType) -> str:
     """
     Label a graph in either graph6 (undirected) or digraph6 (directed) format.
     """
-    '''
+    
     #for windows
     if graph_type == GraphType.UNDIRECTED:
         return graph6(nx_graph)
     if graph_type == GraphType.DIRECTED:
         return digraph6(nx_graph)
-    '''
-    #for linux
-    if graph_type == GraphType.UNDIRECTED:
-        return toLabelg(graph6(nx_graph))
-    if graph_type == GraphType.DIRECTED:
-        return toLabelg(digraph6(nx_graph))
+    
+    # #for linux
+    # if graph_type == GraphType.UNDIRECTED:
+    #     return toLabelg(graph6(nx_graph))
+    # if graph_type == GraphType.DIRECTED:
+    #     return toLabelg(digraph6(nx_graph))
