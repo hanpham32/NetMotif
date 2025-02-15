@@ -110,7 +110,7 @@ class GraphWithSubgraph(Graph):
                 line = f"{node:<10}"
                 for key in nodes_dictionary:
                     line += f"{nodes_dictionary[key][node]:<10}"
-                line += "/n"
+                line += "\n"
                 file.writelines(line)
 
         #Display download button for file
