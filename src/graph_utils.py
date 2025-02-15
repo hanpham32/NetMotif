@@ -75,7 +75,7 @@ class Graph:
         return random_graphs
     '''
 
-    def draw_graph(self):
+    def draw_graph(self, output_file_name = "nx.html"):
         output_dir = "drawings"
         if self.graph_type == GraphType.DIRECTED:
             nt = Network(directed=True)
@@ -87,7 +87,7 @@ class Graph:
         #nt.show_buttons(filter_=["physics"])
 
         # Render the graph to an HTML file
-        file_name = os.path.join(output_dir, "nx.html")
+        file_name = os.path.join(output_dir, output_file_name)
 
         # make sure output folder for the drawings exists
         if not os.path.exists(output_dir):

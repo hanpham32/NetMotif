@@ -49,26 +49,10 @@ class GraphWithSubgraph(Graph):
             os.makedirs(output_dir)
 
         for i, subgraph in enumerate(self.subgraph_list):
-            if self.graph_type == GraphType.DIRECTED:
-                nt = Network(directed=True)
-            else:
-                nt = Network()
-
-            nt.from_nx(subgraph.G)
-            file_name = os.path.join(output_dir, f"nx_subgraph_{i}.html")
-
-            if not os.path.exists(output_dir):
-                os.makedirs(output_dir)
-
-            nt.write_html(file_name, open_browser=False)
-
-            with open(file_name, "r") as f:
-                html = f.read()
-
             st.markdown(
                 f"### Subgraph {subgraph.get_label()}"
             )
-            components.html(html, height=700, scrolling=True)
+            subgraph.draw_graph("nx_subgraph_{i}.html")
         return
 
     def generate_nemo_count(self):
