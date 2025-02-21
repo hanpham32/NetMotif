@@ -48,7 +48,7 @@ class ESU:
         with open(labelg_file, "r") as file:
             for i, subgraph in enumerate(self.subgraph_list):
                 sub = Subgraph(graph_type=graph_type,input=subgraph)
-                sub.label = file.readline()
+                sub.set_label(file.readline())
                 self.Subgraph_list.append(sub)
 
     def esu_recursive_helper(
