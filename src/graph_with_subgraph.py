@@ -84,16 +84,14 @@ class GraphWithSubgraph(Graph):
             for node in subgraph.G.nodes:
                 nodes_dictionary[label][node] += 1
 
-        #table to show profile for each node-label count
-        #df = pd.DataFrame.from_dict(nodes_dictionary)
-
         # Write into file
         with open(subgraph_profile_output, "w") as file:
-            top_row = f"{'Nodes':<10}"
+            top_row = f"{'Nodes':<10}" #top row for graph labels
             for key in nodes_dictionary:
-                top_row += f"{key.strip():<10}"
-            top_row += "\n"
+                top_row += f"{key.strip():<10}" #strip new line from label
+            top_row += "\n" #make space for the nodes and their count
             file.write(top_row)
+            #each nodes count in its associated graph
             for node in self.G:
                 line = f"{node:<10}"
                 for key in nodes_dictionary:
