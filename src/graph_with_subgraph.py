@@ -123,7 +123,7 @@ class GraphWithSubgraph(Graph):
             for subgraph in self.subgraph_list:
                 nodes = subgraph.G.nodes()
                 line = ""
-                line += subgraph.get_label() + "\n[" + ", ".join([str(x) for x in nodes]) + "] \n"
+                line += subgraph.get_label() + "[" + ", ".join([str(x) for x in nodes]) + "] \n"
                 file.write(line)
 
         #Display download button for file
