@@ -91,7 +91,7 @@ class GraphWithSubgraph(Graph):
         with open(subgraph_profile_output, "w") as file:
             top_row = f"{'Nodes':<10}"
             for key in nodes_dictionary:
-                top_row += f"{key:<10}"
+                top_row += f"{key.strip():<10}"
             top_row += "\n"
             file.write(top_row)
             for node in self.G:
