@@ -70,7 +70,7 @@ class GraphWithSubgraph(Graph):
 
         #label-node count dictionary
         nodes_dictionary = {}
-        
+
         #iterate over subgraphs
         for subgraph in self.subgraph_list:
             label = subgraph.get_label()
@@ -83,7 +83,7 @@ class GraphWithSubgraph(Graph):
             #for every node in the subgraph add 1 to its label-node count
             for node in subgraph.G.nodes:
                 nodes_dictionary[label][node] += 1
-    
+
         #table to show profile for each node-label count
         df = pd.DataFrame.from_dict(nodes_dictionary)
 
@@ -123,7 +123,7 @@ class GraphWithSubgraph(Graph):
             for subgraph in self.subgraph_list:
                 nodes = subgraph.G.nodes()
                 line = ""
-                line += subgraph.get_label() + "\n[" + ", ".join([str(x) for x in nodes]) + "] \n"
+                line += subgraph.get_label() + "[" + ", ".join([str(x) for x in nodes]) + "] \n"
                 file.writelines(line)
 
         #Display download button for file
