@@ -48,7 +48,7 @@ class GraphWithSubgraph(Graph):
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        for i, subgraph in enumerate(self.subgraph_list):
+        for i, subgraph in enumerate(self.subgraph_list_enumerated.keys()):
             st.markdown(
                 f"### Subgraph {subgraph.get_label()}"
             )
