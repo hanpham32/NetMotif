@@ -44,12 +44,17 @@ class ESU:
         my_bar.empty()
 
 
-        labelg_file = lb.print_labelg(graph_type=graph_type, subgraph_list=self.subgraph_list)
-        with open(labelg_file, "r") as file:
-            for i, subgraph in enumerate(self.subgraph_list):
-                sub = Subgraph(graph_type=graph_type,input=subgraph)
-                sub.set_label(file.readline())
-                self.Subgraph_list.append(sub)
+        label_conversion_map: dict = {} #d6->g6
+        for i, subgraph in enumerate(self.subgraph_list):
+            sub = Subgraph(graph_type=graph_type,input=subgraph)
+            d6 = lb.get_basic_graph_label(sub, graph_type)
+            if(d6 not in label_conversion_map):
+                g6 = lb.get_graph_label(sub, graph_type) #expensive operation, minimize use!
+                label_conversion_map[d6] = g6
+                sub.set_label(g6)
+            else:
+                sub.set_label(label_conversion_map[d6])
+            self.Subgraph_list.append(sub)
 
     def esu_recursive_helper(
         self,
@@ -102,8 +107,6 @@ class ESU:
                 right_hand_neighbors.append(n)
 
         return iter(right_hand_neighbors)
-
-    
 
     def get_subgraph_list(self):
         return self.Subgraph_list

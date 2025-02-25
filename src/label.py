@@ -7,7 +7,7 @@ from src.graph_types import GraphType
 
 def print_labelg(graph_type, subgraph_list: list[nx.Graph]):
     """
-    Takes in esu subgraph list and output the labels into a .txt file.
+    Takes in esu subgraph list and outputs labels into a .txt file.
     """
     output_dir = "out"
     labels_file_output = os.path.join(output_dir, "labels.txt")
@@ -41,7 +41,6 @@ def print_labelg(graph_type, subgraph_list: list[nx.Graph]):
         subprocess.run(
             [label_g, labels_file_output, labelg_output_file],
             text=True,
-            #input=labels_file_output + " " + labelg_output_file,
             check=True,
         )
     except subprocess.CalledProcessError as e:
@@ -181,7 +180,6 @@ def get_basic_graph_label(nx_graph: nx.Graph, graph_type: GraphType) -> str:
     """
     Label a graph in either graph6 (undirected) or digraph6 (directed) format.
     """
-    #for linux
     if graph_type == GraphType.UNDIRECTED:
         return graph6(nx_graph)
     if graph_type == GraphType.DIRECTED:
@@ -192,4 +190,4 @@ def get_graph_label(nx_graph: nx.Graph, graph_type: GraphType) -> str:
     Label a graph in labelg format.
     """
     #for linux
-    return toLabelg(get_basic_graph_label(nx_graph))
+    return toLabelg(get_basic_graph_label(nx_graph, graph_type))
