@@ -47,9 +47,9 @@ class ESU:
         label_conversion_map: dict = {} #d6->g6
         for i, subgraph in enumerate(self.subgraph_list):
             sub = Subgraph(graph_type=graph_type,input=subgraph)
-            d6 = lb.get_basic_graph_label(sub, graph_type)
+            d6 = lb.get_basic_graph_label(sub.G, graph_type)
             if(d6 not in label_conversion_map):
-                g6 = lb.get_graph_label(sub, graph_type) #expensive operation, minimize use!
+                g6 = lb.get_graph_label(sub.G, graph_type) #expensive operation, minimize use!
                 label_conversion_map[d6] = g6
                 sub.set_label(g6)
             else:
