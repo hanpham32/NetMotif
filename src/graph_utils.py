@@ -14,12 +14,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 from pyvis.network import Network
-import subprocess
 from src.graph_types import GraphType
-from collections import defaultdict
-#import src.statistics as stat
-#import src.random_graph as rg
-
 
 class Graph:
     def __init__(self, graph_type, input):
@@ -32,7 +27,7 @@ class Graph:
             self.G = nx.Graph()
         elif graph_type == GraphType.DIRECTED:
             self.G = nx.DiGraph()
-        
+
         # if input is Graph or DiGraph handle differently
         if isinstance(input, UploadedFile):
             if input is not None:
@@ -47,8 +42,7 @@ class Graph:
             self.read_file(input)
         else:
             self.G = input
-
-
+        self.G.remove_edges_from(nx.selfloop_edges(self.G))
 
     def read_file(self, file_directory):
         with open(file_directory, 'r') as f:
