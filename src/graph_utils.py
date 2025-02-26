@@ -48,6 +48,8 @@ class Graph:
         else:
             self.G = input
 
+        self.G.remove_edges_from(nx.selfloop_edges(self.G))
+
     def read_file(self, file_directory):
         with open(file_directory, 'r') as f:
             file_content_edges = f.readlines()
