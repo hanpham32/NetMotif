@@ -70,7 +70,7 @@ def form_callback():
 def main():
     # Initialize global session state for user form submission
     if "graph_type" not in st.session_state:
-        st.session_state["graph_type"] = GraphType.DIRECTED
+        st.session_state["graph_type"] = None
     if "uploaded_file" not in st.session_state:
         st.session_state["uploaded_file"] = None
     if "prev_uploaded_file" not in st.session_state:
@@ -89,8 +89,7 @@ def main():
             graph_type = st.radio(
                 "Set Graph type:",
                 key="graph",
-                index=None,
-                options=[GraphType.DIRECTED, GraphType.UNDIRECTED],
+                options=[GraphType.UNDIRECTED, GraphType.DIRECTED],
                 format_func=lambda x: x.value,
             )
 
