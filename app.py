@@ -112,6 +112,7 @@ def main():
             nemo_count_type = st.radio(
                 "Nemo Data Options",
                 key="nemo_option",
+                index=None,
                 options=["NemoCount", "SubgraphProfile", "SubgraphCollection"],
             )
 
