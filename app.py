@@ -17,7 +17,7 @@ def form_callback():
     if st.session_state["graph_type"] is None:
         st.warning("Please select a graph type.")
         return
-    
+
     if st.session_state["number_of_random_graphs"] is None:
         st.warning("Please select a number of random graphs between 5-100.")
         return
@@ -70,7 +70,7 @@ def form_callback():
 def main():
     # Initialize global session state for user form submission
     if "graph_type" not in st.session_state:
-        st.session_state["graph_type"] = None
+        st.session_state["graph_type"] = GraphType.DIRECTED
     if "uploaded_file" not in st.session_state:
         st.session_state["uploaded_file"] = None
     if "prev_uploaded_file" not in st.session_state:
