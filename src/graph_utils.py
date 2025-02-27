@@ -42,7 +42,7 @@ class Graph:
         else:
             self.G = input
         if nx.is_frozen(self.G):
-            self.G.unfreeze()  # Unfreeze the graph
+            st.write("frozen graph")
         self.G.remove_edges_from(nx.selfloop_edges(self.G))
 
     def read_file(self, file_directory):
