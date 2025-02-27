@@ -33,7 +33,6 @@ class Graph:
             if input is not None:
                 bytes_data = StringIO(input.getvalue().decode("utf-8"))
                 data = bytes_data.readlines()
-
                 for line in data:
                     nodes = line.strip().split()
                     if len(nodes) == 2:
@@ -42,7 +41,7 @@ class Graph:
             self.read_file(input)
         else:
             self.G = input
-        if self.G.is_frozen():
+        if nx.is_frozen(self.G):
             self.G.unfreeze()  # Unfreeze the graph
         self.G.remove_edges_from(nx.selfloop_edges(self.G))
 

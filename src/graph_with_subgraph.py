@@ -17,14 +17,11 @@ class GraphWithSubgraph(Graph):
         #dictionary of subgraph enumeration (Subgraph -> #)
         self.subgraph_list_enumerated: dict = {}
         #number of nodes in subgraphs
-        self.motif_size: int = 0
+        self.motif_size: int = motif_size
         #esu object for esu algorithm
         self.esu = None
-
         #instantiation of Graph object
         super().__init__(graph_type, input)
-        #setting motif size
-        self.motif_size = motif_size
         #creating Subgraph list and dict
         self.runESU(motif_size, graph_type)
 
