@@ -42,6 +42,8 @@ class Graph:
             self.read_file(input)
         else:
             self.G = input
+        if self.G.is_frozen():
+            self.G.unfreeze()  # Unfreeze the graph
         self.G.remove_edges_from(nx.selfloop_edges(self.G))
 
     def read_file(self, file_directory):
