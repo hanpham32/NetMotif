@@ -41,10 +41,6 @@ class Graph:
             self.read_file(input)
         else:
             self.G = input
-        if nx.is_frozen(self.G):
-            st.write("frozen graph")
-        else:
-            st.write("not frozen graph")
 
     def read_file(self, file_directory):
         with open(file_directory, 'r') as f:
