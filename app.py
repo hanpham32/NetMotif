@@ -1,11 +1,12 @@
 import streamlit as st
+import time
 from src.graph_with_subgraph import GraphWithSubgraph
 from src.graph_types import GraphType
 import src.random_graph as rg
 import src.motif_statistics as stat
 
 
-def form_callback():
+def form_callback(start_time):
     """
     Handle form validation logic
     """
@@ -46,10 +47,14 @@ def form_callback():
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph()
 
-    #Visualize random graph generation progress
+    #Generate random graph generation progress
     random_graphs = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
 
     stats = stat.process_statistics(G, random_graphs)
+
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    st.write(f"Time elapsed: {elapsed_time:.2f} seconds")
 
     #Visualize statistics
     st.markdown("### Statistics Table")
@@ -139,7 +144,8 @@ def main():
         st.session_state["motif_size"] = motif_size
         st.session_state["number_of_random_graphs"] = number_of_random_graphs
         st.session_state["nemo_count_option"] = nemo_count_type
-        form_callback()
+        start_time = time.time()
+        form_callback(start_time)
     """
     [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/hanpham32/NetMotif)
 
