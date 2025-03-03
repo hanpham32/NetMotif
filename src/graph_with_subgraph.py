@@ -23,7 +23,7 @@ class GraphWithSubgraph(Graph):
         #instantiation of Graph object
         super().__init__(graph_type, input)
         #remove self loops
-        self.G.remove_edges_from(nx.selfloop_edges(self.G))
+        #self.G.remove_edges_from(nx.selfloop_edges(self.G))
         #creating Subgraph list and dict
         self.runESU(motif_size, graph_type)
 
