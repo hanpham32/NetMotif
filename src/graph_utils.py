@@ -45,7 +45,6 @@ class Graph:
             st.write("frozen graph")
         else:
             st.write("not frozen graph")
-        #self.G.remove_edges_from(nx.selfloop_edges(self.G))
 
     def read_file(self, file_directory):
         with open(file_directory, 'r') as f:
