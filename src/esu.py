@@ -46,12 +46,13 @@ class ESU:
         progress_text = "Labelg algorithm in progress. Please wait."
         my_bar = st.progress(0, text=progress_text)
         label_conversion_map: dict = {} #d6->g6
+        numberOfConversions = 0
         for i, subgraph in enumerate(self.subgraph_list):
             sub = Subgraph(graph_type=graph_type,input=subgraph)
             d6 = lb.get_basic_graph_label(sub.G, graph_type)
             if(d6 not in label_conversion_map):
-                #g6 = lb.get_graph_label(sub.G, graph_type) #expensive operation, minimize use!
-                g6 = d6
+                numberOfConversions += 1
+                g6 = lb.get_graph_label(sub.G, graph_type) #expensive operation, minimize use!
                 label_conversion_map[d6] = g6
                 sub.set_label(g6)
             else:
@@ -59,6 +60,7 @@ class ESU:
             self.Subgraph_list.append(sub)
             my_bar.progress(i/len(self.subgraph_list), text=progress_text)
         my_bar.empty()
+        st.write("number of labelg calls: " + numberOfConversions)
 
     def esu_recursive_helper(
         self,
