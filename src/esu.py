@@ -43,6 +43,8 @@ class ESU:
             my_bar.progress(i/len(nodes), text=progress_text)
         my_bar.empty()
 
+        progress_text = "Labelg algorithm in progress. Please wait."
+        my_bar = st.progress(0, text=progress_text)
         label_conversion_map: dict = {} #d6->g6
         for i, subgraph in enumerate(self.subgraph_list):
             sub = Subgraph(graph_type=graph_type,input=subgraph)
@@ -54,6 +56,8 @@ class ESU:
             else:
                 sub.set_label(label_conversion_map[d6])
             self.Subgraph_list.append(sub)
+            my_bar.progress(i/len(self.subgraph_list), text=progress_text)
+        my_bar.empty()
 
     def esu_recursive_helper(
         self,
