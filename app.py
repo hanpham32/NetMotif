@@ -47,7 +47,7 @@ def form_callback(start_time):
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph()
 
-    #Generate random graph generation progress
+    #Generate random graphs
     random_graphs = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
 
     stats = stat.process_statistics(G, random_graphs)
