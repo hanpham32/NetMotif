@@ -14,8 +14,6 @@ def generate_random_graphs(mimicked_graph: GraphWithSubgraph, number_of_graphs) 
     return random_graphs
 
 def generate_random_graph(mimicked_graph: GraphWithSubgraph):
-    initial_progress_text = "Generating one random networkx graph. Please wait."
-    my_bar = st.progress(0, text=initial_progress_text)
     if mimicked_graph.graph_type == GraphType.UNDIRECTED:
             degree_sequence = [d for _, d in mimicked_graph.G.degree()]
             random_nx_graph = nx.Graph(nx.configuration_model(degree_sequence))
@@ -27,15 +25,9 @@ def generate_random_graph(mimicked_graph: GraphWithSubgraph):
                 in_degree_sequence, out_degree_sequence
             )
         )
-    secondary_progress_text = "Creating Graph class out of networkx graph. Please wait."
-    my_bar.progress(0.5, text=secondary_progress_text)
     random_graph = GraphWithSubgraph(
         graph_type=mimicked_graph.graph_type,
         input=random_nx_graph,
         motif_size=mimicked_graph.motif_size,
     )
-    #REMOVE FINISHED PROGRESS BAR
-    finish_text = "Finished random graph"
-    my_bar.progress(1, text=finish_text)
-    my_bar.empty()
     return random_graph
