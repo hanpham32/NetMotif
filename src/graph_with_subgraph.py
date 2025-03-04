@@ -30,8 +30,8 @@ class GraphWithSubgraph(Graph):
 
         # remove self loops
 #        start_time = time.time()
-#        self.G.remove_edges_from(nx.selfloop_edges(self.G))
-        end_time = time.time()
+        self.G.remove_edges_from(nx.selfloop_edges(self.G))
+#        end_time = time.time()
 #        st.write(f"Time to remove self-loops: {end_time - start_time:.2f} seconds")
 
         # creating Subgraph list and dict
