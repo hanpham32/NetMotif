@@ -60,7 +60,7 @@ class ESU:
             self.Subgraph_list.append(sub)
             my_bar.progress(i/len(self.subgraph_list), text=progress_text)
         my_bar.empty()
-        st.write("number of labelg calls: " + numberOfConversions)
+        st.write("number of labelg calls: " + str(numberOfConversions))
 
     def esu_recursive_helper(
         self,
