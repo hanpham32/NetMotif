@@ -29,18 +29,16 @@ class GraphWithSubgraph(Graph):
         st.write(f"Time to instantiate Graph object: {end_time - start_time:.2f} seconds")
 
         # remove self loops
-        start_time = time.time()
+#        start_time = time.time()
         self.G.remove_edges_from(nx.selfloop_edges(self.G))
-        end_time = time.time()
-        st.write(f"Time to remove self-loops: {end_time - start_time:.2f} seconds")
+#        end_time = time.time()
+#        st.write(f"Time to remove self-loops: {end_time - start_time:.2f} seconds")
 
         # creating Subgraph list and dict
-        start_time = time.time()
+#        start_time = time.time()
         self.runESU(motif_size, graph_type)
-        end_time = time.time()
-        st.write(f"Time to run ESU and enumerate subgraphs: {end_time - start_time:.2f} seconds")
-        
-        st.experimental_rerun()  # Force UI update
+#        end_time = time.time()
+#        st.write(f"Time to run ESU and enumerate subgraphs: {end_time - start_time:.2f} seconds")
 
     def runESU(self, motif_size, graph_type):
         # produce list of subgraphs
