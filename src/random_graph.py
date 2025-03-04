@@ -33,5 +33,6 @@ def generate_random_graph(mimicked_graph: GraphWithSubgraph):
         input=random_nx_graph,
         motif_size=mimicked_graph.motif_size,
     )
+    my_bar = st.progress(1, text=progress_text)
     my_bar.empty()
     return random_graph
