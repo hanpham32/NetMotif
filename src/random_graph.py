@@ -27,12 +27,12 @@ def generate_random_graph(mimicked_graph: GraphWithSubgraph):
                 in_degree_sequence, out_degree_sequence
             )
         )
-    my_bar = st.progress(0.5, text=progress_text)
+    my_bar.progress(0.5, text=progress_text)
     random_graph = GraphWithSubgraph(
         graph_type=mimicked_graph.graph_type,
         input=random_nx_graph,
         motif_size=mimicked_graph.motif_size,
     )
-    my_bar = st.progress(1, text=progress_text)
+    my_bar.progress(1, text=progress_text)
     my_bar.empty()
     return random_graph
