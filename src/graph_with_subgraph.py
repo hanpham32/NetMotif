@@ -39,6 +39,8 @@ class GraphWithSubgraph(Graph):
         self.runESU(motif_size, graph_type)
         end_time = time.time()
         st.write(f"Time to run ESU and enumerate subgraphs: {end_time - start_time:.2f} seconds")
+        
+        st.experimental_rerun()  # Force UI update
 
     def runESU(self, motif_size, graph_type):
         # produce list of subgraphs
