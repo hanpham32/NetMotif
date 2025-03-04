@@ -23,16 +23,16 @@ class GraphWithSubgraph(Graph):
         self.esu = None
 
         # instantiation of Graph object
-        start_time = time.time()
+#        start_time = time.time()
         super().__init__(graph_type, input)
-        end_time = time.time()
-        st.write(f"Time to instantiate Graph object: {end_time - start_time:.2f} seconds")
+#        end_time = time.time()
+#        st.write(f"Time to instantiate Graph object: {end_time - start_time:.2f} seconds")
 
         # remove self loops
-#        start_time = time.time()
+        start_time = time.time()
         self.G.remove_edges_from(nx.selfloop_edges(self.G))
-#        end_time = time.time()
-#        st.write(f"Time to remove self-loops: {end_time - start_time:.2f} seconds")
+        end_time = time.time()
+        st.write(f"Time to remove self-loops: {end_time - start_time:.2f} seconds")
 
         # creating Subgraph list and dict
 #        start_time = time.time()
