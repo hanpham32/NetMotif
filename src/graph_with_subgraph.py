@@ -21,18 +21,10 @@ class GraphWithSubgraph(Graph):
         self.motif_size: int = motif_size
         # esu object for esu algorithm
         self.esu = None
-
         # instantiation of Graph object
-#        start_time = time.time()
         super().__init__(graph_type, input)
-#        end_time = time.time()
-#        st.write(f"Time to instantiate Graph object: {end_time - start_time:.2f} seconds")
-
         # remove self loops
-#        start_time = time.time()
         self.G.remove_edges_from(nx.selfloop_edges(self.G))
-#        end_time = time.time()
-#        st.write(f"Time to remove self-loops: {end_time - start_time:.2f} seconds")
 
         # creating Subgraph list and dict
         start_time = time.time()
@@ -66,6 +58,15 @@ class GraphWithSubgraph(Graph):
             )
             subgraph.draw_graph("nx_subgraph_{i}.html")
         return
+
+    def get_graph_properties(self):
+        simple_properties = super().get_graph_properties()
+        if simple_properties is None:
+            return simple_properties
+
+        return simple_properties + {
+            "Number of subgraphs": len(self.subgraph_list),
+        }
 
     def generate_nemo_count(self):
         # do nothing
