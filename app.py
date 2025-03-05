@@ -36,6 +36,7 @@ def form_callback(start_time):
     # st.write(f"Edges: {graph_properties['Edges']}")
     st.write(f"Number of edges: {graph_properties['Number of edges']}")
     st.write(f"Weight: {graph_properties['Weight']}")
+    st.write(f"Number of subgraphs: {graph_properties['Number of subgraphs']}")
 
     # visualize the full graph if selected
     if st.session_state["is_visualize_graph"]:
