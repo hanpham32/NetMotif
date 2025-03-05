@@ -62,11 +62,13 @@ class GraphWithSubgraph(Graph):
     def get_graph_properties(self):
         simple_properties = super().get_graph_properties()
         if simple_properties is None:
-            return simple_properties
+            return None
 
-        return simple_properties.update( {
+        simple_properties.update({
             "Number of subgraphs": len(self.subgraph_list),
         })
+
+        return simple_properties
 
     def generate_nemo_count(self):
         # do nothing
