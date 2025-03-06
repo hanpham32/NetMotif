@@ -52,7 +52,7 @@ class ESU:
             d6 = lb.get_basic_graph_label(sub.G, graph_type)
             if(d6 not in label_conversion_map):
                 numberOfConversions += 1
-                g6 = d6#lb.get_graph_label(sub.G, graph_type) #expensive operation, minimize use!
+                g6 = lb.get_graph_label(sub.G, graph_type) #expensive operation, minimize use!
                 label_conversion_map[d6] = g6
                 sub.set_label(g6)
             else:
