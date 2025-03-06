@@ -25,9 +25,10 @@ def generate_random_graph(mimicked_graph: GraphWithSubgraph):
                 in_degree_sequence, out_degree_sequence
             )
         )
+    random_nx_graph.remove_edges_from(nx.selfloop_edges(random_nx_graph))
     random_graph = GraphWithSubgraph(
         graph_type=mimicked_graph.graph_type,
-        input=random_nx_graph.remove_edges_from(nx.selfloop_edges(random_nx_graph)),
+        input=random_nx_graph,
         motif_size=mimicked_graph.motif_size,
     )
     return random_graph
