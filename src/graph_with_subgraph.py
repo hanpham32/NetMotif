@@ -52,7 +52,7 @@ class GraphWithSubgraph(Graph):
                     visited.add(current)
                     component.add(current)
                     # Add all unvisited neighbors (in undirected graph)
-                    for neighbor in G.all_neighbors(current):
+                    for neighbor in nx.all_neighbors(G, current):
                         if neighbor not in visited:
                             stack.append(neighbor)
 
