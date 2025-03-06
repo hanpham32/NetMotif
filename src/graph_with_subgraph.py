@@ -29,8 +29,8 @@ class GraphWithSubgraph(Graph):
 
         # creating Subgraph list and dict
         start_time = time.time()
-        self.subgraph_list = self.weakly_connected_components_of_size_k(self.graph_type, self.G, motif_size)
-        #self.runESU(motif_size, graph_type)
+        #self.subgraph_list = self.weakly_connected_components_of_size_k(self.graph_type, self.G, motif_size)
+        self.runESU(motif_size, graph_type)
         # name and enumerate list of subgraphs
         self.enumerate_subgraphs()
         end_time = time.time()
