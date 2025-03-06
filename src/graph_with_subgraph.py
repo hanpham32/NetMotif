@@ -36,7 +36,7 @@ class GraphWithSubgraph(Graph):
         end_time = time.time()
         st.write(f"Time to run ESU and enumerate subgraphs: {end_time - start_time:.2f} seconds")
 
-    def weakly_connected_components_of_size_k(graph_type, G, k):
+    def weakly_connected_components_of_size_k(self, graph_type, G, k):
         # List to store components of size k
         components_of_size_k = []
 
