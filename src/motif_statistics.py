@@ -30,8 +30,12 @@ def process_statistics(original_graph: GraphWithSubgraph, graphs: list[GraphWith
             p_value = 'NA'
         else:
             sd = _getStandardDeviation(mean, subgraph, graphs)
-            z_score = _getZScore(sd, mean, subgraph, original_graph)
-            p_value = _getPValue(z_score)
+            if(sd == 0):
+                z_score = 'NA'
+                p_value = 'NA'
+            else:
+                z_score = _getZScore(sd, mean, subgraph, original_graph)
+                p_value = _getPValue(z_score)
         #frequency of subgraph in original graph as a percent
         subgraph_table[subgraph]['freq'] = original_freq * 100
         subgraph_table[subgraph]['mean'] = mean * 100 # % mean-frequency as a percent
