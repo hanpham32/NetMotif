@@ -9,6 +9,7 @@ from src.graph_utils import Graph
 from src.subgraph import Subgraph
 from src.esu import ESU
 from src.graph_types import GraphType
+import src.label as lb
 import time
 
 class GraphWithSubgraph(Graph):
@@ -28,16 +29,70 @@ class GraphWithSubgraph(Graph):
 
         # creating Subgraph list and dict
         start_time = time.time()
-        self.runESU(motif_size, graph_type)
+        self.subgraph_list = self.weakly_connected_components_of_size_k(self.graph_type, self.G, motif_size)
+        #self.runESU(motif_size, graph_type)
+        # name and enumerate list of subgraphs
+        self.enumerate_subgraphs()
         end_time = time.time()
         st.write(f"Time to run ESU and enumerate subgraphs: {end_time - start_time:.2f} seconds")
+
+    def weakly_connected_components_of_size_k(graph_type, G, k):
+        # List to store components of size k
+        components_of_size_k = []
+
+        # Set to keep track of visited nodes
+        visited = set()
+
+        # Helper function to perform DFS
+        def dfs(node, component):
+            stack = [node]
+            while stack:
+                current = stack.pop()
+                if current not in visited:
+                    visited.add(current)
+                    component.add(current)
+                    # Add all unvisited neighbors (in undirected graph)
+                    for neighbor in G.all_neighbors(current):
+                        if neighbor not in visited:
+                            stack.append(neighbor)
+
+        # Iterate over all nodes in the graph
+        for node in G.nodes():
+            if node not in visited:
+                # Start a DFS for this unvisited node
+                component = set()
+                dfs(node, component)
+
+                # If the component has the desired size, add it to the result
+                if len(component) == k:
+                    components_of_size_k.append(component)
+
+        progress_text = "Labelg algorithm in progress. Please wait."
+        my_bar = st.progress(0, text=progress_text)
+        label_conversion_map: dict = {} #d6->g6
+        numberOfConversions = 0
+        subgraph_list = []
+        for i, component in enumerate(components_of_size_k):
+            nxgraph = G.subgraph(component)
+            sub = Subgraph(graph_type=graph_type,input=nxgraph)
+            d6 = lb.get_basic_graph_label(sub.G, graph_type)
+            if(d6 not in label_conversion_map):
+                numberOfConversions += 1
+                g6 = d6#lb.get_graph_label(sub.G, graph_type) #expensive operation, minimize use!
+                label_conversion_map[d6] = g6
+                sub.set_label(g6)
+            else:
+                sub.set_label(label_conversion_map[d6])
+            subgraph_list.append(sub)
+            my_bar.progress(i/len(components_of_size_k), text=progress_text)
+        my_bar.empty()
+        st.write("number of labelg calls: " + str(numberOfConversions))
+        return subgraph_list
 
     def runESU(self, motif_size, graph_type):
         # produce list of subgraphs
         self.esu = ESU(self.G, motif_size, graph_type)
         self.subgraph_list = self.esu.get_subgraph_list()
-        # name and enumerate list of subgraphs
-        self.enumerate_subgraphs()
 
     def enumerate_subgraphs(self):
         for subgraph in self.subgraph_list:
