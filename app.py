@@ -5,11 +5,13 @@ from src.graph_types import GraphType
 import src.random_graph as rg
 import src.motif_statistics as stat
 
-
 def form_callback(start_time):
     """
     Handle form validation logic
     """
+    
+    st.set_page_config(page_title="NEMO motif detection program")
+    st.title('NEMO motif detection program')
 
     if st.session_state["uploaded_file"] is None:
         st.warning("Please upload a file.")
