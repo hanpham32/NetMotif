@@ -28,13 +28,13 @@ class GraphWithSubgraph(Graph):
         self.G.remove_edges_from(nx.selfloop_edges(self.G))
 
         # creating Subgraph list and dict
-        start_time = time.time()
+        #start_time = time.time()
         #self.subgraph_list = self.weakly_connected_components_of_size_k(self.graph_type, self.G, motif_size)
         self.runESU(motif_size, graph_type)
         # name and enumerate list of subgraphs
         self.enumerate_subgraphs()
-        end_time = time.time()
-        st.write(f"Time to run ESU and enumerate subgraphs: {end_time - start_time:.2f} seconds")
+        #end_time = time.time()
+        #st.write(f"Time to run ESU and enumerate subgraphs: {end_time - start_time:.2f} seconds")
 
     def weakly_connected_components_of_size_k(self, graph_type, G, k):
         # List to store components of size k
