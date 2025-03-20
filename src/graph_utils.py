@@ -91,4 +91,11 @@ class Graph:
         with open(file_name, "r") as f:
             html = f.read()
 
+        st.download_button(
+            label="Download Graph",
+            data=html,
+            file_name=output_file_name,
+            mime="text/html",
+        )
+
         components.html(html, height=700, scrolling=True)
