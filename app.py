@@ -90,6 +90,12 @@ def main():
             st.session_state["uploaded_file"] = uploaded_file
             st.session_state["prev_uploaded_file"] = uploaded_file
             st.toast("Succesfully uploaded file", icon="✅")
+    
+    demo = st.button("Use Demo File")
+    if demo:
+        st.session_state["uploaded_file"] = "data/bestGraph.txt"
+        st.session_state["prev_uploaded_file"] = "data/bestGraph.txt"
+        st.toast("Succesfully uploaded demo file", icon="✅")
 
     with st.form(key="form"):
         col1, col2 = st.columns([1, 2])
