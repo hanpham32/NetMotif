@@ -9,7 +9,7 @@ This class is responsible for graph generation, visualization, and\
 from typing import List
 import networkx as nx
 import os
-from io import StringIO
+import io
 import streamlit as st
 import streamlit.components.v1 as components
 from streamlit.runtime.uploaded_file_manager import UploadedFile
@@ -29,9 +29,9 @@ class Graph:
             self.G = nx.DiGraph()
 
         # if input is Graph or DiGraph handle differently
-        if isinstance(input, UploadedFile):
+        if isinstance(input, UploadedFile) or isinstance(input, io.BytesIO):
             if input is not None:
-                bytes_data = StringIO(input.getvalue().decode("utf-8"))
+                bytes_data = io.StringIO(input.getvalue().decode("utf-8"))
                 data = bytes_data.readlines()
                 for line in data:
                     nodes = line.strip().split()
