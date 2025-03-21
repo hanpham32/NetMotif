@@ -93,8 +93,8 @@ def main():
 
     demo = st.button("Use Demo File")
     if demo:
-        st.session_state["uploaded_file"] = "./NetMotif/data/bestGraph.txt"
-        st.session_state["prev_uploaded_file"] = "./NetMotif/data/bestGraph.txt"
+        st.session_state["uploaded_file"] = "./NetMotif/data/bestTest.txt"
+        st.session_state["prev_uploaded_file"] = "./NetMotif/data/bestTest.txt"
         st.toast("Succesfully uploaded demo file", icon="✅")
 
     with st.form(key="form"):
