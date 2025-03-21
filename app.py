@@ -15,15 +15,15 @@ def form_callback(start_time):
     Handle form validation logic
     """
 
-    if st.session_state["uploaded_file"] is None:
+    if st.session_state.get("uploaded_file") is None:
         st.warning("Please upload a file.")
         return
 
-    if st.session_state["graph_type"] is None:
+    if st.session_state.get("graph_type") is None:
         st.warning("Please select a graph type.")
         return
 
-    if st.session_state["number_of_random_graphs"] is None:
+    if st.session_state.get("number_of_random_graphs") is None:
         st.warning("Please select a number of random graphs between 5-100.")
         return
 
@@ -37,7 +37,6 @@ def form_callback(start_time):
     # display graph properties
     graph_properties = G.get_graph_properties()
     st.write(f"Number of nodes: {graph_properties['Number of nodes']}")
-    # st.write(f"Edges: {graph_properties['Edges']}")
     st.write(f"Number of edges: {graph_properties['Number of edges']}")
     st.write(f"Weight: {graph_properties['Weight']}")
     st.write(f"Number of subgraphs: {graph_properties['Number of subgraphs']}")
@@ -52,7 +51,7 @@ def form_callback(start_time):
         st.markdown("### Subgraph Visualization")
         G.draw_subgraph()
 
-    #Generate random graphs
+    # Generate random graphs
     random_graphs = rg.generate_random_graphs(G, st.session_state['number_of_random_graphs'])
 
     stats = stat.process_statistics(G, random_graphs)
@@ -61,20 +60,18 @@ def form_callback(start_time):
     elapsed_time = end_time - start_time
     st.write(f"Time elapsed: {elapsed_time:.2f} seconds")
 
-    #Visualize statistics
+    # Visualize statistics
     st.markdown("### Statistics Table")
     stat.draw_statistics(stats)
 
     # Download button if nemo count option is selected to subgraph collection
-    if st.session_state["nemo_count_option"] is "NemoCount":
+    if st.session_state["nemo_count_option"] == "NemoCount":
         G.generate_nemo_count()
 
-    # Download button if nemo count option is selected to subgraph collection
-    if st.session_state["nemo_count_option"] is "SubgraphProfile":
+    if st.session_state["nemo_count_option"] == "SubgraphProfile":
         G.generate_subgraph_profile()
 
-    # Download button if nemo count option is selected to subgraph collection
-    if st.session_state["nemo_count_option"] is "SubgraphCollection":
+    if st.session_state["nemo_count_option"] == "SubgraphCollection":
         G.generate_subgraph_collection()
 
 def main():
@@ -91,7 +88,7 @@ def main():
         if uploaded_file != st.session_state["prev_uploaded_file"]:
             st.session_state["uploaded_file"] = uploaded_file
             st.session_state["prev_uploaded_file"] = uploaded_file
-            st.toast("Succesfully uploaded file", icon="✅")
+            st.toast("Successfully uploaded file", icon="✅")
 
     demo = st.button("Use Demo File")
     if demo:
@@ -148,27 +145,18 @@ def main():
         submitted = st.form_submit_button(label="Submit")
 
     if submitted:
-        st.session_state["is_visualize_graph"] = False
-        st.session_state["is_visualize_subgraph"] = False
-
-        if is_visualize_graph:
-            st.session_state["is_visualize_graph"] = True
-        if is_visualize_subgraph:
-            st.session_state["is_visualize_subgraph"] = True
+        st.session_state["is_visualize_graph"] = is_visualize_graph
+        st.session_state["is_visualize_subgraph"] = is_visualize_subgraph
 
         st.session_state["graph_type"] = graph_type
-        st.session_state["uploaded_file"] = uploaded_file
         st.session_state["motif_size"] = motif_size
         st.session_state["number_of_random_graphs"] = number_of_random_graphs
         st.session_state["nemo_count_option"] = nemo_count_type
+
         start_time = time.time()
         form_callback(start_time)
-    """
-    [![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/hanpham32/NetMotif)
 
-    """
     st.markdown("<br>", unsafe_allow_html=True)
-
 
 if __name__ == "__main__":
     main()
