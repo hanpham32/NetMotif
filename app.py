@@ -95,6 +95,7 @@ def main():
     if demo:
         st.session_state["uploaded_file"] = "./NetMotif/data/bestTest.txt"
         st.session_state["prev_uploaded_file"] = "./NetMotif/data/bestTest.txt"
+        st.write(st.session_state["uploaded_file"])
         st.toast("Succesfully uploaded demo file", icon="✅")
 
     with st.form(key="form"):
