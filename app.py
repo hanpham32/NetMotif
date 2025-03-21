@@ -1,7 +1,7 @@
 import streamlit as st
 import time
 import os
-import io
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 from src.graph_with_subgraph import GraphWithSubgraph
 from src.graph_types import GraphType
 import src.random_graph as rg
@@ -96,11 +96,13 @@ def main():
         if os.path.exists(demo_path):
             with open(demo_path, "rb") as file:
                 file_content = file.read()
-            uploaded_file = io.BytesIO(file_content)
-            uploaded_file.name = "bestTest.txt"
+
+            # Create a Streamlit-compatible UploadedFile object
+            uploaded_file = UploadedFile(name="bestTest.txt", type="text/plain", id="demo_file", data=file_content)
             st.session_state["uploaded_file"] = uploaded_file
             st.session_state["prev_uploaded_file"] = uploaded_file
             st.toast("Successfully uploaded demo file", icon="✅")
+
 
     with st.form(key="form"):
         col1, col2 = st.columns([1, 2])
