@@ -1,5 +1,7 @@
 import streamlit as st
 import time
+import os
+import io
 from src.graph_with_subgraph import GraphWithSubgraph
 from src.graph_types import GraphType
 import src.random_graph as rg
@@ -93,8 +95,12 @@ def main():
 
     demo = st.button("Use Demo File")
     if demo:
-        st.session_state["uploaded_file"] = "./NetMotif/data/bestTest.txt"
-        st.session_state["prev_uploaded_file"] = "./NetMotif/data/bestTest.txt"
+        #file_name = os.path.basename("./NetMotif/data/bestTest.txt")
+        with open("./NetMotif/data/bestTest.txt", "rb") as file:
+            file_content = file.read()
+        uploaded_file = io.BytesIO(file_content)
+        st.session_state["uploaded_file"] = uploaded_file
+        st.session_state["prev_uploaded_file"] = uploaded_file
         st.write(st.session_state["uploaded_file"])
         st.toast("Succesfully uploaded demo file", icon="✅")
 
