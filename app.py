@@ -98,10 +98,10 @@ def main():
         #file_name = os.path.basename("./NetMotif/data/", "bestTest.txt")
         with open("./NetMotif/data/bestTest.txt", "rb") as file:
             file_content = file.read()
-        uploaded_file = io.BytesIO(file_content)
-        uploaded_file.name = "Demo"
-        st.session_state["uploaded_file"] = uploaded_file
-        st.session_state["prev_uploaded_file"] = uploaded_file
+        upload_file = io.BytesIO(file_content)
+        upload_file.name = "Demo"
+        st.session_state["uploaded_file"] = upload_file
+        st.session_state["prev_uploaded_file"] = upload_file
         st.write(st.session_state["uploaded_file"])
         st.toast("Succesfully uploaded demo file", icon="✅")
 
