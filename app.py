@@ -95,10 +95,11 @@ def main():
 
     demo = st.button("Use Demo File")
     if demo:
-        #file_name = os.path.basename("./NetMotif/data/bestTest.txt")
+        #file_name = os.path.basename("./NetMotif/data/", "bestTest.txt")
         with open("./NetMotif/data/bestTest.txt", "rb") as file:
             file_content = file.read()
         uploaded_file = io.BytesIO(file_content)
+        uploaded_file.name = "Demo"
         st.session_state["uploaded_file"] = uploaded_file
         st.session_state["prev_uploaded_file"] = uploaded_file
         st.write(st.session_state["uploaded_file"])
