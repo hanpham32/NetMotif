@@ -99,10 +99,10 @@ def main():
         if os.path.exists(demo_path):
             with open(demo_path, "rb") as file:
                 file_content = file.read()
-            upload_file = io.BytesIO(file_content)
-            upload_file.name = "bestTest.txt"
-            st.session_state["uploaded_file"] = upload_file
-            st.session_state["prev_uploaded_file"] = upload_file
+            uploaded_file = io.BytesIO(file_content)
+            uploaded_file.name = "bestTest.txt"
+            st.session_state["uploaded_file"] = uploaded_file
+            st.session_state["prev_uploaded_file"] = uploaded_file
             st.toast("Successfully uploaded demo file", icon="✅")
 
     with st.form(key="form"):
